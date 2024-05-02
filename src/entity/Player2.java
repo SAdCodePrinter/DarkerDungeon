@@ -1,24 +1,26 @@
 package entity;
 
 import MainGUI.GamePanel;
-import MainGUI.KeyHandler;
+import MainGUI.KeyHandler2;
 
 import java.awt.*;
 
-public class Player extends Entity{
+public class Player2 extends Entity{
 
     GamePanel gamePanel;
-    KeyHandler keyH;
+    KeyHandler2 keyH2;
 
-    public Player (GamePanel gamePanel, KeyHandler keyH){
+
+
+    public Player2 (GamePanel gamePanel, KeyHandler2 keyH2){
 
         this.gamePanel = gamePanel;
-        this.keyH = keyH;
+        this.keyH2 = keyH2;
         setDefault();
     }
     public void setDefault(){
-        x = 100;
-        y = 100;
+        x = 200;
+        y = 200;
         speed = 5;
         direction = "idle";
     }
@@ -26,24 +28,23 @@ public class Player extends Entity{
         //TODO: Schräg laufen!
         //player.update();
 
-        if (keyH.upPressed){
+        if (keyH2.upPressed){
             y -= speed;
             direction = "up";
 
-        }else if (keyH.downPressed){
+        }else if (keyH2.downPressed){
             y += speed;
-        direction = "down";
+            direction = "down";
 
-        } else if (keyH.leftPressed) {
+        } else if (keyH2.leftPressed) {
             x -= speed;
-        direction = "left";
+            direction = "left";
 
-        } else if (keyH.rightPressed) {
+        } else if (keyH2.rightPressed) {
             x += speed;
-        direction = "right";
+            direction = "right";
         }
     }
-
     public int getWidth() {
         return gamePanel.getTileSize();
     }
@@ -54,11 +55,10 @@ public class Player extends Entity{
     }
 
 
-    public void draw (Graphics2D g2){
-        g2.setColor(Color.white);
+    public void draw (Graphics2D g3){
+        g3.setColor(Color.red);
 
-        g2.fillRect(x, y, gamePanel.getTileSize(), gamePanel.getTileSize());
-
+        g3.fillRect(x, y, gamePanel.getTileSize(), gamePanel.getTileSize());
     }
 }
 
