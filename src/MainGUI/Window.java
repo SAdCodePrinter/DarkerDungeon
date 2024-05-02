@@ -5,19 +5,12 @@ import java.awt.*;
 
 public class Window extends JFrame {
 
-    private Container container;
-    GridBagConstraints c = new GridBagConstraints();
-
-
-
-
-    public void setWindow() {
+    public void setWindow(GamePanel gamePanel) {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("DarkerDungeon");
 
-        GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
 
         window.pack();
