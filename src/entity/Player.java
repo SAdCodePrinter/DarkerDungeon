@@ -1,46 +1,47 @@
 package entity;
 
+import MainGUI.CollisionHandler;
 import MainGUI.GamePanel;
 import MainGUI.KeyHandler;
 
 import java.awt.*;
 
-public class Player extends Entity{
+public class Player extends Entity {
 
     GamePanel gamePanel;
     KeyHandler keyH;
 
-    public Player (GamePanel gamePanel, KeyHandler keyH){
-
+    public Player(GamePanel gamePanel, KeyHandler keyH) {
         this.gamePanel = gamePanel;
         this.keyH = keyH;
-        setDefault();
+
     }
-    public void setDefault(){
-        x = 100;
-        y = 100;
-        speed = 5;
-        direction = "idle";
+
+    public void setDefault(int xKoord, int yKoord, int defineSpeed) {
+        setX(xKoord);
+        setY(yKoord);
+        setSpeed(defineSpeed);
+        setDirection("idle");
     }
-    public void update(){
+
+    public void collisionAndUpdate(Player other) {
         //TODO: Schräg laufen!
         //player.update();
 
-        if (keyH.upPressed){
+        if (keyH.upPressed && !CollisionHandler.collisionNextStep("up", this, other)) {
             y -= speed;
-            direction = "up";
 
-        }else if (keyH.downPressed){
+        } else if (keyH.downPressed) {
             y += speed;
-        direction = "down";
+            direction = "down";
 
         } else if (keyH.leftPressed) {
             x -= speed;
-        direction = "left";
+            direction = "left";
 
         } else if (keyH.rightPressed) {
             x += speed;
-        direction = "right";
+            direction = "right";
         }
     }
 
@@ -53,11 +54,15 @@ public class Player extends Entity{
         return gamePanel.getTileSize();
     }
 
+    /**
+     * Player, nicht Hitbox
+     *
+     * @param obj
+     */
+    public void draw(Graphics2D obj, Color color) {
+        obj.setColor(color);
 
-    public void draw (Graphics2D g2){
-        g2.setColor(Color.white);
-
-        g2.fillRect(x, y, gamePanel.getTileSize(), gamePanel.getTileSize());
+        obj.fillRect(x, y, gamePanel.getTileSize(), gamePanel.getTileSize());
 
     }
 }
