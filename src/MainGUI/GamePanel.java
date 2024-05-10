@@ -46,7 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
         //"SleepMethod"
-        double drawInterval = 1000000000 / 60.; //FPS: Der Screen kann 60 mal die Sekunde Gedrawt werden
+        double drawInterval = 1000000000 / 60.; //FPS: Der Screen kann 60-mal die Sekunde gezeichnet werden
         double nextDrawTime = System.nanoTime() + drawInterval;
 
         //Game Loop
@@ -55,11 +55,12 @@ public class GamePanel extends JPanel implements Runnable {
             repaint();
             try {
                 double remainingTime = nextDrawTime - System.nanoTime();
-                remainingTime = remainingTime / 1000000;
 
                 if (remainingTime < 0) {
                     remainingTime = 0;
                 }
+
+                remainingTime = remainingTime / 1000000;
 
                 Thread.sleep((long) remainingTime); //Pausiert den Loop in Millis
 
@@ -72,10 +73,10 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void update() {
-        System.out.println("KOLLISION");
-        players.player1.collisionAndUpdate(players.player2);
 
-        players.player2.collisionAndUpdate(players.player1);
+        players.player1.move(players.player2);
+
+        players.player2.move(players.player1);
     }
 
     public void paintComponent(Graphics g) {

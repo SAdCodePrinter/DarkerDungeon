@@ -17,7 +17,7 @@ public class CollisionHandler {
         return overlapX && overlapY;
     }
 
-    public static boolean collisionNextStep(String direction, Player player1, Player player2) {
+    public static boolean noCollisionNextStep(String direction, Player player1, Player player2, int speed) {
         //toDO: Collision einbringen
 
         // Punkte
@@ -31,17 +31,62 @@ public class CollisionHandler {
         int topY2 = player2.getY();
         int bottomY2 = player2.getY() + player2.getHeight();
 
-        // Cols, runter. Rows, seitwärts
-        int leftCol1 = leftX1 / player1.getHeight();
-        int leftCol1 = leftX1 / player1.getHeight();
+        // toDo: Bei Y < 0 und Y > 715 Kollision mit Border
 
-
-        switch (direction) {
-            case "up":
-
-
+        if (direction == "up") {
+            if (topY1 - speed <= bottomY2 && topY1 - speed > topY2
+                    && leftX1 <= rightX2 && rightX1 >= leftX2) {
+                System.out.println("KOLLISION");
+                return false;
+            }
+        } else if (direction == "down") {
+            if (bottomY1 + speed >= topY2 && bottomY1 + speed < bottomY2
+                    && leftX1 <= rightX2 && rightX1 > leftX2) {
+                System.out.println("KOLLISION");
+                return false;
+            }
+        } else if (direction == "left") {
+            if (leftX1 - speed <= rightX2 && leftX1 - speed > leftX2
+                    && topY1 < bottomY2 && bottomY1 > topY2) {
+                System.out.println("KOLLISION");
+                return false;
+            }
+        } else if (direction == "right") {
+            if (rightX1 + speed >= leftX2 && leftX1 + speed < rightX2
+                    && topY1 < bottomY2 && bottomY1 > topY2) {
+                System.out.println("KOLLISION");
+                return false;
+            }
         }
 
+//        switch (direction) {
+//            case "up": {
+//                if (topY1 + speed >= bottomY2 && topY1 + speed < topY2) {
+//                    System.out.println("KOLLISION");
+//                    return false;
+//                }
+//            }
+//            case "down": {
+//                if (bottomRow1 - speed <= topRow2) {
+//                    System.out.println("KOLLISION");
+//                    return false;
+//                }
+//            }
+//            case "left": {
+//                if (leftCol1 - speed <= rightCol2) {
+//                    System.out.println("KOLLISION");
+//                    return false;
+//                }
+//            }
+//            case "right": {
+//                if (rightCol1 + speed >= leftCol2) {
+//                    System.out.println("KOLLISION");
+//                    return false;
+//                }
+//            }
+//        }
+
         return true;
+
     }
 }

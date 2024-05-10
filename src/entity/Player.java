@@ -24,24 +24,28 @@ public class Player extends Entity {
         setDirection("idle");
     }
 
-    public void collisionAndUpdate(Player other) {
+    /**
+     * Updatet die Positionskoordinaten, wenn keine Kollision entsteht
+     *
+     * @param other ist das Element bei dem geschaut wird, ob es eine Kollision mit diesem geben wird
+     */
+    public void move(Player other) {
         //TODO: Schräg laufen!
-        //player.update();
 
-        if (keyH.upPressed && !CollisionHandler.collisionNextStep("up", this, other)) {
+        // toDo: evtl. die Kollisionsabfrage im GamPanel machen, und in dieser Methode nur die Koordinaten updaten
+        //  dann aber die Richtung in die der Player geht vor dem Methodenaufruf definieren
+
+        if (keyH.upPressed && CollisionHandler.noCollisionNextStep("up", this, other, speed)) {
             y -= speed;
 
-        } else if (keyH.downPressed) {
+        } else if (keyH.downPressed && CollisionHandler.noCollisionNextStep("down", this, other, speed)) {
             y += speed;
-            direction = "down";
 
-        } else if (keyH.leftPressed) {
+        } else if (keyH.leftPressed && CollisionHandler.noCollisionNextStep("left", this, other, speed)) {
             x -= speed;
-            direction = "left";
 
-        } else if (keyH.rightPressed) {
+        } else if (keyH.rightPressed && CollisionHandler.noCollisionNextStep("right", this, other, speed)) {
             x += speed;
-            direction = "right";
         }
     }
 
