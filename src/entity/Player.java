@@ -61,7 +61,6 @@ public class Player extends Entity {
     /**
      * Player, nicht Hitbox
      *
-     * @param obj
      */
     public void draw(Graphics2D obj, Color color) {
         obj.setColor(color);

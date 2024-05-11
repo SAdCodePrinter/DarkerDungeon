@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    private int up, down, left, right;
+    private final int up, down, left, right;
 
     public KeyHandler(int up, int down, int left, int right) {
         this.up = up;

@@ -6,36 +6,25 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
-    private int tileSize = 48;
-    private int screenWidth = tileSize * 28;
-    private int screenHeight = tileSize * 16;
-
-
-    //    KeyHandler keyH = new KeyHandler();
-//    KeyHandler2 keyH2 = new KeyHandler2();
+    private final int tileSize = 48;
     Thread gameThread;
-//    Player player = new Player(this, keyH);
-//    Player2 player2 = new Player2(this, keyH2);
-
-    Karaktere players = new Karaktere(this);
+    Karaktere characters = new Karaktere(this);
 
 
     public GamePanel() {
+        int screenWidth = tileSize * 28;
+        int screenHeight = tileSize * 16;
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
-        this.addKeyListener(players.kH1);
-        this.addKeyListener(players.kH2);
+        this.addKeyListener(characters.kH1);
+        this.addKeyListener(characters.kH2);
         this.setFocusable(true);
 
     }
 
     public int getTileSize() {
         return tileSize;
-    }
-
-    public void setTileSize(int tileSize) {
-        this.tileSize = tileSize;
     }
 
     public void startGameThread() {
@@ -74,9 +63,9 @@ public class GamePanel extends JPanel implements Runnable {
 
     private void update() {
 
-        players.player1.move(players.player2);
+        characters.player1.move(characters.player2);
 
-        players.player2.move(players.player1);
+        characters.player2.move(characters.player1);
     }
 
     public void paintComponent(Graphics g) {
@@ -85,10 +74,8 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g1 = (Graphics2D) g; // DAS PLAYER
         Graphics2D g2 = (Graphics2D) g;
 
-
-        players.player1.draw(g1, Color.white);
-        players.player2.draw(g2, Color.red);
-
+        characters.player1.draw(g1, Color.white);
+        characters.player2.draw(g2, Color.red);
 
         g1.dispose();
         g2.dispose();

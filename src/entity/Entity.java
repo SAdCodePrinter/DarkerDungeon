@@ -1,7 +1,5 @@
 package entity;
 
-import java.awt.*;
-
 public class Entity {
 
     // ToDo: Private machen und vielleicht abstract
@@ -9,16 +7,8 @@ public class Entity {
     public int speed;
     public String direction;
 
-    public int getSpeed() {
-        return speed;
-    }
-
     public void setSpeed(int speed) {
         this.speed = speed;
-    }
-
-    public String getDirection() {
-        return direction;
     }
 
     public void setDirection(String direction) {
