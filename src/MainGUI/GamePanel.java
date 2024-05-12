@@ -1,6 +1,7 @@
 package MainGUI;
 
 import entity.Karaktere;
+import tile.TileHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ public class GamePanel extends JPanel implements Runnable {
     private final int tileSize = 48;
     Thread gameThread;
     Karaktere characters = new Karaktere(this);
+    TileHandler tileH = new TileHandler(this);
 
 
     public GamePanel() {
@@ -73,12 +75,19 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g1 = (Graphics2D) g; // DAS PLAYER
         Graphics2D g2 = (Graphics2D) g;
+        Graphics2D g3 = (Graphics2D) g;
+        Graphics2D g4 = (Graphics2D) g;
+
+        tileH.drawBackGroundTiles(g3);
 
         characters.player1.draw(g1, Color.white);
         characters.player2.draw(g2, Color.red);
 
+        tileH.drawForGroundTiles(g4);
+
         g1.dispose();
         g2.dispose();
+        g3.dispose();
     }
 }
 
