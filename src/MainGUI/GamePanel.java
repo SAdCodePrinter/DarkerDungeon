@@ -7,15 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
-    private final int tileSize = 48;
     Thread gameThread;
     Karaktere characters = new Karaktere(this);
     TileHandler tileH = new TileHandler(this);
 
 
     public GamePanel() {
-        int screenWidth = tileSize * 28;
-        int screenHeight = tileSize * 16;
+        int screenWidth = 48 * 28;
+        int screenHeight = 48 * 14;
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
@@ -26,7 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public int getTileSize() {
-        return tileSize;
+        return 24;
     }
 
     public void startGameThread() {
