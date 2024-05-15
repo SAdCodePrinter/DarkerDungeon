@@ -28,6 +28,15 @@ public class GamePanel extends JPanel implements Runnable {
         return 24;
     }
 
+    public int getScreenWith() {
+        return 48 * 14;
+        //return this.getScreenWith();
+    }
+    public int getScreenHeight() {
+        return 48 * 14;
+        //return this.getScreenHeight();
+    }
+
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
@@ -72,21 +81,20 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-          Graphics2D g1 = (Graphics2D) g; // DAS PLAYER1
-          Graphics2D g2 = (Graphics2D) g; // DAS PLAYER2
-//        Graphics2D g3 = (Graphics2D) g;
-//        Graphics2D g4 = (Graphics2D) g;
-//
-//        tileH.drawBackGroundTiles(g3);
-//
-         characters.player1.drawPlayer1(g1);
-         characters.player2.drawPlayer2(g2);
-//
-//        tileH.drawForGroundTiles(g4);
-//
-          g1.dispose();
-          g2.dispose();
-//        g3.dispose();
+        Graphics2D g1 = (Graphics2D) g; // DAS PLAYER1
+        Graphics2D g2 = (Graphics2D) g; // DAS PLAYER2
+        Graphics2D g3 = (Graphics2D) g;
+        Graphics2D g4 = (Graphics2D) g;
+
+        tileH.drawBackGroundTiles(g3);
+
+        characters.player1.drawPlayer1(g1);
+        characters.player2.drawPlayer2(g2);
+
+        //tileH.drawForGroundTiles(g4);
+        g1.dispose();
+        g2.dispose();
+        g3.dispose();
 
 
     }

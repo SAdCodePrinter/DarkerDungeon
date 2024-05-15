@@ -42,7 +42,25 @@ public class TileHandler {
         }
     }
     public void drawBackGroundTiles(Graphics2D g3){
-        g3.drawImage(tile[0].image, 0,0, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+        //g3.drawImage(tile[0].image, 0,0, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+
+        int mapRow = 0; //Breite
+        int mapCol = 0; //Höhe
+        int x = 0;
+        int y = 0;
+
+        while (mapCol < gamePanel.getScreenHeight() && mapRow < gamePanel.getScreenWith()) {
+            g3.drawImage(tile[0].image,x ,y , gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+            mapCol++;
+            x += gamePanel.getTileSize();
+
+            if(mapCol == gamePanel.getScreenHeight()){
+                mapCol = 0;
+                x = 0;
+                mapRow++;
+                y += gamePanel.getTileSize();
+            }
+        }
     }
     public void drawForGroundTiles(Graphics2D g4){
         g4.drawImage(tile[4].image, 64,64, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
