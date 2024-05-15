@@ -18,7 +18,7 @@ public class Player extends Entity {
         this.gamePanel = gamePanel;
         this.keyH = keyH;
         getPlayerImage();
-
+        getPlayer2Image();
     }
 
     public void setDefault(int xKoord, int yKoord, int defineSpeed) {
@@ -80,6 +80,57 @@ public class Player extends Entity {
             e.printStackTrace();
         }
     }
+    public void getPlayer2Image() {
+        try {
+
+            up10 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_up1.png"));
+            up20 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_up2.png"));
+
+            up30 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_up3.png"));
+            up40 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_up4.png"));
+            up50 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_up5.png"));
+            up60 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_up6.png"));
+            up70 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_up7.png"));
+            up80 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_up8.png"));
+
+            down10 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_down1.png"));
+            down20 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_down2.png"));
+            down30 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_down3.png"));
+            down40 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_down4.png"));
+            down50 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_down5.png"));
+            down60 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_down6.png"));
+            down70 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_down7.png"));
+            down80 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_down8.png"));
+
+            left10 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_left1.png"));
+            left20 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_left2.png"));
+            left30 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_left3.png"));
+            left40 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_left4.png"));
+            left50 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_left5.png"));
+            left60 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_left6.png"));
+            left70 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_left7.png"));
+            left80 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_left8.png"));
+
+            right10 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_right1.png"));
+            right20 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_right2.png"));
+            right30 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_right3.png"));
+            right40 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_right4.png"));
+            right50 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_right5.png"));
+            right60 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_right6.png"));
+            right70 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_right7.png"));
+            right80 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_right8.png"));
+
+            idle10 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_idle1.png"));
+            idle20 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_idle2.png"));
+            idle30 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_idle3.png"));
+            idle40 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_idle4.png"));
+            idle50 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_idle5.png"));
+            idle60 = ImageIO.read(getClass().getResourceAsStream("/player2/player2_idle6.png"));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Updatet die Positionskoordinaten, wenn keine Kollision entsteht
@@ -123,9 +174,7 @@ public class Player extends Entity {
                 x += speed;
                 direction = "right";
             }
-
         }
-
     }
 
     public int getWidth() {
@@ -288,9 +337,150 @@ public class Player extends Entity {
     }
 
     public void drawPlayer2(Graphics2D g2) {
-        g2.setColor(Color.BLUE);
-        g2.fillRect(x, y, gamePanel.getTileSize(), gamePanel.getTileSize());
+        //g2.setColor(Color.BLUE);
+        //g2.fillRect(x, y, gamePanel.getTileSize(), gamePanel.getTileSize());
+        BufferedImage imagePlayer2 = null;
 
+        switch (direction) {
+            case "idle":
+                switch (spriteNum) {
+                    case 1:
+                        imagePlayer2 = idle10;
+                        break;
+                    case 2:
+                        imagePlayer2 = idle20;
+                        break;
+                    case 3:
+                        imagePlayer2 = idle30;
+                        break;
+                    case 4:
+                        imagePlayer2 = idle40;
+                        break;
+                    case 5:
+                        imagePlayer2 = idle50;
+                        break;
+                    case 6:
+                        imagePlayer2 = idle60;
+                        break;
+                }
+                break;
+            case "up":
+                switch (spriteNum) {
+                    case 1:
+                        imagePlayer2 = up10;
+                        break;
+                    case 2:
+                        imagePlayer2 = up20;
+                        break;
+                    case 3:
+                        imagePlayer2 = up30;
+                        break;
+                    case 4:
+                        imagePlayer2 = up40;
+                        break;
+                    case 5:
+                        imagePlayer2 = up50;
+                        break;
+                    case 6:
+                        imagePlayer2 = up60;
+                        break;
+                    case 7:
+                        imagePlayer2 = up70;
+                        break;
+                    case 8:
+                        imagePlayer2 = up80;
+                        break;
+                }
+                break;
+            case "down":
+                switch (spriteNum) {
+                    case 1:
+                        imagePlayer2 = down10;
+                        break;
+                    case 2:
+                        imagePlayer2 = down20;
+                        break;
+                    case 3:
+                        imagePlayer2 = down30;
+                        break;
+                    case 4:
+                        imagePlayer2 = down40;
+                        break;
+                    case 5:
+                        imagePlayer2 = down50;
+                        break;
+                    case 6:
+                        imagePlayer2 = down60;
+                        break;
+                    case 7:
+                        imagePlayer2 = down70;
+                        break;
+                    case 8:
+                        imagePlayer2 = down80;
+                        break;
+                }
+                break;
+            case "left":
+                switch (spriteNum) {
+                    case 1:
+                        imagePlayer2 = left10;
+                        break;
+                    case 2:
+                        imagePlayer2 = left20;
+                        break;
+                    case 3:
+                        imagePlayer2 = left30;
+                        break;
+                    case 4:
+                        imagePlayer2 = left40;
+                        break;
+                    case 5:
+                        imagePlayer2 = left50;
+                        break;
+                    case 6:
+                        imagePlayer2 = left60;
+                        break;
+                    case 7:
+                        imagePlayer2 = left70;
+                        break;
+                    case 8:
+                        imagePlayer2 = left80;
+                        break;
+                }
+                break;
+            case "right":
+                switch (spriteNum) {
+                    case 1:
+                        imagePlayer2 = right10;
+                        break;
+                    case 2:
+                        imagePlayer2 = right20;
+                        break;
+                    case 3:
+                        imagePlayer2 = right30;
+                        break;
+                    case 4:
+                        imagePlayer2 = right40;
+                        break;
+                    case 5:
+                        imagePlayer2 = right50;
+                        break;
+                    case 6:
+                        imagePlayer2 = right60;
+                        break;
+                    case 7:
+                        imagePlayer2 = right70;
+                        break;
+                    case 8:
+                        imagePlayer2 = right80;
+                        break;
+                }
+                break;
+        }
+        // Zeichne das Bild des Players
+        if (imagePlayer2 != null) {
+            g2.drawImage(imagePlayer2, x, y, gamePanel.getTileSize() + 4, gamePanel.getTileSize()*2, null);
+        }
     }
 }
 

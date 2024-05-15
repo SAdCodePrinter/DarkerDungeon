@@ -10,6 +10,12 @@ public class Entity {
     public BufferedImage right1, right2, right3, right4, right5, right6, right7, right8;
     public BufferedImage idle1, idle2, idle3, idle4, idle5, idle6;
 
+    public BufferedImage up10, up20, up30, up40, up50, up60, up70, up80;
+    public BufferedImage down10, down20, down30, down40, down50, down60, down70, down80;
+    public BufferedImage left10, left20, left30, left40, left50, left60, left70, left80;
+    public BufferedImage right10, right20, right30, right40, right50, right60, right70, right80;
+    public BufferedImage idle10, idle20, idle30, idle40, idle50, idle60;
+
     public int spriteCounter = 0;
     public int spriteNum = 1;
 
