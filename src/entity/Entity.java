@@ -16,6 +16,7 @@ public class Entity {
     public BufferedImage right10, right20, right30, right40, right50, right60, right70, right80;
     public BufferedImage idle10, idle20, idle30, idle40, idle50, idle60;
 
+    public boolean collision = false;
     public int spriteCounter = 0;
     public int spriteNum = 1;
 

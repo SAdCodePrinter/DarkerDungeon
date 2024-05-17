@@ -24,8 +24,6 @@ public class Karaktere {
         player1.setDefault(100, 100, 3);
         player2.setDefault(200, 200, 3);
 
-
     }
-
 
 }

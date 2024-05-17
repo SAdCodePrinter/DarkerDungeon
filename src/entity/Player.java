@@ -28,7 +28,6 @@ public class Player extends Entity {
         setDirection("idle");
     }
 
-
     public void getPlayerImage() {
         try {
 
@@ -154,26 +153,50 @@ public class Player extends Entity {
                 spriteCounter = 0;
             }
         } else {
+            CollisionHandler collisionHandler = new CollisionHandler(gamePanel);
+
             spriteCounter++;
             if (spriteCounter > 7) { // Da es 8 Bilder gibt, beginnen wir mit 0 als Counter
                 spriteNum = (spriteNum % 8) + 1; // Der Modulo-Operator (%) ermöglicht es, den Counter auf 1 zurückzusetzen, nachdem 8 erreicht wurde
                 spriteCounter = 0;
             }
-            if (keyH.upPressed && CollisionHandler.noCollisionNextStep("up", this, other, speed)) {
+            if (keyH.upPressed && collisionHandler.noCollisionWithPlayer("up", this, other, speed)
+                    && collisionHandler.noCollisionWithTiles("up", this, speed)) {
                 y -= speed;
                 direction = "up";
 
-            } else if (keyH.downPressed && CollisionHandler.noCollisionNextStep("down", this, other, speed)) {
+                if (y < -48) {
+                    y = 14 * 48;
+                }
+
+            } else if (keyH.downPressed && collisionHandler.noCollisionWithPlayer("down", this, other, speed)
+                    && collisionHandler.noCollisionWithTiles("down", this, speed)) {
                 y += speed;
                 direction = "down";
 
-            } else if (keyH.leftPressed && CollisionHandler.noCollisionNextStep("left", this, other, speed)) {
+                if (y > 14 * 48 + 48) {
+                    y = -48;
+                }
+
+            } else if (keyH.leftPressed && collisionHandler.noCollisionWithPlayer("left", this, other, speed)
+                    && collisionHandler.noCollisionWithTiles("left", this, speed)) {
+
                 x -= speed;
                 direction = "left";
 
-            } else if (keyH.rightPressed && CollisionHandler.noCollisionNextStep("right", this, other, speed)) {
+                if (x < -48) {
+                    x = 28 * 48;
+                }
+
+            } else if (keyH.rightPressed && collisionHandler.noCollisionWithPlayer("right", this, other, speed)
+                    && collisionHandler.noCollisionWithTiles("right", this, speed)) {
+
                 x += speed;
                 direction = "right";
+
+                if (x > 28 * 48) {
+                    x = -48;
+                }
             }
         }
     }

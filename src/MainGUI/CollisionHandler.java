@@ -5,7 +5,13 @@ import entity.Player;
 import java.util.Objects;
 
 public class CollisionHandler {
-    public static boolean noCollisionNextStep(String direction, Player player1, Player player2, int speed) {
+    private final GamePanel gamePanel;
+
+    public CollisionHandler(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+    }
+
+    public boolean noCollisionWithPlayer(String direction, Player player1, Player player2, int speed) {
 
         // Punkte
         int leftX1 = player1.getX();
@@ -39,6 +45,69 @@ public class CollisionHandler {
             if (rightX1 + speed >= leftX2 && leftX1 + speed < rightX2
                     && topY1 < bottomY2 && bottomY1 > topY2) {
                 return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean noCollisionWithTiles(String direction, Player player, int speed) {
+        // Mit Playerkoordinaten (TOP LEFT ist x&y = 0)
+        int leftX1 = player.getX();
+        int rightX1 = player.getX() + player.getWidth();
+        int topY1 = player.getY();
+        int bottomY1 = player.getY() + player.getHeight();
+
+        // die Rows und Cols - Größen berechnen
+        int playerLeftCol = leftX1 / player.getHeight();
+        int playerRightCol = rightX1 / player.getHeight();
+        int playerTopRow = topY1 / player.getWidth();
+        int playerBottomRow = bottomY1 / player.getWidth();
+
+        // Player muss auf Kollision mit zwei Teilen pro Richtung geprüft werden
+        int tileNum1, tileNum2;
+
+        switch (direction) {
+            case "up" -> {
+                // den nächsten Schritt des Players überprüfen
+                playerTopRow = (topY1 - speed) / player.getHeight();
+
+                // die nebenliegenden Tiles definieren
+                tileNum1 = gamePanel.tileH.mapTileNum[playerLeftCol][playerTopRow];
+                tileNum2 = gamePanel.tileH.mapTileNum[playerRightCol][playerTopRow];
+
+                // und schauen, ob sie Kollision angestellt haben
+                if (gamePanel.tileH.tile[tileNum1].collision || gamePanel.tileH.tile[tileNum2].collision) {
+                    return false;
+                }
+            }
+
+            case "down" -> {
+                playerBottomRow = (bottomY1 + speed) / player.getHeight();
+                tileNum1 = gamePanel.tileH.mapTileNum[playerLeftCol][playerBottomRow];
+                tileNum2 = gamePanel.tileH.mapTileNum[playerRightCol][playerBottomRow];
+
+                if (gamePanel.tileH.tile[tileNum1].collision || gamePanel.tileH.tile[tileNum2].collision) {
+                    return false;
+                }
+            }
+            case "left" -> {
+                playerLeftCol = (leftX1 - speed) / player.getWidth();
+                tileNum1 = gamePanel.tileH.mapTileNum[playerLeftCol][playerTopRow];
+                tileNum2 = gamePanel.tileH.mapTileNum[playerLeftCol][playerBottomRow];
+
+                if (gamePanel.tileH.tile[tileNum1].collision || gamePanel.tileH.tile[tileNum2].collision) {
+                    return false;
+                }
+            }
+            case "right" -> {
+                playerRightCol = (rightX1 + speed) / player.getWidth();
+                tileNum1 = gamePanel.tileH.mapTileNum[playerRightCol][playerTopRow];
+                tileNum2 = gamePanel.tileH.mapTileNum[playerRightCol][playerBottomRow];
+
+                if (gamePanel.tileH.tile[tileNum1].collision || gamePanel.tileH.tile[tileNum2].collision) {
+                    return false;
+                }
             }
         }
 

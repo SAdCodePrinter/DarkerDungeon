@@ -9,16 +9,16 @@ import java.awt.*;
 public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     Karaktere characters = new Karaktere(this);
-    TileHandler tileH = new TileHandler(this);
+    TileHandler tileH;
     private final int screenWidth = 48 * 28;
     private final int screenHeight = 48 * 14;
 
     public int getScreenCol() {
-        return getScreenWith() / getTileSize();
+        return 28;
     }
 
     public int getScreenRow() {
-        return getScreenHeight() / getTileSize();
+        return 14;
     }
 
     public int getTileSize() {
@@ -37,13 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
         // toDo: Auslagern in Window- Klasse
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-
-//          Falls wir Fullscreen einbinden wollen und keine feste Window- Size
-//        protected void setWindowSize() {
-//            width = frame.getBounds().width;
-//            height = frame.getBounds().height;
-//            screen.setSize(width, height);
-//        }
+        tileH = new TileHandler(this);
 
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
