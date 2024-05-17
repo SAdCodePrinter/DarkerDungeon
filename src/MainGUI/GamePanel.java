@@ -5,7 +5,6 @@ import tile.TileHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.concurrent.CompletableFuture;
 
 public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
@@ -104,9 +103,7 @@ public class GamePanel extends JPanel implements Runnable {
         //  - oder nur ein Bild der Map
         //  - Wie wurde das im Tutorial gemacht?
 
-        //CompletableFuture.runAsync(() -> {
         tileH.drawBackGroundTiles(g1);
-        //});
 
         // toDo: spriteNum und Direction übergeben und nur zeichnen in der draw Methode
         characters.player1.drawPlayer1(g1);

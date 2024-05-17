@@ -4,7 +4,6 @@ import MainGUI.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,7 +53,7 @@ public class TileHandler {
     }
     public void loadMap() {
         try {
-            InputStream is = getClass().getResourceAsStream("/maps/SampleDungeon.rtf");
+            InputStream is = getClass().getResourceAsStream("/maps/SampleDungeon.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             int row = 0;
