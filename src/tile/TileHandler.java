@@ -4,6 +4,7 @@ import MainGUI.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class TileHandler {
@@ -17,8 +18,8 @@ public class TileHandler {
         tile = new Tile [38];
         getTileImage();
     }
-    public void getTileImage(){
-        //Instanzieren der Tiles:
+    private void getTileImage(){
+        //Instanziieren der Tiles:
         try {
 
         tile [0] = new Tile ();
@@ -61,7 +62,10 @@ public class TileHandler {
                 y += gamePanel.getTileSize();
             }
         }
+        System.out.println("Image drawed");
     }
+
+
     public void drawForGroundTiles(Graphics2D g4){
         g4.drawImage(tile[4].image, 64,64, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
     }

@@ -80,6 +80,7 @@ public class Player extends Entity {
             e.printStackTrace();
         }
     }
+
     public void getPlayer2Image() {
         try {
 
@@ -332,7 +333,7 @@ public class Player extends Entity {
         }
         // Zeichne das Bild des Players
         if (imagePlayer1 != null) {
-            g1.drawImage(imagePlayer1, x, y, gamePanel.getTileSize() + 4, gamePanel.getTileSize()*2, null);
+            g1.drawImage(imagePlayer1, getX(), getY() - getHeight(), getWidth() + 4, getHeight() * 2, null);
         }
     }
 
@@ -479,7 +480,7 @@ public class Player extends Entity {
         }
         // Zeichne das Bild des Players
         if (imagePlayer2 != null) {
-            g2.drawImage(imagePlayer2, x, y, gamePanel.getTileSize() + 4, gamePanel.getTileSize()*2, null);
+            g2.drawImage(imagePlayer2, x, y - getHeight(), gamePanel.getTileSize() + 4, gamePanel.getTileSize() * 2, null);
         }
     }
 }
