@@ -10,8 +10,8 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     Karaktere characters = new Karaktere(this);
     TileHandler tileH = new TileHandler(this);
-    private int screenWidth = 48 * 28;
-    private int screenHeight = 48 * 14;
+    private final int screenWidth = 48 * 28;
+    private final int screenHeight = 48 * 14;
 
     public int getScreenCol() {
         return getScreenWith() / getTileSize();
@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public int getTileSize() {
-        return 42;
+        return 48;
     }
 
     public int getScreenWith() {

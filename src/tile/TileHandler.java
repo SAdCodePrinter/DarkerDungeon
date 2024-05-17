@@ -13,20 +13,20 @@ public class TileHandler {
 
     GamePanel gamePanel;
     Tile[] tile;
-    int mapTileNum[][];
+    int[][] mapTileNum;
 
     public TileHandler(GamePanel gamePanel){
 
         this.gamePanel = gamePanel;
         tile = new Tile [38];
-
         mapTileNum = new int [gamePanel.getScreenCol()][gamePanel.getScreenRow()];
+
 
         getTileImage();
         loadMap();
 
-        //BufferedReader
     }
+
     private void getTileImage(){
         //Instanziieren der Tiles:
         try {
@@ -59,6 +59,9 @@ public class TileHandler {
             int row = 0;
             int col = 0;
 
+            int screencol = gamePanel.getScreenCol();
+            int screenrow = gamePanel.getScreenRow();
+
             // Lesen des Text Files:
             while (col < gamePanel.getScreenCol() && row < gamePanel.getScreenRow()) {
 
@@ -73,7 +76,7 @@ public class TileHandler {
                     mapTileNum[col][row] = num;
                     col++;
                 }
-                if (col == gamePanel.getScreenCol()) {
+                if (col <= gamePanel.getScreenCol()) {
                     col = 0;
                     row ++;
                 }
