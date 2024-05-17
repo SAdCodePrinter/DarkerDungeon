@@ -7,8 +7,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class TileHandler {
 
@@ -20,10 +18,9 @@ public class TileHandler {
 
         this.gamePanel = gamePanel;
         tile = new Tile [38];
-        mapTileNum = new int[gamePanel.getScreenWith()][gamePanel.getScreenHeight()];
         getTileImage();
-        loadMap();
 
+        //BufferedReader
     }
     private void getTileImage(){
         //Instanziieren der Tiles:
@@ -83,30 +80,27 @@ public class TileHandler {
             e.printStackTrace();
         }
     }
-    public void drawBackGroundTiles(Graphics2D g3){
-        //g3.drawImage(tile[0].image, 0,0, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+    public void drawBackGroundTiles(Graphics2D g){
+        //g.drawImage(tile[0].image, 0,0, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
 
-        int mapRow = 0; //Höhe
-        int mapCol = 0; //Breite
+        int mapRow = 0;
+        int mapCol = 0;
         int x = 0;
         int y = 0;
 
-        while (mapCol < gamePanel.getScreenWith() && mapRow < gamePanel.getScreenHeight()) {
-
-            int tileNum = mapTileNum[mapCol][mapRow];
-
-            g3.drawImage(tile[tileNum].image,x ,y , gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+        while (mapCol < gamePanel.getScreenCol() && mapRow < gamePanel.getScreenRow()) {
+            g.drawImage(tile[0].image,x ,y , gamePanel.getTileSize(), gamePanel.getTileSize(), null);
             mapCol++;
             x += gamePanel.getTileSize();
 
-            if(mapCol == gamePanel.getScreenWith()){
+            if(mapCol == gamePanel.getScreenCol()){
                 mapCol = 0;
                 x = 0;
                 mapRow++;
                 y += gamePanel.getTileSize();
             }
         }
-        System.out.println("Image drawed");
+        System.out.println("Background drawed");
     }
 
 

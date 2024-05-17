@@ -14,6 +14,27 @@ public class GamePanel extends JPanel implements Runnable {
     private int screenWidth = 48 * 28;
     private int screenHeight = 48 * 14;
 
+    public int getScreenCol() {
+        return getScreenWith() / getTileSize();
+    }
+
+    public int getScreenRow() {
+        return getScreenHeight() / getTileSize();
+    }
+
+    public int getTileSize() {
+        return 42;
+    }
+
+    public int getScreenWith() {
+        return screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
+
     public GamePanel() {
         // toDo: Auslagern in Window- Klasse
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -31,18 +52,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(characters.kH2);
         this.setFocusable(true);
 
-    }
-
-    public int getTileSize() {
-        return 82;
-    }
-
-    public int getScreenWith() {
-        return screenWidth;
-    }
-
-    public int getScreenHeight() {
-        return screenHeight;
     }
 
     public void startGameThread() {
@@ -88,10 +97,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Graphics2D g1 = (Graphics2D) g; // DAS PLAYER1
-        Graphics2D g2 = (Graphics2D) g; // DAS PLAYER2
-        Graphics2D g3 = (Graphics2D) g;
-        Graphics2D g4 = (Graphics2D) g;
+        Graphics2D g1 = (Graphics2D) g;
 
         // toDo: Muss man den Hintergrund nicht nur einmalig zeichnen?
         //  - oder durch zweiten Thread?
@@ -99,18 +105,16 @@ public class GamePanel extends JPanel implements Runnable {
         //  - Wie wurde das im Tutorial gemacht?
 
         //CompletableFuture.runAsync(() -> {
-        tileH.drawBackGroundTiles(g3);
+        tileH.drawBackGroundTiles(g1);
         //});
 
-        //characters.player1.drawPlayer1(g1);
-        //characters.player2.drawPlayer2(g2);
+        // toDo: spriteNum und Direction übergeben und nur zeichnen in der draw Methode
+        characters.player1.drawPlayer1(g1);
+        characters.player2.drawPlayer2(g1);
 
-//        tileH.drawForGroundTiles(g4);
+//        tileH.drawForGroundTiles(g1);
 
         g1.dispose();
-        g2.dispose();
-        g3.dispose();
-
 
     }
 }

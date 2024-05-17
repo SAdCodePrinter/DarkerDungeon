@@ -337,9 +337,9 @@ public class Player extends Entity {
         }
     }
 
-    public void drawPlayer2(Graphics2D g2) {
-        //g2.setColor(Color.BLUE);
-        //g2.fillRect(x, y, gamePanel.getTileSize(), gamePanel.getTileSize());
+    public void drawPlayer2(Graphics2D g) {
+        //g.setColor(Color.BLUE);
+        //g.fillRect(x, y, gamePanel.getTileSize(), gamePanel.getTileSize());
         BufferedImage imagePlayer2 = null;
 
         switch (direction) {
@@ -480,7 +480,7 @@ public class Player extends Entity {
         }
         // Zeichne das Bild des Players
         if (imagePlayer2 != null) {
-            g2.drawImage(imagePlayer2, x, y - getHeight(), gamePanel.getTileSize() + 4, gamePanel.getTileSize() * 2, null);
+            g.drawImage(imagePlayer2, x, y - getHeight(), gamePanel.getTileSize() + 4, gamePanel.getTileSize() * 2, null);
         }
     }
 }
