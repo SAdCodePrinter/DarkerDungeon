@@ -21,7 +21,6 @@ public class TileHandler {
         tile = new Tile [38];
         mapTileNum = new int [gamePanel.getScreenCol()][gamePanel.getScreenRow()];
 
-
         getTileImage();
         loadMap();
 
@@ -58,9 +57,6 @@ public class TileHandler {
 
             int row = 0;
             int col = 0;
-
-            int screencol = gamePanel.getScreenCol();
-            int screenrow = gamePanel.getScreenRow();
 
             // Lesen des Text Files:
             while (col < gamePanel.getScreenCol() && row < gamePanel.getScreenRow()) {
