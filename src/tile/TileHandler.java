@@ -4,22 +4,28 @@ import MainGUI.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class TileHandler {
 
     GamePanel gamePanel;
-    private Tile[] tile;
+    Tile[] tile;
+    int[][] mapTileNum;
 
     public TileHandler(GamePanel gamePanel){
 
         this.gamePanel = gamePanel;
         tile = new Tile [38];
+        mapTileNum = new int [gamePanel.getScreenCol()][gamePanel.getScreenRow()];
+
         getTileImage();
+        loadMap();
 
     }
+
     private void getTileImage(){
         //Instanziieren der Tiles:
         try {
@@ -44,6 +50,40 @@ public class TileHandler {
             e.printStackTrace();
         }
     }
+    public void loadMap() {
+        try {
+            InputStream is = getClass().getResourceAsStream("/maps/SampleDungeon.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+            int row = 0;
+            int col = 0;
+
+            // Lesen des Text Files:
+            while (col < gamePanel.getScreenCol() && row < gamePanel.getScreenRow()) {
+
+                String line = br.readLine();
+
+                while (col < gamePanel.getScreenCol()){
+
+                    String numbers[] = line.split(" ");
+
+                    int num = Integer.parseInt(numbers[col]);
+
+                    mapTileNum[col][row] = num;
+                    col++;
+                }
+                if (col <= gamePanel.getScreenCol()) {
+                    col = 0;
+                    row ++;
+                }
+            }
+
+            // Schließen des BufferedReader
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void drawBackGroundTiles(Graphics2D g){
         //g.drawImage(tile[0].image, 0,0, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
 
@@ -53,7 +93,10 @@ public class TileHandler {
         int y = 0;
 
         while (mapCol < gamePanel.getScreenCol() && mapRow < gamePanel.getScreenRow()) {
-            g.drawImage(tile[0].image,x ,y , gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+
+            int tileNum = mapTileNum[mapCol][mapRow];
+
+            g.drawImage(tile[tileNum].image,x ,y , gamePanel.getTileSize(), gamePanel.getTileSize(), null);
             mapCol++;
             x += gamePanel.getTileSize();
 

@@ -5,14 +5,13 @@ import tile.TileHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.concurrent.CompletableFuture;
 
 public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     Karaktere characters = new Karaktere(this);
     TileHandler tileH = new TileHandler(this);
-    private int screenWidth = 48 * 28;
-    private int screenHeight = 48 * 14;
+    private final int screenWidth = 48 * 28;
+    private final int screenHeight = 48 * 14;
 
     public int getScreenCol() {
         return getScreenWith() / getTileSize();
