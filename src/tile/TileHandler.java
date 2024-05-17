@@ -64,7 +64,6 @@ public class TileHandler {
                 y += gamePanel.getTileSize();
             }
         }
-        System.out.println("Background drawed");
     }
 
 
