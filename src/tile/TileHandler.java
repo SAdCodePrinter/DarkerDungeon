@@ -5,6 +5,7 @@ import MainGUI.GamePanel;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 public class TileHandler {
@@ -17,6 +18,8 @@ public class TileHandler {
         this.gamePanel = gamePanel;
         tile = new Tile [38];
         getTileImage();
+
+        //BufferedReader
     }
     private void getTileImage(){
         //Instanziieren der Tiles:

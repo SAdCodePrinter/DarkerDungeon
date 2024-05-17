@@ -11,11 +11,11 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     Karaktere characters = new Karaktere(this);
     TileHandler tileH = new TileHandler(this);
+    private int screenWidth = 48 * 28;
+    private int screenHeight = 48 * 14;
 
     public GamePanel() {
         // toDo: Auslagern in Window- Klasse
-        int screenWidth = 48 * 28;
-        int screenHeight = 48 * 14;
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 
 //          Falls wir Fullscreen einbinden wollen und keine feste Window- Size
@@ -34,17 +34,15 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public int getTileSize() {
-        return 48;
+        return 82;
     }
 
     public int getScreenWith() {
-        return 48 * 14;
-        //return this.getScreenWith();
+        return screenWidth;
     }
 
     public int getScreenHeight() {
-        return 48 * 14;
-        //return this.getScreenHeight();
+        return screenHeight;
     }
 
     public void startGameThread() {
@@ -100,12 +98,12 @@ public class GamePanel extends JPanel implements Runnable {
         //  - oder nur ein Bild der Map
         //  - Wie wurde das im Tutorial gemacht?
 
-        CompletableFuture.runAsync(() -> {
-            tileH.drawBackGroundTiles(g3);
-        });
+        //CompletableFuture.runAsync(() -> {
+        tileH.drawBackGroundTiles(g3);
+        //});
 
-        characters.player1.drawPlayer1(g1);
-        characters.player2.drawPlayer2(g2);
+        //characters.player1.drawPlayer1(g1);
+        //characters.player2.drawPlayer2(g2);
 
 //        tileH.drawForGroundTiles(g4);
 
