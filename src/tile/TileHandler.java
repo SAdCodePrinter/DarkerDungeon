@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class TileHandler {
 
@@ -18,7 +20,11 @@ public class TileHandler {
 
         this.gamePanel = gamePanel;
         tile = new Tile [38];
+
+        mapTileNum = new int [gamePanel.getScreenCol()][gamePanel.getScreenRow()];
+
         getTileImage();
+        loadMap();
 
         //BufferedReader
     }
@@ -55,11 +61,11 @@ public class TileHandler {
             int col = 0;
 
             // Lesen des Text Files:
-            while (col < gamePanel.getScreenWith() && row < gamePanel.getScreenHeight()) {
+            while (col < gamePanel.getScreenCol() && row < gamePanel.getScreenRow()) {
 
                 String line = br.readLine();
 
-                while (col < gamePanel.getScreenWith()){
+                while (col < gamePanel.getScreenCol()){
 
                     String numbers[] = line.split(" ");
 
@@ -68,7 +74,7 @@ public class TileHandler {
                     mapTileNum[col][row] = num;
                     col++;
                 }
-                if (col == gamePanel.getScreenWith()) {
+                if (col == gamePanel.getScreenCol()) {
                     col = 0;
                     row ++;
                 }
@@ -89,7 +95,10 @@ public class TileHandler {
         int y = 0;
 
         while (mapCol < gamePanel.getScreenCol() && mapRow < gamePanel.getScreenRow()) {
-            g.drawImage(tile[0].image,x ,y , gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+
+            int tileNum = mapTileNum[mapCol][mapRow];
+
+            g.drawImage(tile[tileNum].image,x ,y , gamePanel.getTileSize(), gamePanel.getTileSize(), null);
             mapCol++;
             x += gamePanel.getTileSize();
 
