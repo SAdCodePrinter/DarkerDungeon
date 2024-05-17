@@ -160,42 +160,53 @@ public class Player extends Entity {
                 spriteNum = (spriteNum % 8) + 1; // Der Modulo-Operator (%) ermöglicht es, den Counter auf 1 zurückzusetzen, nachdem 8 erreicht wurde
                 spriteCounter = 0;
             }
-            if (keyH.upPressed && collisionHandler.noCollisionWithPlayer("up", this, other, speed)
-                    && collisionHandler.noCollisionWithTiles("up", this, speed)) {
-                y -= speed;
+            if (keyH.upPressed && collisionHandler.noCollisionWithPlayer("up", this, other, speed)) {
                 direction = "up";
 
-                if (y < -48) {
+                if (y < 0) {
                     y = 14 * 48;
                 }
 
-            } else if (keyH.downPressed && collisionHandler.noCollisionWithPlayer("down", this, other, speed)
-                    && collisionHandler.noCollisionWithTiles("down", this, speed)) {
-                y += speed;
-                direction = "down";
-
-                if (y > 14 * 48 + 48) {
-                    y = -48;
+                if (collisionHandler.noCollisionWithTiles("up", this, speed)) {
+                    y -= speed;
                 }
 
-            } else if (keyH.leftPressed && collisionHandler.noCollisionWithPlayer("left", this, other, speed)
-                    && collisionHandler.noCollisionWithTiles("left", this, speed)) {
+            } else if (keyH.downPressed && collisionHandler.noCollisionWithPlayer("down", this, other, speed)) {
+                direction = "down";
 
-                x -= speed;
+                // Da die Koordinate oben links vom Player startet, ist das näschte Tile früher da beim Heruntergehen
+                if (y > 12 * 48 - 25) {
+                    y = 0;
+                }
+
+                if (collisionHandler.noCollisionWithTiles("down", this, speed)) {
+                    y += speed;
+                }
+
+            } else if (keyH.leftPressed && collisionHandler.noCollisionWithPlayer("left", this, other, speed)) {
+
                 direction = "left";
 
-                if (x < -48) {
+                if (x < 0) {
                     x = 28 * 48;
                 }
 
-            } else if (keyH.rightPressed && collisionHandler.noCollisionWithPlayer("right", this, other, speed)
-                    && collisionHandler.noCollisionWithTiles("right", this, speed)) {
+                if (collisionHandler.noCollisionWithTiles("left", this, speed)) {
+                    x -= speed;
+                }
 
-                x += speed;
+            } else if (keyH.rightPressed && collisionHandler.noCollisionWithPlayer("right", this, other, speed)) {
                 direction = "right";
 
-                if (x > 28 * 48) {
-                    x = -48;
+                // toDo: Verhinder, dass man wenn man out of Bounds ist, die falsche Taste drücken kann
+                //  Validierung des Bereiches zu jeder Direction, welchen Key man drücken darf
+
+                if (x > 26 * 48) {
+                    x = 0;
+                }
+
+                if (collisionHandler.noCollisionWithTiles("right", this, speed)) {
+                    x += speed;
                 }
             }
         }
