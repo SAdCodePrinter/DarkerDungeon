@@ -15,9 +15,10 @@ public class Player extends Entity {
     GamePanel gamePanel;
     KeyHandler keyH;
 
-    public Player(GamePanel gamePanel, KeyHandler keyH) {
+    public Player(GamePanel gamePanel, KeyHandler keyH, String imagePath) {
         this.gamePanel = gamePanel;
         this.keyH = keyH;
+        getPlayerImage(imagePath);
     }
 
     public void setDefault(int xKoord, int yKoord, int defineSpeed) {
@@ -30,11 +31,12 @@ public class Player extends Entity {
     public void getPlayerImage(String path) {
         try {
             for (int i = 0; i < 8; i++) {
-                up[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path + "/up (" + i + 1 + ").png")));
-                down[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path + "/down (" + i + 1 + ").png")));
-                left[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path + "/left (" + i + 1 + ").png")));
-                right[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path + "/right (" + i + 1 + ").png")));
-                idle[i] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(path + "/idle (" + i + 1 + ").png")));
+                String tmp = path + "up (" + (i + 1) + ").png";
+                up[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "up (" + (i + 1) + ").png")));
+                down[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "down (" + (i + 1) + ").png")));
+                left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "left (" + (i + 1) + ").png")));
+                right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "right (" + (i + 1) + ").png")));
+                idle[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "idle (" + (i + 1) + ").png")));
             }
 
         } catch (IOException e) {
@@ -60,15 +62,17 @@ public class Player extends Entity {
             // um den spriteCounter zu erhöhen und die Sprite-Nummer entsprechend zu ändern
             spriteCounter++;
             if (spriteCounter > 7) {
-                spriteNum = (spriteNum % 6) + 1;
+                spriteNum++;
+                spriteNum = (spriteNum % 8);
                 spriteCounter = 0;
             }
         } else {
             CollisionHandler collisionHandler = new CollisionHandler(gamePanel);
 
             spriteCounter++;
-            if (spriteCounter > 7) { // Da es 8 Bilder gibt, beginnen wir mit 0 als Counter
-                spriteNum = (spriteNum % 8) + 1; // Der Modulo-Operator (%) ermöglicht es, den Counter auf 1 zurückzusetzen, nachdem 8 erreicht wurde
+            if (spriteCounter > 7) {
+                spriteNum++;// Da es 8 Bilder gibt, beginnen wir mit 0 als Counter
+                spriteNum = (spriteNum % 8); // Der Modulo-Operator (%) ermöglicht es, den Counter auf 1 zurückzusetzen, nachdem 8 erreicht wurde
                 spriteCounter = 0;
             }
             if (keyH.upPressed) {
@@ -178,9 +182,7 @@ public class Player extends Entity {
         return gamePanel.getTileSize();
     }
 
-    public void drawPlayer(Graphics2D g, String path) {
-        getPlayerImage(path);
-
+    public void drawPlayer(Graphics2D g) {
         BufferedImage imagePlayer =
                 switch (direction) {
                     case "idle" -> idle[spriteNum];

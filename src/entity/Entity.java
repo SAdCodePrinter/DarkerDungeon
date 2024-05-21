@@ -4,11 +4,11 @@ import java.awt.image.BufferedImage;
 
 public class Entity {
     // ToDo: Auslagern
-    public BufferedImage[] up;
-    public BufferedImage[] down;
-    public BufferedImage[] left;
-    public BufferedImage[] right;
-    public BufferedImage[] idle;
+    public BufferedImage[] up = new BufferedImage[8];
+    public BufferedImage[] down = new BufferedImage[8];
+    public BufferedImage[] left = new BufferedImage[8];
+    public BufferedImage[] right = new BufferedImage[8];
+    public BufferedImage[] idle = new BufferedImage[8];
 
     public boolean collision = false;
     public int spriteCounter = 0;

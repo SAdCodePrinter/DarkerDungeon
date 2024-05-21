@@ -95,8 +95,8 @@ public class GamePanel extends JPanel implements Runnable {
         tileH.drawBackGroundTiles(g1);
 
         // toDo: spriteNum und Direction übergeben und nur zeichnen in der draw Methode
-        characters.player1.drawPlayer(g1, "players/player1");
-        characters.player2.drawPlayer(g1, "players/player2");
+        characters.player1.drawPlayer(g1);
+        characters.player2.drawPlayer(g1);
 
         tileH.drawForGroundTiles(g1);
 
