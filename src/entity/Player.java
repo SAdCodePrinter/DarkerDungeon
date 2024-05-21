@@ -13,6 +13,7 @@ public class Player extends Entity {
 
     GamePanel gamePanel;
     KeyHandler keyH;
+    private boolean isPlayerOne = false;
 
     public Player(GamePanel gamePanel, KeyHandler keyH) {
         this.gamePanel = gamePanel;
@@ -162,6 +163,7 @@ public class Player extends Entity {
             }
             if (keyH.upPressed) {
                 direction = "up";
+
                 // Wenn schräg gelaufen wird: den Speed verringern
                 if ((keyH.rightPressed || keyH.leftPressed) &&
                         collisionHandler.noCollisionWithPlayer((keyH.rightPressed ? "right" : "left"), this, other, speed)) {
@@ -172,7 +174,7 @@ public class Player extends Entity {
                             y = 14 * 48;
                         }
 
-                        if (collisionHandler.noCollisionWithTiles(direction, this, speed - 1)) {
+                        if (collisionHandler.noCollisionWithTiles(direction, this, speed)) {
                             y -= speed - 1;
                         }
                     }
@@ -205,7 +207,7 @@ public class Player extends Entity {
                             y = 0;
                         }
 
-                        if (collisionHandler.noCollisionWithTiles(direction, this, speed - 1)) {
+                        if (collisionHandler.noCollisionWithTiles(direction, this, speed)) {
                             y += speed - 1;
                         }
                     }
@@ -277,138 +279,67 @@ public class Player extends Entity {
 
         switch (direction) {
             case "idle":
-                switch (spriteNum) {
-                    case 1:
-                        imagePlayer1 = idle1;
-                        break;
-                    case 2:
-                        imagePlayer1 = idle2;
-                        break;
-                    case 3:
-                        imagePlayer1 = idle3;
-                        break;
-                    case 4:
-                        imagePlayer1 = idle4;
-                        break;
-                    case 5:
-                        imagePlayer1 = idle5;
-                        break;
-                    case 6:
-                        imagePlayer1 = idle6;
-                        break;
-                }
+                imagePlayer1 = switch (spriteNum) {
+                    case 1 -> isPlayerOne ? idle1 : idle10;
+                    case 2 -> idle2;
+                    case 3 -> idle3;
+                    case 4 -> idle4;
+                    case 5 -> idle5;
+                    case 6 -> idle6;
+                    default -> imagePlayer1;
+                };
                 break;
             case "up":
-                switch (spriteNum) {
-                    case 1:
-                        imagePlayer1 = up1;
-                        break;
-                    case 2:
-                        imagePlayer1 = up2;
-                        break;
-                    case 3:
-                        imagePlayer1 = up3;
-                        break;
-                    case 4:
-                        imagePlayer1 = up4;
-                        break;
-                    case 5:
-                        imagePlayer1 = up5;
-                        break;
-                    case 6:
-                        imagePlayer1 = up6;
-                        break;
-                    case 7:
-                        imagePlayer1 = up7;
-                        break;
-                    case 8:
-                        imagePlayer1 = up8;
-                        break;
-                }
+                imagePlayer1 = switch (spriteNum) {
+                    case 1 -> up1;
+                    case 2 -> up2;
+                    case 3 -> up3;
+                    case 4 -> up4;
+                    case 5 -> up5;
+                    case 6 -> up6;
+                    case 7 -> up7;
+                    case 8 -> up8;
+                    default -> imagePlayer1;
+                };
                 break;
             case "down":
-                switch (spriteNum) {
-                    case 1:
-                        imagePlayer1 = down1;
-                        break;
-                    case 2:
-                        imagePlayer1 = down2;
-                        break;
-                    case 3:
-                        imagePlayer1 = down3;
-                        break;
-                    case 4:
-                        imagePlayer1 = down4;
-                        break;
-                    case 5:
-                        imagePlayer1 = down5;
-                        break;
-                    case 6:
-                        imagePlayer1 = down6;
-                        break;
-                    case 7:
-                        imagePlayer1 = down7;
-                        break;
-                    case 8:
-                        imagePlayer1 = down8;
-                        break;
-                }
+                imagePlayer1 = switch (spriteNum) {
+                    case 1 -> down1;
+                    case 2 -> down2;
+                    case 3 -> down3;
+                    case 4 -> down4;
+                    case 5 -> down5;
+                    case 6 -> down6;
+                    case 7 -> down7;
+                    case 8 -> down8;
+                    default -> imagePlayer1;
+                };
                 break;
             case "left":
-                switch (spriteNum) {
-                    case 1:
-                        imagePlayer1 = left1;
-                        break;
-                    case 2:
-                        imagePlayer1 = left2;
-                        break;
-                    case 3:
-                        imagePlayer1 = left3;
-                        break;
-                    case 4:
-                        imagePlayer1 = left4;
-                        break;
-                    case 5:
-                        imagePlayer1 = left5;
-                        break;
-                    case 6:
-                        imagePlayer1 = left6;
-                        break;
-                    case 7:
-                        imagePlayer1 = left7;
-                        break;
-                    case 8:
-                        imagePlayer1 = left8;
-                        break;
-                }
+                imagePlayer1 = switch (spriteNum) {
+                    case 1 -> left1;
+                    case 2 -> left2;
+                    case 3 -> left3;
+                    case 4 -> left4;
+                    case 5 -> left5;
+                    case 6 -> left6;
+                    case 7 -> left7;
+                    case 8 -> left8;
+                    default -> imagePlayer1;
+                };
                 break;
             case "right":
-                switch (spriteNum) {
-                    case 1:
-                        imagePlayer1 = right1;
-                        break;
-                    case 2:
-                        imagePlayer1 = right2;
-                        break;
-                    case 3:
-                        imagePlayer1 = right3;
-                        break;
-                    case 4:
-                        imagePlayer1 = right4;
-                        break;
-                    case 5:
-                        imagePlayer1 = right5;
-                        break;
-                    case 6:
-                        imagePlayer1 = right6;
-                        break;
-                    case 7:
-                        imagePlayer1 = right7;
-                        break;
-                    case 8:
-                        imagePlayer1 = right8;
-                        break;
-                }
+                imagePlayer1 = switch (spriteNum) {
+                    case 1 -> right1;
+                    case 2 -> right2;
+                    case 3 -> right3;
+                    case 4 -> right4;
+                    case 5 -> right5;
+                    case 6 -> right6;
+                    case 7 -> right7;
+                    case 8 -> right8;
+                    default -> imagePlayer1;
+                };
                 break;
         }
         // Zeichne das Bild des Players
@@ -424,138 +355,67 @@ public class Player extends Entity {
 
         switch (direction) {
             case "idle":
-                switch (spriteNum) {
-                    case 1:
-                        imagePlayer2 = idle10;
-                        break;
-                    case 2:
-                        imagePlayer2 = idle20;
-                        break;
-                    case 3:
-                        imagePlayer2 = idle30;
-                        break;
-                    case 4:
-                        imagePlayer2 = idle40;
-                        break;
-                    case 5:
-                        imagePlayer2 = idle50;
-                        break;
-                    case 6:
-                        imagePlayer2 = idle60;
-                        break;
-                }
+                imagePlayer2 = switch (spriteNum) {
+                    case 1 -> idle10;
+                    case 2 -> idle20;
+                    case 3 -> idle30;
+                    case 4 -> idle40;
+                    case 5 -> idle50;
+                    case 6 -> idle60;
+                    default -> imagePlayer2;
+                };
                 break;
             case "up":
-                switch (spriteNum) {
-                    case 1:
-                        imagePlayer2 = up10;
-                        break;
-                    case 2:
-                        imagePlayer2 = up20;
-                        break;
-                    case 3:
-                        imagePlayer2 = up30;
-                        break;
-                    case 4:
-                        imagePlayer2 = up40;
-                        break;
-                    case 5:
-                        imagePlayer2 = up50;
-                        break;
-                    case 6:
-                        imagePlayer2 = up60;
-                        break;
-                    case 7:
-                        imagePlayer2 = up70;
-                        break;
-                    case 8:
-                        imagePlayer2 = up80;
-                        break;
-                }
+                imagePlayer2 = switch (spriteNum) {
+                    case 1 -> up10;
+                    case 2 -> up20;
+                    case 3 -> up30;
+                    case 4 -> up40;
+                    case 5 -> up50;
+                    case 6 -> up60;
+                    case 7 -> up70;
+                    case 8 -> up80;
+                    default -> imagePlayer2;
+                };
                 break;
             case "down":
-                switch (spriteNum) {
-                    case 1:
-                        imagePlayer2 = down10;
-                        break;
-                    case 2:
-                        imagePlayer2 = down20;
-                        break;
-                    case 3:
-                        imagePlayer2 = down30;
-                        break;
-                    case 4:
-                        imagePlayer2 = down40;
-                        break;
-                    case 5:
-                        imagePlayer2 = down50;
-                        break;
-                    case 6:
-                        imagePlayer2 = down60;
-                        break;
-                    case 7:
-                        imagePlayer2 = down70;
-                        break;
-                    case 8:
-                        imagePlayer2 = down80;
-                        break;
-                }
+                imagePlayer2 = switch (spriteNum) {
+                    case 1 -> down10;
+                    case 2 -> down20;
+                    case 3 -> down30;
+                    case 4 -> down40;
+                    case 5 -> down50;
+                    case 6 -> down60;
+                    case 7 -> down70;
+                    case 8 -> down80;
+                    default -> imagePlayer2;
+                };
                 break;
             case "left":
-                switch (spriteNum) {
-                    case 1:
-                        imagePlayer2 = left10;
-                        break;
-                    case 2:
-                        imagePlayer2 = left20;
-                        break;
-                    case 3:
-                        imagePlayer2 = left30;
-                        break;
-                    case 4:
-                        imagePlayer2 = left40;
-                        break;
-                    case 5:
-                        imagePlayer2 = left50;
-                        break;
-                    case 6:
-                        imagePlayer2 = left60;
-                        break;
-                    case 7:
-                        imagePlayer2 = left70;
-                        break;
-                    case 8:
-                        imagePlayer2 = left80;
-                        break;
-                }
+                imagePlayer2 = switch (spriteNum) {
+                    case 1 -> left10;
+                    case 2 -> left20;
+                    case 3 -> left30;
+                    case 4 -> left40;
+                    case 5 -> left50;
+                    case 6 -> left60;
+                    case 7 -> left70;
+                    case 8 -> left80;
+                    default -> imagePlayer2;
+                };
                 break;
             case "right":
-                switch (spriteNum) {
-                    case 1:
-                        imagePlayer2 = right10;
-                        break;
-                    case 2:
-                        imagePlayer2 = right20;
-                        break;
-                    case 3:
-                        imagePlayer2 = right30;
-                        break;
-                    case 4:
-                        imagePlayer2 = right40;
-                        break;
-                    case 5:
-                        imagePlayer2 = right50;
-                        break;
-                    case 6:
-                        imagePlayer2 = right60;
-                        break;
-                    case 7:
-                        imagePlayer2 = right70;
-                        break;
-                    case 8:
-                        imagePlayer2 = right80;
-                        break;
-                }
+                imagePlayer2 = switch (spriteNum) {
+                    case 1 -> right10;
+                    case 2 -> right20;
+                    case 3 -> right30;
+                    case 4 -> right40;
+                    case 5 -> right50;
+                    case 6 -> right60;
+                    case 7 -> right70;
+                    case 8 -> right80;
+                    default -> imagePlayer2;
+                };
                 break;
         }
         // Zeichne das Bild des Players

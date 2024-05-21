@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public int getTileSize() {
-        return 48;
+        return 36;
     }
 
     public int getScreenWith() {
@@ -91,11 +91,6 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g1 = (Graphics2D) g;
-
-        // toDo: Muss man den Hintergrund nicht nur einmalig zeichnen?
-        //  - oder durch zweiten Thread?
-        //  - oder nur ein Bild der Map
-        //  - Wie wurde das im Tutorial gemacht?
 
         tileH.drawBackGroundTiles(g1);
 
