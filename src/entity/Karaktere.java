@@ -9,6 +9,7 @@ public class Karaktere {
 
     public Player player1;
     public Player player2;
+    public Enemy_Troll troll1;
     public KeyHandler kH1;
     public KeyHandler kH2;
 
@@ -21,8 +22,13 @@ public class Karaktere {
         player1 = new Player(gamePanel, kH1, "/players/player1/");
         player2 = new Player(gamePanel, kH2, "/players/player2/");
 
-        player1.setDefault(100, 200, 3);
-        player2.setDefault(200, 200, 3);
+        troll1 = new Enemy_Troll(gamePanel, "/npc/");
+
+
+        player1.setDefault(100, 300, 3);
+        player2.setDefault(200, 300, 3);
+
+        troll1.setDefault(250, 250, 4);
 
     }
 

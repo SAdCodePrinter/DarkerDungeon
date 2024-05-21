@@ -63,11 +63,11 @@ public class TileHandler {
 
             tile[9] = new Tile();
             tile[9].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_north_top_1.png"));
-            tile[9].collision = true;
+            //tile[9].collision = true;
 
             tile[10] = new Tile();
             tile[10].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_north_top_2.png"));
-            tile[10].collision = true;
+            //tile[10].collision = true;
 
             tile[11] = new Tile();
             tile[11].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_north_west_corner.png"));
@@ -103,11 +103,11 @@ public class TileHandler {
 
             tile[19] = new Tile();
             tile[19].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_south_1.png"));
-            tile[19].collision = true;
+            //tile[19].collision = true;
 
             tile[20] = new Tile();
             tile[20].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_south_2.png"));
-            tile[20].collision = true;
+            //tile[20].collision = true;
 
             tile[21] = new Tile();
             tile[21].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_ground_shadow_2.png"));
@@ -117,7 +117,7 @@ public class TileHandler {
 
             tile[23] = new Tile();
             tile[23].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_connection_east_south.png"));
-            tile[23].collision = true;
+            //tile[23].collision = true;
 
             tile[24] = new Tile();
             tile[24].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_edge_left_bottom.png"));
@@ -129,7 +129,7 @@ public class TileHandler {
 
             tile[26] = new Tile();
             tile[26].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_edge_left_top.png"));
-            tile[26].collision = true;
+            //tile[26].collision = true;
 
             tile[27] = new Tile();
             tile[27].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_edge_right_bottom.png"));
@@ -141,7 +141,7 @@ public class TileHandler {
 
             tile[29] = new Tile();
             tile[29].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_edge_right_top.png"));
-            tile[29].collision = true;
+            //tile[29].collision = true;
 
             tile[30] = new Tile();
             tile[30].image = ImageIO.read(getClass().getResourceAsStream("/tiles/blanc.png"));
@@ -149,7 +149,7 @@ public class TileHandler {
 
             tile[31] = new Tile();
             tile[31].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_connection_west_south.png"));
-            tile[31].collision = true;
+            //tile[31].collision = true;
 
             tile[32] = new Tile();
             tile[32].image = ImageIO.read(getClass().getResourceAsStream("/tiles/object_door_top.png"));
@@ -223,7 +223,7 @@ public class TileHandler {
 
             int tileNum = mapTileNum[mapCol][mapRow];
             if(isBackground) g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
-            if ((tileNum == 19 || tileNum == 20) && !isBackground) g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+            if ((tileNum == 19 || tileNum == 20 || tileNum == 23 || tileNum == 31 || tileNum == 26 || tileNum == 29 || tileNum == 9 || tileNum == 10) && !isBackground) g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
             mapCol++;
             x += gamePanel.getTileSize();
 

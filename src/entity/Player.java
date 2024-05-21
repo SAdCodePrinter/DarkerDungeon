@@ -12,11 +12,14 @@ import java.util.Objects;
 
 public class Player extends Entity {
 
-    GamePanel gamePanel;
+    //GamePanel gamePanel;
     KeyHandler keyH;
 
     public Player(GamePanel gamePanel, KeyHandler keyH, String imagePath) {
-        this.gamePanel = gamePanel;
+
+        super (gamePanel);
+
+        //this.gamePanel = gamePanel;
         this.keyH = keyH;
         getPlayerImage(imagePath);
     }
@@ -78,6 +81,7 @@ public class Player extends Entity {
             if (keyH.upPressed) {
                 direction = "up";
 
+// Todo: Boarder Abfrage in Funktion umwandeln:
                 // Wenn schräg gelaufen wird: den Speed verringern
                 if ((keyH.rightPressed || keyH.leftPressed) &&
                         collisionHandler.noCollisionWithPlayer((keyH.rightPressed ? "right" : "left"), this, other, speed)) {
