@@ -21,7 +21,7 @@ public class Karaktere {
         player1 = new Player(gamePanel, kH1);
         player2 = new Player(gamePanel, kH2);
 
-        player1.setDefault(100, 100, 3);
+        player1.setDefault(100, 200, 3);
         player2.setDefault(200, 200, 3);
 
     }
