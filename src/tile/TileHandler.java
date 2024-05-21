@@ -211,7 +211,7 @@ public class TileHandler {
         }
     }
 
-    public void drawBackGroundTiles(Graphics2D g) {
+    public void drawBackGroundTiles(Graphics2D g, boolean isBackground) {
         //g.drawImage(tile[0].image, 0,0, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
 
         int mapRow = 0;
@@ -222,8 +222,8 @@ public class TileHandler {
         while (mapCol < gamePanel.getScreenCol() && mapRow < gamePanel.getScreenRow()) {
 
             int tileNum = mapTileNum[mapCol][mapRow];
-
-            g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+            if(isBackground) g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+            if ((tileNum == 19 || tileNum == 20) && !isBackground) g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
             mapCol++;
             x += gamePanel.getTileSize();
 
@@ -234,10 +234,5 @@ public class TileHandler {
                 y += gamePanel.getTileSize();
             }
         }
-    }
-
-
-    public void drawForGroundTiles(Graphics2D g4) {
-        g4.drawImage(tile[4].image, 64, 64, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
     }
 }

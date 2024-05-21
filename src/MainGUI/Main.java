@@ -9,6 +9,8 @@ public class Main {
         window.setWindow(gamePanel);
 
         gamePanel.startGameThread();
+        System.out.println(gamePanel.getScreenWith());
+        System.out.println(gamePanel.getScreenHeight());
 
     }
 }
