@@ -138,10 +138,10 @@ public class Player extends Entity {
      * @param other ist das Element bei dem geschaut wird, ob es eine Kollision mit diesem geben wird
      */
     public void move(Player other) {
-        //TODO: Schräg laufen!
 
         // toDo: evtl. die Kollisionsabfrage im GamPanel machen, und in dieser Methode nur die Koordinaten updaten
         //  dann aber die Richtung in die der Player geht vor dem Methodenaufruf definieren
+
         if (!keyH.upPressed && !keyH.downPressed && !keyH.leftPressed && !keyH.rightPressed) {
             direction = "idle";
 
@@ -160,53 +160,99 @@ public class Player extends Entity {
                 spriteNum = (spriteNum % 8) + 1; // Der Modulo-Operator (%) ermöglicht es, den Counter auf 1 zurückzusetzen, nachdem 8 erreicht wurde
                 spriteCounter = 0;
             }
-            if (keyH.upPressed && collisionHandler.noCollisionWithPlayer("up", this, other, speed)) {
+            if (keyH.upPressed) {
                 direction = "up";
+                // Wenn schräg gelaufen wird: den Speed verringern
+                if ((keyH.rightPressed || keyH.leftPressed) &&
+                        collisionHandler.noCollisionWithPlayer((keyH.rightPressed ? "right" : "left"), this, other, speed)) {
+                    // Um den out-of-Bounds Bereich zu beachten
+                    if (x > 0 && x < 27 * 48 - 25) {
+                        if (y < 0) {
+                            // Koordinaten der Map-Ende
+                            y = 14 * 48;
+                        }
 
-                if (y < 0) {
-                    y = 14 * 48;
+                        if (collisionHandler.noCollisionWithTiles(direction, this, speed - 1)) {
+                            y -= speed - 1;
+                        }
+                    }
+
+                } else if (collisionHandler.noCollisionWithPlayer(direction, this, other, speed)) {
+                    // Um den out-of-Bounds Bereich zu beachten
+                    if (x > 0 && x < 27 * 48 - 25) {
+
+                        if (y < 0) {
+                            y = 14 * 48;
+                        }
+
+                        if (collisionHandler.noCollisionWithTiles("up", this, speed)) {
+                            y -= speed;
+                        }
+                    }
                 }
 
-                if (collisionHandler.noCollisionWithTiles("up", this, speed)) {
-                    y -= speed;
-                }
-
-            } else if (keyH.downPressed && collisionHandler.noCollisionWithPlayer("down", this, other, speed)) {
+            } else if (keyH.downPressed) {
                 direction = "down";
 
-                // Da die Koordinate oben links vom Player startet, ist das näschte Tile früher da beim Heruntergehen
-                if (y > 12 * 48 - 25) {
-                    y = 0;
+                if ((keyH.rightPressed || keyH.leftPressed) &&
+                        collisionHandler.noCollisionWithPlayer((keyH.rightPressed ? "right" : "left"), this, other, speed)) {
+
+                    // Um den out-of-Bounds Bereich zu beachten
+                    if (x > 0 && x < 27 * 48 - 25) {
+
+                        // Da die Koordinate oben links vom Player startet, ist das näschte Tile früher da beim Heruntergehen
+                        if (y > 13 * 48 - 25) {
+                            y = 0;
+                        }
+
+                        if (collisionHandler.noCollisionWithTiles(direction, this, speed - 1)) {
+                            y += speed - 1;
+                        }
+                    }
+
+                } else if (collisionHandler.noCollisionWithPlayer(direction, this, other, speed)) {
+                    // Um den out-of-Bounds Bereich zu beachten
+                    if (x > 0 && x < 27 * 48 - 25) {
+
+                        // Da die Koordinate oben links vom Player startet, ist das näschte Tile früher da beim Heruntergehen
+                        if (y > 13 * 48 - 25) {
+                            y = 0;
+                        }
+
+                        if (collisionHandler.noCollisionWithTiles(direction, this, speed)) {
+                            y += speed;
+                        }
+                    }
                 }
 
-                if (collisionHandler.noCollisionWithTiles("down", this, speed)) {
-                    y += speed;
-                }
+            }
 
-            } else if (keyH.leftPressed && collisionHandler.noCollisionWithPlayer("left", this, other, speed)) {
+            if (keyH.leftPressed && collisionHandler.noCollisionWithPlayer("left", this, other, speed)) {
+                // Um den out-of-Bounds Bereich zu beachten
+                if (y > 0 && y < 13 * 48 - 25) {
+                    direction = "left";
 
-                direction = "left";
+                    if (x < 0) {
+                        x = 28 * 48;
+                    }
 
-                if (x < 0) {
-                    x = 28 * 48;
-                }
-
-                if (collisionHandler.noCollisionWithTiles("left", this, speed)) {
-                    x -= speed;
+                    if (collisionHandler.noCollisionWithTiles("left", this, speed)) {
+                        x -= speed;
+                    }
                 }
 
             } else if (keyH.rightPressed && collisionHandler.noCollisionWithPlayer("right", this, other, speed)) {
-                direction = "right";
+                // Um den out-of-Bounds Bereich zu beachten
+                if (y > 0 && y < 13 * 48 - 25) {
+                    direction = "right";
 
-                // toDo: Verhinder, dass man wenn man out of Bounds ist, die falsche Taste drücken kann
-                //  Validierung des Bereiches zu jeder Direction, welchen Key man drücken darf
+                    if (x > 27 * 48 - 25) {
+                        x = 0;
+                    }
 
-                if (x > 26 * 48) {
-                    x = 0;
-                }
-
-                if (collisionHandler.noCollisionWithTiles("right", this, speed)) {
-                    x += speed;
+                    if (collisionHandler.noCollisionWithTiles("right", this, speed)) {
+                        x += speed;
+                    }
                 }
             }
         }
