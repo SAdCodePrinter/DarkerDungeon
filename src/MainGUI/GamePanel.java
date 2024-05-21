@@ -14,11 +14,11 @@ public class GamePanel extends JPanel implements Runnable {
     private final int screenHeight = 48 * 14;
 
     public int getScreenCol() {
-        return 37;
+        return 28;
     }
 
     public int getScreenRow() {
-        return 18;
+        return 14;
     }
 
     public int getTileSize() {
@@ -92,15 +92,16 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g1 = (Graphics2D) g;
 
-        tileH.drawBackGroundTiles(g1, true);
-        characters.player2.drawPlayer2(g1);
-        characters.player1.drawPlayer1(g1);
-        tileH.drawBackGroundTiles(g1, false);
-
+        tileH.drawBackGroundTiles(g1);
 
         // toDo: spriteNum und Direction übergeben und nur zeichnen in der draw Methode
+        characters.player1.drawPlayer(g1);
+        characters.player2.drawPlayer(g1);
+
+        tileH.drawForGroundTiles(g1);
 
         g1.dispose();
+
 
     }
 }
