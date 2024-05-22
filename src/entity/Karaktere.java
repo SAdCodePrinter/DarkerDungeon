@@ -22,7 +22,7 @@ public class Karaktere {
         player1 = new Player(gamePanel, kH1, "/players/player1/");
         player2 = new Player(gamePanel, kH2, "/players/player2/");
 
-        troll1 = new Enemy_Troll(gamePanel, "/npc/");
+        troll1 = new Enemy_Troll(gamePanel, "/npc/troll1/");
 
 
         player1.setDefault(100, 300, 3);

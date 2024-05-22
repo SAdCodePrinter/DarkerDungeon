@@ -82,6 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void update() {
+        // den anderen Player übergeben, um eine Kollision abzufragen
         characters.player1.move(characters.player2);
         characters.player2.move(characters.player1);
 
@@ -94,7 +95,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         tileH.drawBackGroundTiles(g1, true);
 
-        // toDo: spriteNum und Direction übergeben und nur zeichnen in der draw Methode
         characters.player1.drawPlayer(g1);
         characters.player2.drawPlayer(g1);
         characters.troll1.drawTroll(g1);

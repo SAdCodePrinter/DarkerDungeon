@@ -113,4 +113,9 @@ public class CollisionHandler {
 
         return true;
     }
+
+    public boolean insideBoarder(int x, int y) {
+        return x > 0 && x < gamePanel.getScreenCol() * gamePanel.getTileSize() &&
+                y > 0 && y < gamePanel.getScreenRow() * gamePanel.getTileSize();
+    }
 }

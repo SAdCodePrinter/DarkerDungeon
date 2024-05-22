@@ -5,12 +5,6 @@ import MainGUI.GamePanel;
 import java.awt.image.BufferedImage;
 
 public class Entity {
-    GamePanel gamePanel;
-    public Entity(GamePanel gamePanel){
-        this.gamePanel = gamePanel;
-    }
-
-    // ToDo: Auslagern
     public BufferedImage[] up = new BufferedImage[8];
     public BufferedImage[] down = new BufferedImage[8];
     public BufferedImage[] left = new BufferedImage[8];
@@ -25,6 +19,12 @@ public class Entity {
     public int x, y;
     public int speed;
     public String direction;
+
+    GamePanel gamePanel;
+
+    public Entity(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+    }
 
     public void setSpeed(int speed) {
         this.speed = speed;
@@ -49,6 +49,4 @@ public class Entity {
     public void setY(int y) {
         this.y = y;
     }
-
-
 }
