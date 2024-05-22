@@ -47,12 +47,6 @@ public class Entity {
     public int speed;
     public String direction;
 
-    GamePanel gamePanel;
-
-    public Entity(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
-    }
-
     public void setSpeed(int speed) {
         this.speed = speed;
     }

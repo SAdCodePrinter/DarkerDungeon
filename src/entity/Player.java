@@ -66,7 +66,6 @@ public class Player extends Entity {
             spriteCounter = 0;
         }
 
-
         if (!keyH.upPressed && !keyH.downPressed && !keyH.leftPressed && !keyH.rightPressed) {
             direction = "idle";
             return;
@@ -81,7 +80,7 @@ public class Player extends Entity {
 
                 // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
                 y -= (keyH.rightPressed || keyH.leftPressed) ?
-                        (collisionHandler.noCollisionWithPlayer((keyH.rightPressed ? "right" : "left"), this, other, speed)) ? (int) (speed * 0.1) : 0
+                        (collisionHandler.noCollisionWithPlayer((keyH.rightPressed ? "right" : "left"), this, other, speed)) ? (int) (speed * 0.8) : 0
                         : speed;
             }
 
@@ -94,7 +93,7 @@ public class Player extends Entity {
 
                 // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
                 y += (keyH.rightPressed || keyH.leftPressed) ?
-                        (collisionHandler.noCollisionWithPlayer((keyH.rightPressed ? "right" : "left"), this, other, speed)) ? (int) (speed * 0.1) : 0
+                        (collisionHandler.noCollisionWithPlayer((keyH.rightPressed ? "right" : "left"), this, other, speed)) ? (int) (speed * 0.8) : 0
                         : speed;
             }
         }
@@ -108,7 +107,7 @@ public class Player extends Entity {
 
                 // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
                 x -= (keyH.upPressed || keyH.downPressed) ?
-                        (collisionHandler.noCollisionWithPlayer((keyH.upPressed ? "up" : "down"), this, other, speed)) ? (int) (speed * 0.1) : 0
+                        (collisionHandler.noCollisionWithPlayer((keyH.upPressed ? "up" : "down"), this, other, speed)) ? (int) (speed * 0.8) : 0
                         : speed;
             }
 
@@ -121,7 +120,7 @@ public class Player extends Entity {
 
                 // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
                 x += (keyH.upPressed || keyH.downPressed) ?
-                        (collisionHandler.noCollisionWithPlayer((keyH.upPressed ? "up" : "down"), this, other, speed)) ? (int) (speed * 0.1) : 0
+                        (collisionHandler.noCollisionWithPlayer((keyH.upPressed ? "up" : "down"), this, other, speed)) ? (int) (speed * 0.8) : 0
                         : speed;
             }
         }
