@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
 
 public class Enemy_Troll extends Entity{
 
@@ -35,11 +36,28 @@ public class Enemy_Troll extends Entity{
             e.printStackTrace();
         }
     }
+    public void setAI(){
+        Random random = new Random();
+        int i = random.nextInt(100)+1; //Between 1-100
+
+        if(i<=25) {
+            direction = "up";
+        }
+        if (i > 25 && i <= 50) {
+            direction = "down";
+        }
+        if (i > 50 && i <= 75) {
+            direction = "left";
+        }
+        if(i > 75 && i <= 100){
+            direction = "right";
+        }
+    }
     public void drawTroll(Graphics2D g) {
         BufferedImage imageTroll =
                 switch (direction) {
                     //case "idle" -> idle[spriteNum];
-                    //case "up" -> up[spriteNum];
+                    case "up" -> down[spriteNum];
                     case "down" -> down[spriteNum];
                     case "left" -> left[spriteNum];
                     case "right" -> right[spriteNum];
@@ -50,4 +68,5 @@ public class Enemy_Troll extends Entity{
             g.drawImage(imageTroll, getX(), getY(), gamePanel.getTileSize()*10, gamePanel.getTileSize()*10, null);
         }
     }
+
 }
