@@ -84,6 +84,7 @@ public class GamePanel extends JPanel implements Runnable {
     private void update() {
         characters.player1.move(characters.player2);
         characters.player2.move(characters.player1);
+        characters.troll1.update();
 
     }
 
@@ -97,6 +98,7 @@ public class GamePanel extends JPanel implements Runnable {
         // toDo: spriteNum und Direction übergeben und nur zeichnen in der draw Methode
         characters.player1.drawPlayer(g1);
         characters.player2.drawPlayer(g1);
+
         characters.troll1.drawTroll(g1);
 
         tileH.drawBackGroundTiles(g1, false);

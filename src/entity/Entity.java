@@ -1,5 +1,6 @@
 package entity;
 
+import MainGUI.CollisionHandler;
 import MainGUI.GamePanel;
 
 import java.awt.image.BufferedImage;
@@ -10,16 +11,36 @@ public class Entity {
         this.gamePanel = gamePanel;
     }
 
-    // ToDo: Auslagern
+
     public BufferedImage[] up = new BufferedImage[8];
     public BufferedImage[] down = new BufferedImage[8];
     public BufferedImage[] left = new BufferedImage[8];
     public BufferedImage[] right = new BufferedImage[8];
     public BufferedImage[] idle = new BufferedImage[8];
 
-    public boolean collision = false;
+    public boolean collisionOn = false;
     public int spriteCounter = 0;
     public int spriteNum = 1;
+
+
+    public void setAI (){
+
+    }
+
+    //TODO: Collision mit Player und Tiles callen???
+    // Glaube Tiles Collision muss Entity übergeben bekommen
+    public void update (){
+        setAI();
+
+        if (!collisionOn){
+            switch (direction){
+                case "up": y -= speed; break;
+                case "down": y += speed; break;
+                case "left": x -= speed; break;
+                case "right": x += speed; break;
+            }
+        }
+    }
 
     // ToDo: Private machen und vielleicht abstract
     public int x, y;
