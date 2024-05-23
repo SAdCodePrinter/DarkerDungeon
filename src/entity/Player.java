@@ -49,13 +49,16 @@ public class Player extends Entity {
     }
 
 
+    public void drawHitbox(Graphics2D g) {
+        g.setColor(Color.red);
+        g.drawRect(x, y, 36, 36);
+    }
     /**
      * Updatet die Positionskoordinaten, wenn keine Kollision entsteht
      *
      * @param other ist das Element bei dem geschaut wird, ob es eine Kollision mit diesem geben wird
      */
     public void move(Player other) {
-
         spriteCounter(8);
 
         // toDo: evtl. die Kollisionsabfrage im GamPanel machen, und in dieser Methode nur die Koordinaten updaten
@@ -71,7 +74,7 @@ public class Player extends Entity {
         if (keyH.upPressed) {
             direction = "up";
 
-            if (collisionHandler.noColisionUp(this.x, this.y, other.x, other.y, speed)) {
+            if (collisionHandler.noColisionUp(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
                 // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
                 y -= (keyH.rightPressed || keyH.leftPressed) ?
                         (int) (speed * 0.8) : speed;
@@ -80,7 +83,7 @@ public class Player extends Entity {
         } else if (keyH.downPressed) {
             direction = "down";
 
-            if (collisionHandler.noCollisionDown(this.x, this.y, other.x, other.y, speed)) {
+            if (collisionHandler.noColisionDown(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
                 y += (keyH.rightPressed || keyH.leftPressed) ?
                         (int) (speed * 0.8) : speed;
             }
@@ -89,7 +92,7 @@ public class Player extends Entity {
         if (keyH.leftPressed) {
             direction = "left";
 
-            if (collisionHandler.noColisionLeft(this.x, this.y, other.x, other.y, speed)) {
+            if (collisionHandler.noColisionLeft(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
                 x -= (keyH.upPressed || keyH.downPressed) ?
                         (int) (speed * 0.8) : speed;
             }
@@ -97,7 +100,7 @@ public class Player extends Entity {
         } else if (keyH.rightPressed) {
             direction = "right";
 
-            if (collisionHandler.noColisionRight(this.x, this.y, other.x, other.y, speed)) {
+            if (collisionHandler.noColisionRight(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
                 x += (keyH.upPressed || keyH.downPressed) ?
                         (int) (speed * 0.8) : speed;
             }

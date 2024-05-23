@@ -25,7 +25,15 @@ public class GamePanel extends JPanel implements Runnable {
         return 36;
     }
 
-    public int getScreenWith() {
+    public int getPHitboxWidth() {
+        return 36;
+    }
+
+    public int getPHitboxHeight() {
+        return 36;
+    }
+
+    public int getScreenWidth() {
         return screenWidth;
     }
 
@@ -97,9 +105,13 @@ public class GamePanel extends JPanel implements Runnable {
         tileH.drawBackGroundTiles(g1, true);
 
         characters.player1.drawPlayer(g1);
+        characters.player1.drawHitbox(g1);
+
         characters.player2.drawPlayer(g1);
+        characters.player2.drawHitbox(g1);
 
         characters.troll1.drawTroll(g1);
+        characters.troll1.drawHitbox(g1);
 
         tileH.drawBackGroundTiles(g1, false);
 

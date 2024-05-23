@@ -129,7 +129,7 @@ public class TileHandler {
 
             tile[26] = new Tile();
             tile[26].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_edge_left_top.png"));
-            //tile[26].collision = true;
+            tile[26].collision = true;
 
             tile[27] = new Tile();
             tile[27].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_edge_right_bottom.png"));
@@ -141,7 +141,7 @@ public class TileHandler {
 
             tile[29] = new Tile();
             tile[29].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_edge_right_top.png"));
-            //tile[29].collision = true;
+//            tile[29].collision = true;
 
             tile[30] = new Tile();
             tile[30].image = ImageIO.read(getClass().getResourceAsStream("/tiles/blanc.png"));
@@ -223,7 +223,7 @@ public class TileHandler {
 
             int tileNum = mapTileNum[mapCol][mapRow];
             if(isBackground) g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
-            if ((tileNum == 19 || tileNum == 20 || tileNum == 23 || tileNum == 31 || tileNum == 26 || tileNum == 29 || tileNum == 9 || tileNum == 10) && !isBackground) g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+            if ((tileNum == 19 || tileNum == 20 || tileNum == 23 || tileNum == 31 || tileNum == 26 || tileNum == 29 || tileNum == 9 || tileNum == 10 || tileNum == 30) && !isBackground) g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
             mapCol++;
             x += gamePanel.getTileSize();
 

@@ -8,23 +8,25 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Random;
 
-public class Enemy_Troll extends Entity{
+public class Enemy_Troll extends Entity {
 
     CollisionHandler collisionHandler;
-    public Enemy_Troll (GamePanel gamePanel, String imagePath){
-        super (gamePanel);
+
+    public Enemy_Troll(GamePanel gamePanel, String imagePath) {
+        super(gamePanel);
 
         collisionHandler = new CollisionHandler(gamePanel);
         getTrollImage(imagePath);
     }
+
     public void setDefault(int xKoord, int yKoord, int defineSpeed) {
         setX(xKoord);
         setY(yKoord);
         setSpeed(defineSpeed);
         setDirection("down");
     }
+
     public void getTrollImage(String path) {
         try {
             for (int i = 0; i < 8; i++) {
@@ -39,19 +41,44 @@ public class Enemy_Troll extends Entity{
             e.printStackTrace();
         }
     }
-    public void move(Player player1, Player player2){
+
+    public void drawHitbox(Graphics2D g) {
+        g.setColor(Color.red);
+        g.drawRect(x, y, 36, 36);
+    }
+
+    private boolean directionSet = false;
+
+    public void move(Player player1, Player player2) {
         spriteCounter(8);
-//
-//        if (!collisionHandler.noCollisionDown(y, this, player2, speed)) {
-//            direction = "up";
-//        }
+
+        if (!directionSet) {
+            if (!collisionHandler.noColisionDown(this.x, this.y, player1.x, player1.y, speed, 36) &&
+                    !collisionHandler.noColisionDown(this.x, this.y, player2.x, player2.y, speed, 36)) {
+                direction = "up";
+                directionSet = true;
+            }
+
+        } else if (!collisionHandler.noColisionUp(this.x, this.y, player1.x, player1.y, speed, 36) &&
+                !collisionHandler.noColisionUp(this.x, this.y, player2.x, player2.y, speed, 36)) {
+            direction = "down";
+            directionSet = false;
+        }
 
 
-        switch (direction){
-            case "up": y -= speed; break;
-            case "down": y += speed; break;
-            case "left": x -= speed; break;
-            case "right": x += speed; break;
+        switch (direction) {
+            case "up":
+                y -= speed;
+                break;
+            case "down":
+                y += speed;
+                break;
+            case "left":
+                x -= speed;
+                break;
+            case "right":
+                x += speed;
+                break;
         }
 //
 //        if(i<=25) {
@@ -67,6 +94,7 @@ public class Enemy_Troll extends Entity{
 //            direction = "right";
 //        }
     }
+
     public void drawTroll(Graphics2D g) {
         BufferedImage imageTroll =
                 switch (direction) {
@@ -79,7 +107,7 @@ public class Enemy_Troll extends Entity{
                 };
 
         if (imageTroll != null) {
-            g.drawImage(imageTroll, getX(), getY(), gamePanel.getTileSize()*4, gamePanel.getTileSize()*4, null);
+            g.drawImage(imageTroll, getX() - 32, getY() - 36, gamePanel.getTileSize() * 3, gamePanel.getTileSize() * 3, null);
         }
     }
 
