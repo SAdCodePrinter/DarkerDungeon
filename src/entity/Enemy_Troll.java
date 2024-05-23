@@ -1,5 +1,6 @@
 package entity;
 
+import MainGUI.CollisionHandler;
 import MainGUI.GamePanel;
 
 import javax.imageio.ImageIO;
@@ -11,8 +12,11 @@ import java.util.Random;
 
 public class Enemy_Troll extends Entity{
 
+    CollisionHandler collisionHandler;
     public Enemy_Troll (GamePanel gamePanel, String imagePath){
         super (gamePanel);
+
+        collisionHandler = new CollisionHandler(gamePanel);
         getTrollImage(imagePath);
     }
     public void setDefault(int xKoord, int yKoord, int defineSpeed) {
@@ -24,7 +28,6 @@ public class Enemy_Troll extends Entity{
     public void getTrollImage(String path) {
         try {
             for (int i = 0; i < 8; i++) {
-                String tmp = path + "down (" + (i + 1) + ").png";
                 //up[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "up (" + (i + 1) + ").png")));
                 down[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "down (" + (i + 1) + ").png")));
                 left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "left (" + (i + 1) + ").png")));
@@ -36,22 +39,33 @@ public class Enemy_Troll extends Entity{
             e.printStackTrace();
         }
     }
-    public void setAI(){
-        Random random = new Random();
-        int i = random.nextInt(100)+1; //Between 1-100
+    public void move(Player player1, Player player2){
+        spriteCounter(8);
+//
+//        if (!collisionHandler.noCollisionDown(y, this, player2, speed)) {
+//            direction = "up";
+//        }
 
-        if(i<=25) {
-            direction = "up";
+
+        switch (direction){
+            case "up": y -= speed; break;
+            case "down": y += speed; break;
+            case "left": x -= speed; break;
+            case "right": x += speed; break;
         }
-        if (i > 25 && i <= 50) {
-            direction = "down";
-        }
-        if (i > 50 && i <= 75) {
-            direction = "left";
-        }
-        if(i > 75 && i <= 100){
-            direction = "right";
-        }
+//
+//        if(i<=25) {
+//            direction = "up";
+//        }
+//        if (i > 25 && i <= 50) {
+//            direction = "down";
+//        }
+//        if (i > 50 && i <= 75) {
+//            direction = "left";
+//        }
+//        if(i > 75 && i <= 100){
+//            direction = "right";
+//        }
     }
     public void drawTroll(Graphics2D g) {
         BufferedImage imageTroll =
@@ -65,7 +79,7 @@ public class Enemy_Troll extends Entity{
                 };
 
         if (imageTroll != null) {
-            g.drawImage(imageTroll, getX(), getY(), gamePanel.getTileSize()*10, gamePanel.getTileSize()*10, null);
+            g.drawImage(imageTroll, getX(), getY(), gamePanel.getTileSize()*4, gamePanel.getTileSize()*4, null);
         }
     }
 

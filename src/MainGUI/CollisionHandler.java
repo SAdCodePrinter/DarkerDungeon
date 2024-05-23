@@ -11,7 +11,7 @@ public class CollisionHandler {
         this.gamePanel = gamePanel;
     }
 
-    public boolean noCollisionWithPlayer(String direction, Player player1, Player player2, int speed) {
+    public boolean noCollisionPlayerPlayer(String direction, Player player1, Player player2, int speed) {
 
         // Punkte
         int leftX1 = player1.getX();
@@ -23,6 +23,7 @@ public class CollisionHandler {
         int rightX2 = player2.getX() + player2.getWidth();
         int topY2 = player2.getY();
         int bottomY2 = player2.getY() + player2.getHeight();
+
 
         // toDo: Bei Y < 0 und Y > 715 Kollision mit Border
 
@@ -53,10 +54,10 @@ public class CollisionHandler {
 
     public boolean noCollisionWithTiles(String direction, Player player, int speed) {
         // Mit Playerkoordinaten (TOP LEFT ist x&y = 0)
-        int leftX1 = player.getX();
-        int rightX1 = player.getX() + player.getWidth();
-        int topY1 = player.getY();
-        int bottomY1 = player.getY() + player.getHeight();
+        int leftX1 = player.getX() + 1;
+        int rightX1 = player.getX() + player.getWidth() - 1;
+        int topY1 = player.getY() + 1;
+        int bottomY1 = player.getY() + player.getHeight() - 1;
 
         // die Rows und Cols - Größen berechnen
         int playerLeftCol = leftX1 / player.getHeight();
@@ -117,5 +118,29 @@ public class CollisionHandler {
     public boolean insideBoarder(int x, int y) {
         return x > 0 && x < gamePanel.getScreenCol() * gamePanel.getTileSize() &&
                 y > 0 && y < gamePanel.getScreenRow() * gamePanel.getTileSize();
+    }
+
+    public boolean noColisionUp(int koordY, Player player1, Player player2, int speed) {
+        return noCollisionPlayerPlayer("up", player1, player2, speed) &&
+                (koordY > 0 || koordY < gamePanel.getScreenRow() * gamePanel.getTileSize()) &&
+                noCollisionWithTiles("up", player1, speed);
+    }
+
+    public boolean noCollisionDown(int koordY, Player player1, Player player2, int speed) {
+        return noCollisionPlayerPlayer("down", player1, player2, speed) &&
+                (koordY > 0 || koordY < gamePanel.getScreenRow() * gamePanel.getTileSize()) &&
+                noCollisionWithTiles("down", player1, speed);
+    }
+
+    public boolean noColisionLeft(int koordX, Player player1, Player player2, int speed) {
+        return noCollisionPlayerPlayer("left", player1, player2, speed) &&
+                (koordX > 0 || koordX < gamePanel.getScreenCol() * gamePanel.getTileSize()) &&
+                noCollisionWithTiles("left", player1, speed);
+    }
+
+    public boolean noColisionRight(int koordX, Player player1, Player player2, int speed) {
+        return noCollisionPlayerPlayer("right", player1, player2, speed) &&
+                (koordX > 0 || koordX < gamePanel.getScreenCol() * gamePanel.getTileSize()) &&
+                noCollisionWithTiles("right", player1, speed);
     }
 }

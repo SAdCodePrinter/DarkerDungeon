@@ -85,7 +85,7 @@ public class GamePanel extends JPanel implements Runnable {
         // den anderen Player übergeben, um eine Kollision abzufragen
         characters.player1.move(characters.player2);
         characters.player2.move(characters.player1);
-        characters.troll1.update();
+        characters.troll1.move(characters.player1, characters.player2);
 
     }
 

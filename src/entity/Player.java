@@ -20,6 +20,7 @@ public class Player extends Entity {
         super(gamePanel);
 
         collisionHandler = new CollisionHandler(gamePanel);
+
         //this.gamePanel = gamePanel;
         this.keyH = keyH;
         getPlayerImage(imagePath);
@@ -35,7 +36,6 @@ public class Player extends Entity {
     public void getPlayerImage(String path) {
         try {
             for (int i = 0; i < 8; i++) {
-                String tmp = path + "up (" + (i + 1) + ").png";
                 up[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "up (" + (i + 1) + ").png")));
                 down[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "down (" + (i + 1) + ").png")));
                 left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "left (" + (i + 1) + ").png")));
@@ -56,72 +56,50 @@ public class Player extends Entity {
      */
     public void move(Player other) {
 
+        spriteCounter(8);
+
         // toDo: evtl. die Kollisionsabfrage im GamPanel machen, und in dieser Methode nur die Koordinaten updaten
         //  dann aber die Richtung in die der Player geht vor dem Methodenaufruf definieren
 
-        spriteCounter++;
-        if (spriteCounter > 7) {
-            spriteNum++;
-            spriteNum = (spriteNum % 8);
-            spriteCounter = 0;
-        }
 
         if (!keyH.upPressed && !keyH.downPressed && !keyH.leftPressed && !keyH.rightPressed) {
             direction = "idle";
+
             return;
         }
 
         if (keyH.upPressed) {
             direction = "up";
 
-            if (collisionHandler.noCollisionWithPlayer(direction, this, other, speed) &&
-                    collisionHandler.insideBoarder((keyH.rightPressed ? (x + speed) : x), (keyH.leftPressed ? (y + speed) : y)) &&
-                    collisionHandler.noCollisionWithTiles(direction, this, speed)) {
-
+            if (collisionHandler.noColisionUp(y, this, other, speed)) {
                 // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
                 y -= (keyH.rightPressed || keyH.leftPressed) ?
-                        (collisionHandler.noCollisionWithPlayer((keyH.rightPressed ? "right" : "left"), this, other, speed)) ? (int) (speed * 0.8) : 0
-                        : speed;
+                        (int) (speed * 0.8) : speed;
             }
 
         } else if (keyH.downPressed) {
             direction = "down";
 
-            if (collisionHandler.noCollisionWithPlayer(direction, this, other, speed) &&
-                    collisionHandler.insideBoarder((keyH.rightPressed ? (x + speed) : x), (keyH.leftPressed ? (y + speed) : y)) &&
-                    collisionHandler.noCollisionWithTiles(direction, this, speed)) {
-
-                // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
+            if (collisionHandler.noCollisionDown(y, this, other, speed)) {
                 y += (keyH.rightPressed || keyH.leftPressed) ?
-                        (collisionHandler.noCollisionWithPlayer((keyH.rightPressed ? "right" : "left"), this, other, speed)) ? (int) (speed * 0.8) : 0
-                        : speed;
+                        (int) (speed * 0.8) : speed;
             }
         }
 
         if (keyH.leftPressed) {
             direction = "left";
 
-            if (collisionHandler.noCollisionWithPlayer(direction, this, other, speed) &&
-                    collisionHandler.insideBoarder((keyH.rightPressed ? (x + speed) : x), (keyH.leftPressed ? (y + speed) : y)) &&
-                    collisionHandler.noCollisionWithTiles(direction, this, speed)) {
-
-                // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
+            if (collisionHandler.noColisionLeft(x, this, other, speed)) {
                 x -= (keyH.upPressed || keyH.downPressed) ?
-                        (collisionHandler.noCollisionWithPlayer((keyH.upPressed ? "up" : "down"), this, other, speed)) ? (int) (speed * 0.8) : 0
-                        : speed;
+                        (int) (speed * 0.8) : speed;
             }
 
         } else if (keyH.rightPressed) {
             direction = "right";
 
-            if (collisionHandler.noCollisionWithPlayer(direction, this, other, speed) &&
-                    collisionHandler.insideBoarder((keyH.rightPressed ? (x + speed) : x), (keyH.leftPressed ? (y + speed) : y)) &&
-                    collisionHandler.noCollisionWithTiles(direction, this, speed)) {
-
-                // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
+            if (collisionHandler.noColisionRight(x, this, other, speed)) {
                 x += (keyH.upPressed || keyH.downPressed) ?
-                        (collisionHandler.noCollisionWithPlayer((keyH.upPressed ? "up" : "down"), this, other, speed)) ? (int) (speed * 0.8) : 0
-                        : speed;
+                        (int) (speed * 0.8) : speed;
             }
         }
 
