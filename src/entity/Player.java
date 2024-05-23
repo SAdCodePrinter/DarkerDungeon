@@ -71,7 +71,7 @@ public class Player extends Entity {
         if (keyH.upPressed) {
             direction = "up";
 
-            if (collisionHandler.noColisionUp(y, this, other, speed)) {
+            if (collisionHandler.noColisionUp(this.x, this.y, other.x, other.y, speed)) {
                 // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
                 y -= (keyH.rightPressed || keyH.leftPressed) ?
                         (int) (speed * 0.8) : speed;
@@ -80,7 +80,7 @@ public class Player extends Entity {
         } else if (keyH.downPressed) {
             direction = "down";
 
-            if (collisionHandler.noCollisionDown(y, this, other, speed)) {
+            if (collisionHandler.noCollisionDown(this.x, this.y, other.x, other.y, speed)) {
                 y += (keyH.rightPressed || keyH.leftPressed) ?
                         (int) (speed * 0.8) : speed;
             }
@@ -89,7 +89,7 @@ public class Player extends Entity {
         if (keyH.leftPressed) {
             direction = "left";
 
-            if (collisionHandler.noColisionLeft(x, this, other, speed)) {
+            if (collisionHandler.noColisionLeft(this.x, this.y, other.x, other.y, speed)) {
                 x -= (keyH.upPressed || keyH.downPressed) ?
                         (int) (speed * 0.8) : speed;
             }
@@ -97,7 +97,7 @@ public class Player extends Entity {
         } else if (keyH.rightPressed) {
             direction = "right";
 
-            if (collisionHandler.noColisionRight(x, this, other, speed)) {
+            if (collisionHandler.noColisionRight(this.x, this.y, other.x, other.y, speed)) {
                 x += (keyH.upPressed || keyH.downPressed) ?
                         (int) (speed * 0.8) : speed;
             }
