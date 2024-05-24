@@ -44,7 +44,7 @@ public class CollisionHandler {
         return true;
     }
 
-    public boolean noCollisionWithTiles(String direction, int leftX1, int topY1, int speed, int tileSize) {
+    public boolean noColisionWithTiles(String direction, int leftX1, int topY1, int speed, int tileSize) {
         // wird um 2 pro Seite verkleinert, da sonst das errechnete Quadrat nicht zwischen zwei tiles passt
         int rightX1 = leftX1 + tileSize - 2;
         leftX1 += 2;
@@ -123,24 +123,24 @@ public class CollisionHandler {
     public boolean noColisionUp(int leftX1, int topY1, int leftX2, int topY2, int speed, int tileSize) {
         return noCollisionPlayer("up", leftX1, topY1, leftX2, topY2, speed, tileSize) &&
                 (topY1 > 0 || topY1 < gamePanel.getScreenRow() * gamePanel.getTileSize()) &&
-                noCollisionWithTiles("up", leftX1, topY1, speed, tileSize);
+                noColisionWithTiles("up", leftX1, topY1, speed, tileSize);
     }
 
     public boolean noColisionDown(int leftX1, int topY1, int leftX2, int topY2, int speed, int tileSize) {
         return noCollisionPlayer("down", leftX1, topY1, leftX2, topY2, speed, tileSize) &&
                 (topY1 > 0 || topY1 < gamePanel.getScreenRow() * gamePanel.getTileSize()) &&
-                noCollisionWithTiles("down", leftX1, topY1, speed, tileSize);
+                noColisionWithTiles("down", leftX1, topY1, speed, tileSize);
     }
 
     public boolean noColisionLeft(int leftX1, int topY1, int leftX2, int topY2, int speed, int tileSize) {
         return noCollisionPlayer("left", leftX1, topY1, leftX2, topY2, speed, tileSize) &&
                 (leftX1 > 0 || leftX1 < gamePanel.getScreenCol() * gamePanel.getTileSize()) &&
-                noCollisionWithTiles("left", leftX1, topY1, speed, tileSize);
+                noColisionWithTiles("left", leftX1, topY1, speed, tileSize);
     }
 
     public boolean noColisionRight(int leftX1, int topY1, int leftX2, int topY2, int speed, int tileSize) {
         return noCollisionPlayer("right", leftX1, topY1, leftX2, topY2, speed, tileSize) &&
                 (leftX1 > 0 || leftX1 < gamePanel.getScreenCol() * gamePanel.getTileSize()) &&
-                noCollisionWithTiles("right", leftX1, topY1, speed, tileSize);
+                noColisionWithTiles("right", leftX1, topY1, speed, tileSize);
     }
 }

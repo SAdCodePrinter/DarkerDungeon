@@ -9,9 +9,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-import java.util.Random;
-
-
 
 public class Enemy_Troll extends Entity {
 
@@ -51,65 +48,17 @@ public class Enemy_Troll extends Entity {
         g.drawRect(x, y, 36, 36);
     }
 
-    private boolean directionSet = false;
-
-    /*public void move(Player player1, Player player2) {
-        spriteCounter(8);
-
-        if (!directionSet) {
-            if (!collisionHandler.noColisionDown(this.x, this.y, player1.x, player1.y, speed, 36) &&
-                    !collisionHandler.noColisionDown(this.x, this.y, player2.x, player2.y, speed, 36)) {
-                direction = "up";
-                directionSet = true;
-            }
-
-        } else if (!collisionHandler.noColisionUp(this.x, this.y, player1.x, player1.y, speed, 36) &&
-                !collisionHandler.noColisionUp(this.x, this.y, player2.x, player2.y, speed, 36)) {
-            direction = "down";
-            directionSet = false;
-        }
-
-
-        switch (direction) {
-            case "up":
-                y -= speed;
-                break;
-            case "down":
-                y += speed;
-                break;
-            case "left":
-                x -= speed;
-                break;
-            case "right":
-                x += speed;
-                break;
-        }
-//
-//        if(i<=25) {
-//            direction = "up";
-//        }
-//        if (i > 25 && i <= 50) {
-//            direction = "down";
-//        }
-//        if (i > 50 && i <= 75) {
-//            direction = "left";
-//        }
-//        if(i > 75 && i <= 100){
-//            direction = "right";
-//        }
-    }
-
-     */
     public void move(Player player1, Player player2) {
         spriteCounter(8);
-        followPlayer(player1);
+
+//        direction = followPlayer(player1);
 
         // Überprüfen, ob der Troll eine Wand oder einen Spieler trifft und die Richtung ändern
         switch (direction) {
             case "up":
                 if (!collisionHandler.noColisionUp(this.x, this.y, player1.x, player1.y, speed, 36) ||
                         !collisionHandler.noColisionUp(this.x, this.y, player2.x, player2.y, speed, 36) ||
-                        !collisionHandler.noCollisionWithTiles("up", this.x, this.y, speed, 36)) {
+                        !collisionHandler.noColisionWithTiles("up", this.x, this.y, speed, 36)) {
                     direction = getRandomDirection();
                 } else {
                     y -= speed;
@@ -118,7 +67,7 @@ public class Enemy_Troll extends Entity {
             case "down":
                 if (!collisionHandler.noColisionDown(this.x, this.y, player1.x, player1.y, speed, 36) ||
                         !collisionHandler.noColisionDown(this.x, this.y, player2.x, player2.y, speed, 36) ||
-                        !collisionHandler.noCollisionWithTiles("down", this.x, this.y, speed, 36)) {
+                        !collisionHandler.noColisionWithTiles("down", this.x, this.y, speed, 36)) {
                     direction = getRandomDirection();
                 } else {
                     y += speed;
@@ -127,7 +76,7 @@ public class Enemy_Troll extends Entity {
             case "left":
                 if (!collisionHandler.noColisionLeft(this.x, this.y, player1.x, player1.y, speed, -36) ||
                         !collisionHandler.noColisionLeft(this.x, this.y, player2.x, player2.y, speed, -36) ||
-                        !collisionHandler.noCollisionWithTiles("left", this.x, this.y, speed, -36)) {
+                        !collisionHandler.noColisionWithTiles("left", this.x, this.y, speed, -36)) {
                     direction = getRandomDirection();
                 } else {
                     x -= speed;
@@ -136,7 +85,7 @@ public class Enemy_Troll extends Entity {
             case "right":
                 if (!collisionHandler.noColisionRight(this.x, this.y, player1.x, player1.y, speed, 36) ||
                         !collisionHandler.noColisionRight(this.x, this.y, player2.x, player2.y, speed, 36) ||
-                        !collisionHandler.noCollisionWithTiles("right", this.x, this.y, speed, 36)) {
+                        !collisionHandler.noColisionWithTiles("right", this.x, this.y, speed, 36)) {
                     direction = getRandomDirection();
                 } else {
                     x += speed;
@@ -153,7 +102,7 @@ public class Enemy_Troll extends Entity {
         } while (newDirection.equals(direction));
         return newDirection;
     }
-    public void followPlayer(Player player) {
+    public String followPlayer(Player player) {
         int playerX = player.getX();
         int playerY = player.getY();
         int dx = playerX - x;
@@ -161,22 +110,16 @@ public class Enemy_Troll extends Entity {
 
         // Überprüfen, ob der Troll den Spieler bereits erreicht hat
         if (dx == 0 && dy == 0) {
-            return; // Der Spieler wurde erreicht, keine Bewegung erforderlich
+            return "down"; // Der Spieler wurde erreicht, keine Bewegung erforderlich
         }
 
-        // Berechnung der horizontalen und vertikalen Schritte
-        int stepX = (int) Math.signum(dx);
-        int stepY = (int) Math.signum(dy);
+        // die Koordinate ansprechen, welche die größte Distanz zum Player hat.
+        if (Math.abs(dx) > Math.abs(dy)) {
+            return dx > 0 ? "right" : "left";
+        } else {
+            return dy > 0 ? "down" : "up";
+        }
 
-        // Berechnung der Entfernung zwischen Troll und Spieler
-        double distance = Math.sqrt(dx * dx + dy * dy);
-
-        // Berechnung der Schrittgröße basierend auf der Entfernung
-        double stepSize = Math.min(speed, distance);
-
-        // Bewegung des Trolls in Richtung des Spielers mit der berechneten Schrittgröße
-        x += stepX * stepSize;
-        y += stepY * stepSize;
     }
 
 
