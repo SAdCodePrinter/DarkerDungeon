@@ -28,7 +28,7 @@ public class Karaktere {
 
 
         player1.setDefault(100, 300, 5);
-        player2.setDefault(1050, 500, 3);
+        player2.setDefault(250, 250, 3);
 
         // Gegner
         troll1 = new Enemy_Troll(gamePanel, "/npc/troll1/");
