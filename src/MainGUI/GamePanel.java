@@ -5,13 +5,15 @@ import tile.TileHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class GamePanel extends JPanel implements Runnable {
-    Thread gameThread;
+public class GamePanel extends JPanel{
     Karaktere characters = new Karaktere(this);
     TileHandler tileH;
     private final int screenWidth = 48 * 28;
     private final int screenHeight = 48 * 14;
+    private final int delay = 1000 / 60; // Timer delay für 60 FPS
 
     public int getScreenCol() {
         return 37;
@@ -53,40 +55,12 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(characters.kH2);
         this.setFocusable(true);
 
-    }
-
-    public void startGameThread() {
-        gameThread = new Thread(this);
-        gameThread.start();
-    }
-
-    @Override
-    public void run() {
-        //"SleepMethod"
-        double drawInterval = 1000000000 / 60.; // FPS: Der Screen kann 60-mal die Sekunde gezeichnet werden
-        double nextDrawTime = System.nanoTime() + drawInterval;
-
-        //Game Loop
-        while (gameThread != null) {
-            this.update();
+// Timer für die Aktualisierung und das Neuzeichnen des Panels
+        Timer timer = new Timer(delay, e -> {
+            update();
             repaint();
-            try {
-                double remainingTime = nextDrawTime - System.nanoTime();
-
-                if (remainingTime < 0) {
-                    remainingTime = 0;
-                }
-
-                remainingTime = remainingTime / 1000000;
-
-                Thread.sleep((long) remainingTime); //Pausiert den Loop in Millis
-
-                nextDrawTime += drawInterval;
-
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        });
+        timer.start();
     }
 
     private void update() {
@@ -97,6 +71,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
+    // toDO: das drawn auslagern
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
