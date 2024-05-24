@@ -71,6 +71,7 @@ public class GamePanel extends JPanel{
 
     }
 
+    // toDO: das drawn auslagern
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 

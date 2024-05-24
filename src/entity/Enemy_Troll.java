@@ -51,44 +51,66 @@ public class Enemy_Troll extends Entity {
     public void move(Player player1, Player player2) {
         spriteCounter(8);
 
-//        direction = followPlayer(player1);
+        direction = followPlayer(player1);
 
         // Überprüfen, ob der Troll eine Wand oder einen Spieler trifft und die Richtung ändern
         switch (direction) {
             case "up":
-                if (!collisionHandler.noColisionUp(this.x, this.y, player1.x, player1.y, speed, 36) ||
-                        !collisionHandler.noColisionUp(this.x, this.y, player2.x, player2.y, speed, 36) ||
-                        !collisionHandler.noColisionWithTiles("up", this.x, this.y, speed, 36)) {
-                    direction = getRandomDirection();
-                } else {
+                if (collisionHandler.noColisionWithTiles("up", x, y, speed, 36) &&
+                        collisionHandler.insideBoarder(x, y)) {
                     y -= speed;
+                } else {
+                    direction = getRandomDirection();
+                }
+
+                if (!collisionHandler.noCollisionPlayer("up", x, y, player1.x, player1.y, speed, 36) ||
+                        !collisionHandler.noCollisionPlayer("up", x, y, player2.x, player2.y, speed, 36)) {
+                    // Action
+                    direction = getRandomDirection();
                 }
                 break;
+
             case "down":
-                if (!collisionHandler.noColisionDown(this.x, this.y, player1.x, player1.y, speed, 36) ||
-                        !collisionHandler.noColisionDown(this.x, this.y, player2.x, player2.y, speed, 36) ||
-                        !collisionHandler.noColisionWithTiles("down", this.x, this.y, speed, 36)) {
-                    direction = getRandomDirection();
-                } else {
+                if (collisionHandler.noColisionWithTiles("down", x, y, speed, 36) &&
+                        collisionHandler.insideBoarder(x, y)) {
                     y += speed;
+                } else {
+                    direction = getRandomDirection();
+                }
+
+                if (!collisionHandler.noCollisionPlayer("down", x, y, player1.x, player1.y, speed, 36) ||
+                        !collisionHandler.noCollisionPlayer("down", x, y, player2.x, player2.y, speed, 36)) {
+                    // Action
+                    direction = getRandomDirection();
                 }
                 break;
+
             case "left":
-                if (!collisionHandler.noColisionLeft(this.x, this.y, player1.x, player1.y, speed, -36) ||
-                        !collisionHandler.noColisionLeft(this.x, this.y, player2.x, player2.y, speed, -36) ||
-                        !collisionHandler.noColisionWithTiles("left", this.x, this.y, speed, -36)) {
-                    direction = getRandomDirection();
-                } else {
+                if (collisionHandler.noColisionWithTiles("left", x, y, speed, 36) &&
+                        collisionHandler.insideBoarder(x, y)) {
                     x -= speed;
+                } else {
+                    direction = getRandomDirection();
+                }
+
+                if (!collisionHandler.noCollisionPlayer("left", x, y, player1.x, player1.y, speed, 36) ||
+                        !collisionHandler.noCollisionPlayer("left", x, y, player2.x, player2.y, speed, 36)) {
+                    // Action
+                    direction = getRandomDirection();
                 }
                 break;
+
             case "right":
-                if (!collisionHandler.noColisionRight(this.x, this.y, player1.x, player1.y, speed, 36) ||
-                        !collisionHandler.noColisionRight(this.x, this.y, player2.x, player2.y, speed, 36) ||
-                        !collisionHandler.noColisionWithTiles("right", this.x, this.y, speed, 36)) {
-                    direction = getRandomDirection();
-                } else {
+                if (collisionHandler.noColisionWithTiles("right", x, y, speed, 36) &&
+                        collisionHandler.insideBoarder(x, y)) {
                     x += speed;
+                } else {
+                    direction = getRandomDirection();
+                }
+                if (!collisionHandler.noCollisionPlayer("right", x, y, player1.x, player1.y, speed, 36) ||
+                        !collisionHandler.noCollisionPlayer("right", x, y, player2.x, player2.y, speed, 36)) {
+                    // Action
+                    direction = getRandomDirection();
                 }
                 break;
         }
@@ -102,6 +124,7 @@ public class Enemy_Troll extends Entity {
         } while (newDirection.equals(direction));
         return newDirection;
     }
+
     public String followPlayer(Player player) {
         int playerX = player.getX();
         int playerY = player.getY();
@@ -113,13 +136,24 @@ public class Enemy_Troll extends Entity {
             return "down"; // Der Spieler wurde erreicht, keine Bewegung erforderlich
         }
 
-        // die Koordinate ansprechen, welche die größte Distanz zum Player hat.
+        // Weg blockiert, neue Richtung bestimmen
         if (Math.abs(dx) > Math.abs(dy)) {
-            return dx > 0 ? "right" : "left";
+            if (dx > 0 && collisionHandler.noColisionWithTiles("right", x, y, speed, 36)) {
+                return "right";
+            } else if (collisionHandler.noColisionWithTiles("left", x, y, speed, 36)) {
+                return "left";
+            }
         } else {
-            return dy > 0 ? "down" : "up";
+            if (dy > 0 && collisionHandler.noColisionWithTiles("down", x, y, speed, 36)) {
+                return "down";
+            } else if (collisionHandler.noColisionWithTiles("up", x, y, speed, 36)) {
+                return "up";
+            }
         }
 
+        // toDo: Wenn er zu lange in einer Ecke ist
+
+        return "up";
     }
 
 
