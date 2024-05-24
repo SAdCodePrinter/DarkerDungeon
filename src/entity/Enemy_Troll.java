@@ -51,7 +51,7 @@ public class Enemy_Troll extends Entity {
     public void move(Player player1, Player player2) {
         spriteCounter(8);
 
-        direction = followPlayer(player1);
+//        direction = followPlayer(player1);
 
         // Überprüfen, ob der Troll eine Wand oder einen Spieler trifft und die Richtung ändern
         switch (direction) {
