@@ -9,6 +9,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
+import java.util.Random;
+
+
+
 public class Enemy_Troll extends Entity {
 
     CollisionHandler collisionHandler;
@@ -49,7 +53,7 @@ public class Enemy_Troll extends Entity {
 
     private boolean directionSet = false;
 
-    public void move(Player player1, Player player2) {
+    /*public void move(Player player1, Player player2) {
         spriteCounter(8);
 
         if (!directionSet) {
@@ -95,6 +99,87 @@ public class Enemy_Troll extends Entity {
 //        }
     }
 
+     */
+    public void move(Player player1, Player player2) {
+        spriteCounter(8);
+        followPlayer(player1);
+
+        // Überprüfen, ob der Troll eine Wand oder einen Spieler trifft und die Richtung ändern
+        switch (direction) {
+            case "up":
+                if (!collisionHandler.noColisionUp(this.x, this.y, player1.x, player1.y, speed, 36) ||
+                        !collisionHandler.noColisionUp(this.x, this.y, player2.x, player2.y, speed, 36) ||
+                        !collisionHandler.noCollisionWithTiles("up", this.x, this.y, speed, 36)) {
+                    direction = getRandomDirection();
+                } else {
+                    y -= speed;
+                }
+                break;
+            case "down":
+                if (!collisionHandler.noColisionDown(this.x, this.y, player1.x, player1.y, speed, 36) ||
+                        !collisionHandler.noColisionDown(this.x, this.y, player2.x, player2.y, speed, 36) ||
+                        !collisionHandler.noCollisionWithTiles("down", this.x, this.y, speed, 36)) {
+                    direction = getRandomDirection();
+                } else {
+                    y += speed;
+                }
+                break;
+            case "left":
+                if (!collisionHandler.noColisionLeft(this.x, this.y, player1.x, player1.y, speed, -36) ||
+                        !collisionHandler.noColisionLeft(this.x, this.y, player2.x, player2.y, speed, -36) ||
+                        !collisionHandler.noCollisionWithTiles("left", this.x, this.y, speed, -36)) {
+                    direction = getRandomDirection();
+                } else {
+                    x -= speed;
+                }
+                break;
+            case "right":
+                if (!collisionHandler.noColisionRight(this.x, this.y, player1.x, player1.y, speed, 36) ||
+                        !collisionHandler.noColisionRight(this.x, this.y, player2.x, player2.y, speed, 36) ||
+                        !collisionHandler.noCollisionWithTiles("right", this.x, this.y, speed, 36)) {
+                    direction = getRandomDirection();
+                } else {
+                    x += speed;
+                }
+                break;
+        }
+    }
+
+    private String getRandomDirection() {
+        String[] directions = {"up", "down", "left", "right"};
+        String newDirection;
+        do {
+            newDirection = directions[(int) (Math.random() * directions.length)];
+        } while (newDirection.equals(direction));
+        return newDirection;
+    }
+    public void followPlayer(Player player) {
+        int playerX = player.getX();
+        int playerY = player.getY();
+        int dx = playerX - x;
+        int dy = playerY - y;
+
+        // Überprüfen, ob der Troll den Spieler bereits erreicht hat
+        if (dx == 0 && dy == 0) {
+            return; // Der Spieler wurde erreicht, keine Bewegung erforderlich
+        }
+
+        // Berechnung der horizontalen und vertikalen Schritte
+        int stepX = (int) Math.signum(dx);
+        int stepY = (int) Math.signum(dy);
+
+        // Berechnung der Entfernung zwischen Troll und Spieler
+        double distance = Math.sqrt(dx * dx + dy * dy);
+
+        // Berechnung der Schrittgröße basierend auf der Entfernung
+        double stepSize = Math.min(speed, distance);
+
+        // Bewegung des Trolls in Richtung des Spielers mit der berechneten Schrittgröße
+        x += stepX * stepSize;
+        y += stepY * stepSize;
+    }
+
+
     public void drawTroll(Graphics2D g) {
         BufferedImage imageTroll =
                 switch (direction) {
@@ -110,5 +195,4 @@ public class Enemy_Troll extends Entity {
             g.drawImage(imageTroll, getX() - 32, getY() - 36, gamePanel.getTileSize() * 3, gamePanel.getTileSize() * 3, null);
         }
     }
-
 }
