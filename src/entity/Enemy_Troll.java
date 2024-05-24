@@ -102,7 +102,7 @@ public class Enemy_Troll extends Entity {
      */
     public void move(Player player1, Player player2) {
         spriteCounter(8);
-        //followPlayer(player1);
+        followPlayer(player1);
 
         // Überprüfen, ob der Troll eine Wand oder einen Spieler trifft und die Richtung ändern
         switch (direction) {
@@ -153,7 +153,7 @@ public class Enemy_Troll extends Entity {
         } while (newDirection.equals(direction));
         return newDirection;
     }
-    /*public void followPlayer(Player player) {
+    public void followPlayer(Player player) {
         int playerX = player.getX();
         int playerY = player.getY();
         int dx = playerX - x;
@@ -178,8 +178,6 @@ public class Enemy_Troll extends Entity {
         x += stepX * stepSize;
         y += stepY * stepSize;
     }
-
-     */
 
 
     public void drawTroll(Graphics2D g) {
