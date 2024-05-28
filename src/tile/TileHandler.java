@@ -18,12 +18,26 @@ public class TileHandler {
     public TileHandler(GamePanel gamePanel) {
 
         this.gamePanel = gamePanel;
-        tile = new Tile[38];
+        tile = new Tile[37];
         mapTileNum = new int[gamePanel.getScreenCol()][gamePanel.getScreenRow()];
 
         getTileImage();
         loadMap();
 
+    }
+
+    public int[] getColisionObjekts() {
+        int counter = 0;
+        int[] objekts = new int[tile.length];
+
+        for (int i = 0; i < tile.length; i++) {
+            if (tile[i].collision) {
+                objekts[counter] = i;
+                counter++;
+            }
+        }
+
+        return objekts;
     }
 
     private void getTileImage() {
@@ -222,8 +236,11 @@ public class TileHandler {
         while (mapCol < gamePanel.getScreenCol() && mapRow < gamePanel.getScreenRow()) {
 
             int tileNum = mapTileNum[mapCol][mapRow];
-            if(isBackground) g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
-            if ((tileNum == 19 || tileNum == 20 || tileNum == 23 || tileNum == 31 || tileNum == 26 || tileNum == 29 || tileNum == 9 || tileNum == 10 || tileNum == 30) && !isBackground) g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+            if (isBackground)
+                g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+            if ((tileNum == 19 || tileNum == 20 || tileNum == 23 || tileNum == 31 || tileNum == 26 || tileNum == 29 || tileNum == 9 || tileNum == 10 || tileNum == 30) &&
+                    !isBackground)
+                g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
             mapCol++;
             x += gamePanel.getTileSize();
 

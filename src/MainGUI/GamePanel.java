@@ -9,8 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GamePanel extends JPanel{
-    Karaktere characters = new Karaktere(this);
-    TileHandler tileH;
+    Karaktere characters;
+    public TileHandler tileH;
     private final int screenWidth = 48 * 28;
     private final int screenHeight = 48 * 14;
     private final int delay = 1000 / 60; // Timer delay für 60 FPS
@@ -45,8 +45,8 @@ public class GamePanel extends JPanel{
 
 
     public GamePanel() {
-        // toDo: Auslagern in Window- Klasse
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        characters = new Karaktere(this);
         tileH = new TileHandler(this);
 
         this.setBackground(Color.black);

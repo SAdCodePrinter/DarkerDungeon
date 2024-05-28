@@ -2,23 +2,31 @@ package entity;
 
 import MainGUI.CollisionHandler;
 import MainGUI.GamePanel;
+import pathFinder.Node;
+import pathFinder.PathFinder;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 
 public class Enemy_Troll extends Entity {
 
     CollisionHandler collisionHandler;
+    PathFinder pathFinder = null;
+
 
     public Enemy_Troll(GamePanel gamePanel, String imagePath) {
         super(gamePanel);
-
         collisionHandler = new CollisionHandler(gamePanel);
         getTrollImage(imagePath);
+    }
+
+    public void setPathFinder() {
+        pathFinder = new PathFinder(gamePanel.tileH.mapTileNum, gamePanel.tileH.getColisionObjekts());
     }
 
     public void setDefault(int xKoord, int yKoord, int defineSpeed) {
@@ -49,6 +57,9 @@ public class Enemy_Troll extends Entity {
     }
 
     public void move(Player player1, Player player2) {
+        if (pathFinder == null) {
+            setPathFinder();
+        }
         spriteCounter(8);
 
         direction = followPlayer(player1);
@@ -126,34 +137,44 @@ public class Enemy_Troll extends Entity {
     }
 
     public String followPlayer(Player player) {
-        int playerX = player.getX();
-        int playerY = player.getY();
+        int playerX = player.getX() / gamePanel.getTileSize();
+        int playerY = player.getY() / gamePanel.getTileSize();
+        int trollx = x / gamePanel.getTileSize();
+        int trolly = y / gamePanel.getTileSize();
+
+
         int dx = playerX - x;
         int dy = playerY - y;
 
         // Überprüfen, ob der Troll den Spieler bereits erreicht hat
         if (dx == 0 && dy == 0) {
-            return "down"; // Der Spieler wurde erreicht, keine Bewegung erforderlich
+            return "down";
         }
 
-        // Weg blockiert, neue Richtung bestimmen
-        if (Math.abs(dx) > Math.abs(dy)) {
-            if (dx > 0 && collisionHandler.noColisionWithTiles("right", x, y, speed, 36)) {
-                return "right";
-            } else if (collisionHandler.noColisionWithTiles("left", x, y, speed, 36)) {
+        pathFinder.setNodes(trollx, y / trolly, playerX, playerY);
+        if (pathFinder.autoSearch()) {
+
+            int x1 = pathFinder.pathList.get(0).col;
+            int y1 = pathFinder.pathList.get(0).row;
+
+            if (x > x1 && y == y1) {
                 return "left";
-            }
-        } else {
-            if (dy > 0 && collisionHandler.noColisionWithTiles("down", x, y, speed, 36)) {
+            } else if (x < x1 && y == y1) {
+                return "right";
+            } else if (x == x1 && y < y1) {
                 return "down";
-            } else if (collisionHandler.noColisionWithTiles("up", x, y, speed, 36)) {
+            } else if (x == x1 && y > y1) {
                 return "up";
+            } else {
+                System.out.println("x: " + x + "x1: " + x1 + "y: " + y + "y1: " + y1);
             }
+
         }
 
-        // toDo: Wenn er zu lange in einer Ecke ist
-
-        return "up";
+        // Kein Pfad gefunden
+        System.out.println("Kein Pfad zum Spieler gefunden");
+        return "down";
+        // https://www.youtube.com/watch?v=Hd0D68guFKg
     }
 
 
