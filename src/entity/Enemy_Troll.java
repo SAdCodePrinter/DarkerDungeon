@@ -139,34 +139,30 @@ public class Enemy_Troll extends Entity {
     public String followPlayer(Player player) {
         int playerX = player.getX() / gamePanel.getTileSize();
         int playerY = player.getY() / gamePanel.getTileSize();
-        int trollx = x / gamePanel.getTileSize();
-        int trolly = y / gamePanel.getTileSize();
+        int trollX = x / (gamePanel.getTileSize()-2);
+        int trollY = y / (gamePanel.getTileSize()-2);
 
-
-        int dx = playerX - x;
-        int dy = playerY - y;
-
-        // Überprüfen, ob der Troll den Spieler bereits erreicht hat
-        if (dx == 0 && dy == 0) {
-            return "down";
-        }
-
-        pathFinder.setNodes(trollx, y / trolly, playerX, playerY);
+        pathFinder.setNodes(trollX, trollY, playerX, playerY);
         if (pathFinder.autoSearch()) {
 
             int x1 = pathFinder.pathList.get(0).col;
             int y1 = pathFinder.pathList.get(0).row;
 
-            if (x > x1 && y == y1) {
+            if (x1 == trollX && y1 == trollY) {
+                x1 = pathFinder.pathList.get(1).col;
+                y1 = pathFinder.pathList.get(1).row;
+            }
+
+            if (trollX > x1 && trollY == y1) {
                 return "left";
-            } else if (x < x1 && y == y1) {
+            } else if (trollX < x1 && trollY == y1) {
                 return "right";
-            } else if (x == x1 && y < y1) {
+            } else if (trollX == x1 && trollY < y1) {
                 return "down";
-            } else if (x == x1 && y > y1) {
+            } else if (trollX == x1 && trollY > y1) {
                 return "up";
             } else {
-                System.out.println("x: " + x + "x1: " + x1 + "y: " + y + "y1: " + y1);
+                System.out.println("x: " + trollX + "  x1: " + x1 + "  y: " + trollY + "  y1: " + y1);
             }
 
         }

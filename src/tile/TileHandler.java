@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class TileHandler {
 
@@ -26,14 +27,13 @@ public class TileHandler {
 
     }
 
-    public int[] getColisionObjekts() {
+    public ArrayList<Integer> getColisionObjekts() {
         int counter = 0;
-        int[] objekts = new int[tile.length];
+        ArrayList<Integer> objekts = new ArrayList<>();
 
         for (int i = 0; i < tile.length; i++) {
             if (tile[i].collision) {
-                objekts[counter] = i;
-                counter++;
+                objekts.add(i);
             }
         }
 

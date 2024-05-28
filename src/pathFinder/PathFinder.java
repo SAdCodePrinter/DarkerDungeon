@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class PathFinder {
     int maxCol, maxRow;
-    int[] solidObjekts;
+    ArrayList<Integer> solidObjekts;
     int[][] tileMap;
 
     Node[][] nodes;
@@ -15,7 +15,7 @@ public class PathFinder {
     boolean goalReached = false;
     int step = 0;
 
-    public PathFinder(int[][] tileMap, int[] solidObjekts) {
+    public PathFinder(int[][] tileMap, ArrayList<Integer> solidObjekts) {
         int tmp = tileMap.length;
         maxCol = tileMap.length;
         maxRow = tileMap[0].length;
@@ -149,9 +149,12 @@ public class PathFinder {
     private void trackPath() {
         Node current = goalNode;
 
-        while (current != startNode) {
+        while (current.parent != null) {
             pathList.add(0, current);
-            current = currentNode.parent;
+            if (current.col == startNode.col && current.row == startNode.row) {
+                break;
+            }
+            current = current.parent;
         }
     }
 
