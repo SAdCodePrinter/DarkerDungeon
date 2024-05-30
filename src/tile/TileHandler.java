@@ -1,6 +1,7 @@
 package tile;
 
 import MainGUI.GamePanel;
+import entity.Enemy_Troll;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -15,6 +16,7 @@ public class TileHandler {
     GamePanel gamePanel;
     public Tile[] tile;
     public int[][] mapTileNum;
+    public boolean drawPath = true;
 
     public TileHandler(GamePanel gamePanel) {
 
@@ -26,6 +28,7 @@ public class TileHandler {
         loadMap();
 
     }
+
 
     public ArrayList<Integer> getColisionObjekts() {
         int counter = 0;
@@ -249,6 +252,17 @@ public class TileHandler {
                 x = 0;
                 mapRow++;
                 y += gamePanel.getTileSize();
+            }
+        }
+
+        if (drawPath) {
+            g.setColor(new Color(255, 0, 0, 70));
+
+            for (int i = 0; i < gamePanel.characters.troll1.pathFinder.pathList.size(); i++) {
+                int worldX = gamePanel.characters.troll1.pathFinder.pathList.get(i).col * gamePanel.getTileSize();
+                int worldY = gamePanel.characters.troll1.pathFinder.pathList.get(i).row * gamePanel.getTileSize();
+
+                g.fillRect(worldX, worldY, gamePanel.getTileSize(), gamePanel.getTileSize());
             }
         }
     }

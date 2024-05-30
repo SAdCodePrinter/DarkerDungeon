@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GamePanel extends JPanel{
-    Karaktere characters;
+    public Karaktere characters;
     public TileHandler tileH;
     private final int screenWidth = 48 * 28;
     private final int screenHeight = 48 * 14;

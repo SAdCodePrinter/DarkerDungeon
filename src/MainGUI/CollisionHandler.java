@@ -52,6 +52,7 @@ public class CollisionHandler {
         topY1 += 2;
 
         // die Rows und Cols - Größen berechnen
+        // toDO: Entity col
         int playerLeftCol = leftX1 / gamePanel.getTileSize();
         int playerRightCol = rightX1 / gamePanel.getTileSize();
         int playerTopRow = topY1 / gamePanel.getTileSize();
