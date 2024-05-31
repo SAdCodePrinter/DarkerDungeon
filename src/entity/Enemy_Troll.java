@@ -40,12 +40,12 @@ public class Enemy_Troll extends Entity {
     public void getTrollImage(String path) {
         try {
             for (int i = 0; i < 8; i++) {
-                //up[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "up (" + (i + 1) + ").png")));
                 down[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "down (" + (i + 1) + ").png")));
                 left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "left (" + (i + 1) + ").png")));
                 right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "right (" + (i + 1) + ").png")));
-                hit_right [i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_right (" + (i + 1) + ").png")));
-                hit_left [i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_left (" + (i + 1) + ").png")));
+                hit_right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_right (" + (i + 1) + ").png")));
+                hit_left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_left (" + (i + 1) + ").png")));
+                idle[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "idle (" + (i + 1) + ").png")));
             }
 
         } catch (IOException e) {
@@ -71,71 +71,60 @@ public class Enemy_Troll extends Entity {
             case "up":
                 if (collisionHandler.noColisionWithTiles("up", x, y, speed, 36) &&
                         collisionHandler.insideBoarder(x, y)) {
-                    y -= speed;
-                }
 
-                if (!collisionHandler.noCollisionPlayer("up", x, y, player1.x, player1.y, speed, 36) ||
-                        !collisionHandler.noCollisionPlayer("up", x, y, player2.x, player2.y, speed, 36)) {
-                    // Action
-//                    direction = getRandomDirection();
-                    System.out.println("ACTIONNNN UPPP");
+                    if (!collisionHandler.noCollisionPlayer("up", x, y, player1.x, player1.y, speed, 36) ||
+                            !collisionHandler.noCollisionPlayer("up", x, y, player2.x, player2.y, speed, 36)) {
+
+                        System.out.println("ACTIONNNN UPPP");
+                        direction = "hit_left";
+                        break;
+                    }
+                    y -= speed;
                 }
                 break;
 
             case "down":
                 if (collisionHandler.noColisionWithTiles("down", x, y, speed, 36) &&
                         collisionHandler.insideBoarder(x, y)) {
+                    if (!collisionHandler.noCollisionPlayer("down", x, y, player1.x, player1.y, speed, 36) ||
+                            !collisionHandler.noCollisionPlayer("down", x, y, player2.x, player2.y, speed, 36)) {
+
+                        System.out.println("ACTIONNNN DOWNN");
+                        direction = "hit_right";
+                        break;
+                    }
                     y += speed;
-                }
-
-                if (!collisionHandler.noCollisionPlayer("down", x, y, player1.x, player1.y, speed, 36) ||
-                        !collisionHandler.noCollisionPlayer("down", x, y, player2.x, player2.y, speed, 36)) {
-                    // Action
-//                    direction = getRandomDirection();
-                    System.out.println("ACTIONNNN DOWNN");
-
                 }
                 break;
 
             case "left":
                 if (collisionHandler.noColisionWithTiles("left", x, y, speed, 36) &&
                         collisionHandler.insideBoarder(x, y)) {
+                    if (!collisionHandler.noCollisionPlayer("left", x, y, player1.x, player1.y, speed, 36) ||
+                            !collisionHandler.noCollisionPlayer("left", x, y, player2.x, player2.y, speed, 36)) {
+
+                        System.out.println("ACTIONNNN LEFTTT");
+                        direction = "hit_left";
+                        break;
+                    }
                     x -= speed;
-                }
-
-                if (!collisionHandler.noCollisionPlayer("left", x, y, player1.x, player1.y, speed, 36) ||
-                        !collisionHandler.noCollisionPlayer("left", x, y, player2.x, player2.y, speed, 36)) {
-                    // Action
-//                    direction = getRandomDirection();
-                    System.out.println("ACTIONNNN LEFTTT");
-
                 }
                 break;
 
             case "right":
                 if (collisionHandler.noColisionWithTiles("right", x, y, speed, 36) &&
                         collisionHandler.insideBoarder(x, y)) {
+                    if (!collisionHandler.noCollisionPlayer("right", x, y, player1.x, player1.y, speed, 36) ||
+                            !collisionHandler.noCollisionPlayer("right", x, y, player2.x, player2.y, speed, 36)) {
+
+                        System.out.println("ACTIONNNN RIGHHTTT");
+                        direction = "hit_right";
+                        break;
+                    }
                     x += speed;
-                }
-
-                if (!collisionHandler.noCollisionPlayer("right", x, y, player1.x, player1.y, speed, 36) ||
-                        !collisionHandler.noCollisionPlayer("right", x, y, player2.x, player2.y, speed, 36)) {
-                    // Action
-//                    direction = getRandomDirection();
-                    System.out.println("ACTIONNNN RIGHHTTT");
-
                 }
                 break;
         }
-    }
-
-    private String getRandomDirection() {
-        String[] directions = {"up", "down", "left", "right"};
-        String newDirection;
-        do {
-            newDirection = directions[(int) (Math.random() * directions.length)];
-        } while (newDirection.equals(direction));
-        return newDirection;
     }
 
     public String searchPath(int goalCol, int goalRow) {
@@ -149,72 +138,71 @@ public class Enemy_Troll extends Entity {
 
         if (pathFinder.autoSearch()) {
 
-            int nextX = pathFinder.pathList.get(0).col * gamePanel.getTileSize();
-            int nextY = pathFinder.pathList.get(0).row * gamePanel.getTileSize();
+            // Aktuelle Koordinaten
+            int leftX = x;
+            int rightX = x + gamePanel.getTileSize();
+            int topY = y;
+            int bottmY = y + gamePanel.getTileSize();
 
-            int enLeftX = x;
-            int enRightX = x + gamePanel.getTileSize();
-            int enTopY = y;
-            int enBottomY = y + gamePanel.getTileSize();
+            // Koordinaten des nächsten Schrittes
+            int leftX2 = pathFinder.pathList.get(0).col * gamePanel.getTileSize();
+            int rightX2 = pathFinder.pathList.get(0).col * gamePanel.getTileSize() + gamePanel.getTileSize();
+            int topY2 = pathFinder.pathList.get(0).row * gamePanel.getTileSize();
+            int bottmY2 = pathFinder.pathList.get(0).row * gamePanel.getTileSize() + gamePanel.getTileSize();
 
-            if (enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gamePanel.getTileSize()) {
+
+            // Verschiedene Richtungen
+            if (topY > topY2 && leftX >= leftX2 && rightX <= rightX2) {
                 direction = "up";
-            } else if (enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gamePanel.getTileSize()) {
+            } else if (topY < topY2 && leftX >= leftX2 && rightX <= rightX2) {
                 direction = "down";
-            } else if (enTopY >= nextY && enBottomY <= nextY + gamePanel.getTileSize()) {
-                if (enLeftX > nextX) {
+            } else if (topY >= topY2 && bottmY <= bottmY2) {
+                if (leftX > leftX2) {
                     direction = "left";
-                } else if (enLeftX < nextX) {
+                } else if (leftX < leftX2) {
                     direction = "right";
                 }
 
-                // falls up und links
-            } else if (enTopY > nextY && enLeftX > nextX) {
+                // falls up und schräg, Kollision mit Teilen beachten
+            } else if (topY > topY2 && leftX > leftX2) {
                 direction = "up";
-                if (!collisionHandler.noColisionWithTiles("up", enLeftX, enTopY, speed, 36)) {
+                if (!collisionHandler.noColisionWithTiles("up", leftX, topY, speed, 36)) {
                     direction = "left";
                 }
-            } else if (enTopY > nextY && enLeftX < nextX) {
+            } else if (topY > topY2 && leftX < leftX2) {
                 direction = "up";
                 if (!collisionHandler.noColisionWithTiles("up", x, y, speed, 36)) {
                     direction = "right";
                 }
 
                 // Falls down und schräg
-            } else if (enTopY < nextY && enLeftX > nextX) {
+            } else if (topY < topY2 && leftX > leftX2) {
                 direction = "down";
                 if (!collisionHandler.noColisionWithTiles("down", x, y, speed, 36)) {
                     direction = "left";
                 }
-            } else if (enTopY < nextY && enLeftX < nextX) {
+            } else if (topY < topY2 && leftX < leftX2) {
                 direction = "down";
                 if (!collisionHandler.noColisionWithTiles("down", x, y, speed, 36)) {
                     direction = "right";
                 }
             }
+            // Troll hat sein Ziel erreicht
 
-            // wenn er den Spieler erreicht hat
-            int nextCol = pathFinder.pathList.get(0).col;
-            int nextRow = pathFinder.pathList.get(0).row;
-
-            if (nextCol == goalCol && nextRow == goalRow) {
-                System.out.println("Ziel erreicht");
-                return "idle";
-            }
 
         } else {
-            System.out.println("kein Pfad mit Pathfinder gefunden");
+
+//            System.out.println("Troll hat keinen Pfad zum Ziel mit dem Pathfinder gefunden");
         }
 
         return direction;
         // https://www.youtube.com/watch?v=Hd0D68guFKg
-
     }
 
     public void drawTroll(Graphics2D g) {
         BufferedImage imageTroll =
                 switch (direction) {
-                    //case "idle" -> idle[spriteNum];
+                    case "idle" -> idle[spriteNum];
                     case "up" -> down[spriteNum];
                     case "down" -> down[spriteNum];
                     case "left" -> left[spriteNum];
