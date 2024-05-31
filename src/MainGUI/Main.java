@@ -8,7 +8,6 @@ public class Main {
         Window window = new Window();
         gamePanel = new GamePanel();
         window.setWindow(gamePanel);
-
-
+        gamePanel.setupGame();
     }
 }
