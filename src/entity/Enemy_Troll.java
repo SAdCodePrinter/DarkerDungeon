@@ -66,27 +66,19 @@ public class Enemy_Troll extends Entity {
 
         direction = searchPath(player1.getX() / gamePanel.getTileSize(), player1.getY() / gamePanel.getTileSize());
 
-        // toDo: Troll muss sich genau einen block bewegen bevor die Richtung geändert wird.
-        //  Mittels Block Koordinaten checken in welche Richtung er gehen kann
-
-        if (direction == null) {
-            return;
-        }
-
         // Überprüfen, ob der Troll eine Wand oder einen Spieler trifft und die Richtung ändern
         switch (direction) {
             case "up":
-//                if (collisionHandler.noColisionWithTiles("up", x, y, speed, 36) &&
-//                        collisionHandler.insideBoarder(x, y)) {
+                if (collisionHandler.noColisionWithTiles("up", x, y, speed, 36) &&
+                        collisionHandler.insideBoarder(x, y)) {
                     y -= speed;
-//                } else {
-//                    direction = getRandomDirection();
-//                }
+                }
 
                 if (!collisionHandler.noCollisionPlayer("up", x, y, player1.x, player1.y, speed, 36) ||
                         !collisionHandler.noCollisionPlayer("up", x, y, player2.x, player2.y, speed, 36)) {
                     // Action
-                    direction = getRandomDirection();
+//                    direction = getRandomDirection();
+                    System.out.println("ACTIONNNN UPPP");
                 }
                 break;
 
@@ -94,29 +86,29 @@ public class Enemy_Troll extends Entity {
                 if (collisionHandler.noColisionWithTiles("down", x, y, speed, 36) &&
                         collisionHandler.insideBoarder(x, y)) {
                     y += speed;
-                } else {
-                    direction = getRandomDirection();
                 }
 
                 if (!collisionHandler.noCollisionPlayer("down", x, y, player1.x, player1.y, speed, 36) ||
                         !collisionHandler.noCollisionPlayer("down", x, y, player2.x, player2.y, speed, 36)) {
                     // Action
-                    direction = getRandomDirection();
+//                    direction = getRandomDirection();
+                    System.out.println("ACTIONNNN DOWNN");
+
                 }
                 break;
 
             case "left":
-//                if (collisionHandler.noColisionWithTiles("left", x, y, speed, 36) &&
-//                        collisionHandler.insideBoarder(x, y)) {
+                if (collisionHandler.noColisionWithTiles("left", x, y, speed, 36) &&
+                        collisionHandler.insideBoarder(x, y)) {
                     x -= speed;
-//                } else {
-//                    direction = getRandomDirection();
-//                }
+                }
 
                 if (!collisionHandler.noCollisionPlayer("left", x, y, player1.x, player1.y, speed, 36) ||
                         !collisionHandler.noCollisionPlayer("left", x, y, player2.x, player2.y, speed, 36)) {
                     // Action
-                    direction = getRandomDirection();
+//                    direction = getRandomDirection();
+                    System.out.println("ACTIONNNN LEFTTT");
+
                 }
                 break;
 
@@ -124,13 +116,14 @@ public class Enemy_Troll extends Entity {
                 if (collisionHandler.noColisionWithTiles("right", x, y, speed, 36) &&
                         collisionHandler.insideBoarder(x, y)) {
                     x += speed;
-                } else {
-                    direction = getRandomDirection();
                 }
+
                 if (!collisionHandler.noCollisionPlayer("right", x, y, player1.x, player1.y, speed, 36) ||
                         !collisionHandler.noCollisionPlayer("right", x, y, player2.x, player2.y, speed, 36)) {
                     // Action
-                    direction = getRandomDirection();
+//                    direction = getRandomDirection();
+                    System.out.println("ACTIONNNN RIGHHTTT");
+
                 }
                 break;
         }
@@ -152,7 +145,7 @@ public class Enemy_Troll extends Entity {
         pathFinder.setNodes(startCol, startRow, goalCol, goalRow);
 
         // default
-        String direction = "bug";
+        String direction = "idle";
 
         if (pathFinder.autoSearch()) {
 
@@ -174,6 +167,7 @@ public class Enemy_Troll extends Entity {
                 } else if (enLeftX < nextX) {
                     direction = "right";
                 }
+
                 // falls up und links
             } else if (enTopY > nextY && enLeftX > nextX) {
                 direction = "up";
@@ -205,16 +199,12 @@ public class Enemy_Troll extends Entity {
 
             if (nextCol == goalCol && nextRow == goalRow) {
                 System.out.println("Ziel erreicht");
-                return "hit_right";
+                return "idle";
             }
 
         } else {
             System.out.println("kein Pfad mit Pathfinder gefunden");
         }
-
-//        if (direction.equals("bug")) {
-//            pathFinder.setNodes(startCol, startRow, goalCol, goalRow);
-//        }
 
         return direction;
         // https://www.youtube.com/watch?v=Hd0D68guFKg

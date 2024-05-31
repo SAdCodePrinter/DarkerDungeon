@@ -84,7 +84,7 @@ public class PathFinder {
     }
 
     public boolean autoSearch() {
-        while (!goalReached && step < 500) {
+        while (!goalReached && step < 800) {
 
             int col = currentNode.col;
             int row = currentNode.row;
