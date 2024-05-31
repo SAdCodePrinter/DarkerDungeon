@@ -7,7 +7,9 @@ public class Main {
     public static void main(String[] args) {
         Window window = new Window();
         gamePanel = new GamePanel();
-        window.setWindow(gamePanel);
         gamePanel.setupGame();
+
+
+        window.setWindow(gamePanel);
     }
 }

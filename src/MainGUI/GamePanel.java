@@ -17,11 +17,26 @@ public class GamePanel extends JPanel {
     private final int screenHeight = 48 * 14;
     private final int delay = 1000 / 60; // Timer delay für 60 FPS
 
-    // Game State
-    public int gameState;
-    public final int playState = 1;
-    public final int pauseState = 2;
+    public void setGameState(int gameState) {
+        this.gameState = gameState;
+    }
 
+    // Game State
+    private int gameState;
+    private final int playState = 1;
+    private final int pauseState = 2;
+
+    public int getGameState() {
+        return gameState;
+    }
+
+    public int getPlayState() {
+        return playState;
+    }
+
+    public int getPauseState() {
+        return pauseState;
+    }
 
     public int getScreenCol() {
         return 37;
@@ -77,10 +92,18 @@ public class GamePanel extends JPanel {
     }
 
     private void update() {
-        // den anderen Player übergeben, um eine Kollision abzufragen
-        characters.player1.move(characters.player2);
-        characters.player2.move(characters.player1);
-        characters.troll1.move(characters.player1, characters.player2);
+        if (gameState == playState) {
+            // den anderen Player übergeben, um eine Kollision abzufragen
+            characters.player1.move(characters.player2);
+            characters.player2.move(characters.player1);
+            characters.troll1.move(characters.player1, characters.player2);
+
+        }
+        if (gameState == pauseState) {
+
+        }
+
+
 
     }
 

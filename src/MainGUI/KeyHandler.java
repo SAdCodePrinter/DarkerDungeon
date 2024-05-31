@@ -5,11 +5,13 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    private final int up, down, left, right;
+    GamePanel gamePanel;
+    private int up, down, left, right;
     public boolean upPressed, downPressed, leftPressed, rightPressed;
 
 
-    public KeyHandler(int up, int down, int left, int right) {
+    public KeyHandler(int up, int down, int left, int right, GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
         this.up = up;
         this.down = down;
         this.left = left;
@@ -36,6 +38,14 @@ public class KeyHandler implements KeyListener {
         }
         if (code == this.right) {
             rightPressed = true;
+        }
+        if (code == KeyEvent.VK_P) {
+            if (gamePanel.getGameState() == gamePanel.getPlayState()) {
+                gamePanel.setGameState(gamePanel.getPauseState());
+            }
+//            else if (gamePanel.getGameState() == gamePanel.getPauseState()) {
+//                gamePanel.setGameState(gamePanel.getPlayState());
+//            }
         }
     }
 
