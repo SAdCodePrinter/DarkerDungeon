@@ -16,6 +16,9 @@ public class Entity {
     public BufferedImage[] left = new BufferedImage[8];
     public BufferedImage[] right = new BufferedImage[8];
     public BufferedImage[] idle = new BufferedImage[8];
+    public BufferedImage[] hit_right = new BufferedImage[8];
+    public BufferedImage[] hit_left = new BufferedImage[8];
+
 
     public boolean collisionOn = false;
     public int spriteCounter = 0;

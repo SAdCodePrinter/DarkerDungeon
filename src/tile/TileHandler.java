@@ -1,6 +1,7 @@
 package tile;
 
 import MainGUI.GamePanel;
+import entity.Enemy_Troll;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -8,22 +9,38 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class TileHandler {
 
     GamePanel gamePanel;
     public Tile[] tile;
     public int[][] mapTileNum;
+    public boolean drawPath = true;
 
     public TileHandler(GamePanel gamePanel) {
 
         this.gamePanel = gamePanel;
-        tile = new Tile[38];
+        tile = new Tile[37];
         mapTileNum = new int[gamePanel.getScreenCol()][gamePanel.getScreenRow()];
 
         getTileImage();
         loadMap();
 
+    }
+
+
+    public ArrayList<Integer> getColisionObjekts() {
+        int counter = 0;
+        ArrayList<Integer> objekts = new ArrayList<>();
+
+        for (int i = 0; i < tile.length; i++) {
+            if (tile[i].collision) {
+                objekts.add(i);
+            }
+        }
+
+        return objekts;
     }
 
     private void getTileImage() {
@@ -222,8 +239,11 @@ public class TileHandler {
         while (mapCol < gamePanel.getScreenCol() && mapRow < gamePanel.getScreenRow()) {
 
             int tileNum = mapTileNum[mapCol][mapRow];
-            if(isBackground) g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
-            if ((tileNum == 19 || tileNum == 20 || tileNum == 23 || tileNum == 31 || tileNum == 26 || tileNum == 29 || tileNum == 9 || tileNum == 10 || tileNum == 30) && !isBackground) g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+            if (isBackground)
+                g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+            if ((tileNum == 19 || tileNum == 20 || tileNum == 23 || tileNum == 31 || tileNum == 26 || tileNum == 29 || tileNum == 9 || tileNum == 10 || tileNum == 30) &&
+                    !isBackground)
+                g.drawImage(tile[tileNum].image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
             mapCol++;
             x += gamePanel.getTileSize();
 
@@ -232,6 +252,17 @@ public class TileHandler {
                 x = 0;
                 mapRow++;
                 y += gamePanel.getTileSize();
+            }
+        }
+
+        if (drawPath) {
+            g.setColor(new Color(255, 0, 0, 70));
+
+            for (int i = 0; i < gamePanel.characters.troll1.pathFinder.pathList.size(); i++) {
+                int worldX = gamePanel.characters.troll1.pathFinder.pathList.get(i).col * gamePanel.getTileSize();
+                int worldY = gamePanel.characters.troll1.pathFinder.pathList.get(i).row * gamePanel.getTileSize();
+
+                g.fillRect(worldX, worldY, gamePanel.getTileSize(), gamePanel.getTileSize());
             }
         }
     }
