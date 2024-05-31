@@ -45,7 +45,9 @@ public class Enemy_Troll extends Entity {
                 right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "right (" + (i + 1) + ").png")));
                 hit_right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_right (" + (i + 1) + ").png")));
                 hit_left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_left (" + (i + 1) + ").png")));
+                hit_down[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_down (" + (i + 1) + ").png")));
                 idle[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "idle (" + (i + 1) + ").png")));
+
             }
 
         } catch (IOException e) {
@@ -90,7 +92,7 @@ public class Enemy_Troll extends Entity {
                             !collisionHandler.noCollisionPlayer("down", x, y, player2.x, player2.y, speed, 36)) {
 
                         System.out.println("ACTIONNNN DOWNN");
-                        direction = "hit_right";
+                        direction = "hit_down";
                         break;
                     }
                     y += speed;
@@ -209,6 +211,7 @@ public class Enemy_Troll extends Entity {
                     case "right" -> right[spriteNum];
                     case "hit_right" -> hit_right[spriteNum];
                     case "hit_left" -> hit_left[spriteNum];
+                    case "hit_down" -> hit_down[spriteNum];
                     default -> null;
                 };
 

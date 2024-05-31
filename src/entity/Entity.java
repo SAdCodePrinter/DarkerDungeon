@@ -18,6 +18,7 @@ public class Entity {
     public BufferedImage[] idle = new BufferedImage[8];
     public BufferedImage[] hit_right = new BufferedImage[8];
     public BufferedImage[] hit_left = new BufferedImage[8];
+    public BufferedImage[] hit_down = new BufferedImage[8];
 
 
     public boolean collisionOn = false;
