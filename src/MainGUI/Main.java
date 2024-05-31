@@ -9,5 +9,6 @@ public class Main {
         gamePanel = new GamePanel();
         window.setWindow(gamePanel);
 
+
     }
 }

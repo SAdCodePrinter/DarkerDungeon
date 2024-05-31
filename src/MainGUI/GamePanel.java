@@ -5,15 +5,20 @@ import tile.TileHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class GamePanel extends JPanel{
+public class GamePanel extends JPanel {
     public Karaktere characters;
     public TileHandler tileH;
+    public UI ui = new UI(this);
     private final int screenWidth = 48 * 28;
     private final int screenHeight = 48 * 14;
     private final int delay = 1000 / 60; // Timer delay für 60 FPS
+
+    // Game State
+    public int gameState;
+    public final int playState = 1;
+    public final int pauseState = 2;
+
 
     public int getScreenCol() {
         return 37;
@@ -41,6 +46,10 @@ public class GamePanel extends JPanel{
 
     public int getScreenHeight() {
         return screenHeight;
+    }
+
+    public void gameSetup() {
+        gameState = playState;
     }
 
 
@@ -89,6 +98,7 @@ public class GamePanel extends JPanel{
         characters.troll1.drawHitbox(g1);
 
         tileH.drawBackGroundTiles(g1, false);
+        ui.draw(g1);
 
         g1.dispose();
 
