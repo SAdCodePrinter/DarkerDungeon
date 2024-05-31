@@ -44,7 +44,8 @@ public class Enemy_Troll extends Entity {
                 down[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "down (" + (i + 1) + ").png")));
                 left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "left (" + (i + 1) + ").png")));
                 right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "right (" + (i + 1) + ").png")));
-                //idle[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "idle (" + (i + 1) + ").png")));
+                hit_right [i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_right (" + (i + 1) + ").png")));
+                hit_left [i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_left (" + (i + 1) + ").png")));
             }
 
         } catch (IOException e) {
@@ -204,16 +205,16 @@ public class Enemy_Troll extends Entity {
 
             if (nextCol == goalCol && nextRow == goalRow) {
                 System.out.println("Ziel erreicht");
-                return "down";
+                return "hit_right";
             }
 
         } else {
             System.out.println("kein Pfad mit Pathfinder gefunden");
         }
 
-        if (direction.equals("bug")) {
-            pathFinder.setNodes(startCol, startRow, goalCol, goalRow);
-        }
+//        if (direction.equals("bug")) {
+//            pathFinder.setNodes(startCol, startRow, goalCol, goalRow);
+//        }
 
         return direction;
         // https://www.youtube.com/watch?v=Hd0D68guFKg
@@ -228,6 +229,8 @@ public class Enemy_Troll extends Entity {
                     case "down" -> down[spriteNum];
                     case "left" -> left[spriteNum];
                     case "right" -> right[spriteNum];
+                    case "hit_right" -> hit_right[spriteNum];
+                    case "hit_left" -> hit_left[spriteNum];
                     default -> null;
                 };
 
