@@ -11,6 +11,7 @@ public class Karaktere {
     public Player player1;
     public Player player2;
     public Enemy_Troll troll1;
+    public Enemy_Ghost ghost1;
     public KeyHandler kH1;
     public KeyHandler kH2;
 
@@ -30,6 +31,9 @@ public class Karaktere {
         // Gegner
         troll1 = new Enemy_Troll(gamePanel, "/npc/troll1/");
         troll1.setDefault(1050, 500, 2);
+
+        ghost1 = new Enemy_Ghost(gamePanel, "/npc/ghost1/");
+        ghost1.setDefault(1200, 500, 3);
 
     }
 

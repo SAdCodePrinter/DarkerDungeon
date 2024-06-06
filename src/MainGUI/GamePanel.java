@@ -90,6 +90,8 @@ public class GamePanel extends JPanel {
             characters.player2.move(characters.player1);
             characters.troll1.move(characters.player1, characters.player2);
 
+            characters.ghost1.move(characters.player1, characters.player2);
+
         }
         if (gameState == pauseState) {
 
@@ -120,6 +122,9 @@ public class GamePanel extends JPanel {
 
         characters.troll1.drawTroll(g1);
         characters.troll1.drawHitbox(g1);
+
+        characters.ghost1.drawGhost(g1);
+        characters.ghost1.drawHitbox(g1);
 
         tileH.drawBackGroundTiles(g1, false);
         ui.draw(g1);
