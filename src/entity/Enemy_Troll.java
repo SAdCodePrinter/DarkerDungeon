@@ -61,14 +61,19 @@ public class Enemy_Troll extends Entity {
     }
 
     public void move(Player player1, Player player2) {
+        // Welcher Spieler angesteuert werden soll
+        Player target = nearestPlayer(this, player1, player2);
+
+        spriteCounter(8);
         if (pathFinder == null) {
             setPathFinder();
         }
-        spriteCounter(8);
 
-        direction = searchPath(player1.getX() / gamePanel.getTileSize(), player1.getY() / gamePanel.getTileSize());
+        int tmp = target.getX();
+        // Die Richtung in die der Troll gehen soll festlegen
+        direction = searchPath(target.getX() / gamePanel.getTileSize(), target.getY() / gamePanel.getTileSize());
 
-        // Überprüfen, ob der Troll eine Wand oder einen Spieler trifft und die Richtung ändern
+        // Überprüfen, ob der Troll eine Wand oder einen Spieler trifft
         switch (direction) {
             case "up":
                 if (collisionHandler.noColisionWithTiles("up", x, y, speed, 36) &&
@@ -126,6 +131,17 @@ public class Enemy_Troll extends Entity {
                     x += speed;
                 }
                 break;
+        }
+    }
+
+    private Player nearestPlayer(Enemy_Troll troll, Player player1, Player player2) {
+        double distanceToPlayer1 = Math.sqrt(Math.pow(troll.getX() - player1.getX(), 2) + Math.pow(troll.getY() - player1.getY(), 2));
+        double distanceToPlayer2 = Math.sqrt(Math.pow(troll.getX() - player2.getX(), 2) + Math.pow(troll.getY() - player2.getY(), 2));
+
+        if (distanceToPlayer1 <= distanceToPlayer2) {
+            return player1;
+        } else {
+            return player2;
         }
     }
 

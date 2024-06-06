@@ -12,7 +12,7 @@ public class GamePanel extends JPanel {
     public TileHandler tileH;
     public UI ui = new UI(this);
     public ObjectHandler[] obj = new ObjectHandler[10];
-    public AssetSetter assetSetter = new AssetSetter(this);
+//    public AssetSetter assetSetter = new AssetSetter(this);
     private final int screenWidth = 48 * 28;
     private final int screenHeight = 48 * 14;
     private final int delay = 1000 / 60; // Timer delay für 60 FPS
@@ -23,17 +23,20 @@ public class GamePanel extends JPanel {
 
     // Game State
     private int gameState;
-    private final int playState = 1;
-    private final int pauseState = 2;
+    private final int startState = 0;
 
+    private final int playState = 1;
+
+    private final int pauseState = 2;
     public int getGameState() {
         return gameState;
     }
-
+    public int getStartState() {
+        return startState;
+    }
     public int getPlayState() {
         return playState;
     }
-
     public int getPauseState() {
         return pauseState;
     }
@@ -41,27 +44,15 @@ public class GamePanel extends JPanel {
     public int getScreenCol() {
         return 37;
     }
-
     public int getScreenRow() {
         return 18;
     }
-
     public int getTileSize() {
         return 36;
     }
-
-    public int getPHitboxWidth() {
-        return 36;
-    }
-
-    public int getPHitboxHeight() {
-        return 36;
-    }
-
     public int getScreenWidth() {
         return screenWidth;
     }
-
     public int getScreenHeight() {
         return screenHeight;
     }
@@ -70,7 +61,6 @@ public class GamePanel extends JPanel {
 //        assetSetter.setObject();
         gameState = playState;
     }
-
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -102,7 +92,6 @@ public class GamePanel extends JPanel {
         if (gameState == pauseState) {
 
         }
-
 
 
     }

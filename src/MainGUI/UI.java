@@ -24,7 +24,14 @@ public class UI {
         if (gamePanel.getGameState() == gamePanel.getPlayState()) {
 
         }
+
         if (gamePanel.getGameState() == gamePanel.getPauseState()) {
+            String text = "PAUSE";
+            int length = (int) g1.getFontMetrics().getStringBounds(text, g1).getWidth();
+            int x = gamePanel.getScreenWidth() / 2 - length / 2;
+            int y = gamePanel.getScreenHeight() / 2;
+
+            g1.drawString(text, x, y);
 
         }
 
@@ -40,6 +47,8 @@ public class UI {
         int length = (int) g1.getFontMetrics().getStringBounds(text, g1).getWidth();
         int x = gamePanel.getScreenWidth() / 2 - length / 2;
         int y = gamePanel.getScreenHeight() / 2;
+
+
     }
 }
 

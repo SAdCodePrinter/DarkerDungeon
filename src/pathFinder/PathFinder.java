@@ -1,6 +1,7 @@
 package pathFinder;
 
 import MainGUI.GamePanel;
+import tile.Tile;
 
 import java.util.ArrayList;
 
@@ -14,10 +15,13 @@ public class PathFinder {
     boolean goalReached = false;
     int step = 0;
 
-
     public PathFinder(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         instantiateNodes();
+    }
+
+    public PathFinder(int cols, int rows, int[][] mapTileNum, Tile[] tile) {
+        // toDo: Gamepanel entfernen
     }
 
     private void instantiateNodes() {
