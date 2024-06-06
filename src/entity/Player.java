@@ -16,6 +16,7 @@ public class Player extends Entity {
     //GamePanel gamePanel;
     KeyHandler keyH;
 
+
     public Player(GamePanel gamePanel, KeyHandler keyH, String imagePath) {
         super(gamePanel);
 
@@ -31,6 +32,10 @@ public class Player extends Entity {
         setY(yKoord);
         setSpeed(defineSpeed);
         setDirection("idle");
+
+        //Status
+        maxLife = 6;
+        life = maxLife;
     }
 
     public void getPlayerImage(String path) {
@@ -78,6 +83,7 @@ public class Player extends Entity {
                 // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
                 y -= (keyH.rightPressed || keyH.leftPressed) ?
                         (int) (speed * 0.8) : speed;
+                System.out.println("Slay Bitch");
             }
 
         } else if (keyH.downPressed) {

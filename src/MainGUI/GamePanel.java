@@ -57,8 +57,10 @@ public class GamePanel extends JPanel {
         return screenHeight;
     }
 
+
+    AssetSetter assetSetter = new AssetSetter(this);
     public void setupGame() {
-//        assetSetter.setObject();
+        assetSetter.setObject();
         gameState = playState;
     }
 
@@ -109,6 +111,12 @@ public class GamePanel extends JPanel {
 
         characters.player2.drawPlayer(g1);
         characters.player2.drawHitbox(g1);
+
+        for (int i = 0; i < obj.length; i++) {
+            if (obj [i] != null){
+                obj[i].draw(g1, this);
+            }
+        }
 
         characters.troll1.drawTroll(g1);
         characters.troll1.drawHitbox(g1);

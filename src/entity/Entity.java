@@ -29,6 +29,9 @@ public class Entity {
     public int x, y;
     public int speed;
     public String direction;
+    //Status:
+    public int maxLife;
+    public int life;
 
     public void setSpeed(int speed) {
         this.speed = speed;
