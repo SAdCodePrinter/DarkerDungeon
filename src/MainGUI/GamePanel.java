@@ -12,7 +12,7 @@ public class GamePanel extends JPanel {
     public TileHandler tileH;
     public UI ui = new UI(this);
     public ObjectHandler[] obj = new ObjectHandler[10];
-//    public AssetSetter assetSetter = new AssetSetter(this);
+    public AssetSetter assetSetter = new AssetSetter(this);
     private final int screenWidth = 48 * 28;
     private final int screenHeight = 48 * 14;
     private final int delay = 1000 / 60; // Timer delay für 60 FPS
@@ -57,8 +57,6 @@ public class GamePanel extends JPanel {
         return screenHeight;
     }
 
-
-    AssetSetter assetSetter = new AssetSetter(this);
     public void setupGame() {
         assetSetter.setObject();
         gameState = playState;

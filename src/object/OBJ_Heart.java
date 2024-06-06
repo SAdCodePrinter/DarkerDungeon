@@ -28,8 +28,6 @@ public class OBJ_Heart extends ObjectHandler {
             image3 = uTool.scaleImage(image3, scaledWidth, scaledHeight);
 
 
-            //image1 = uTool.scaleImage(image1, gamePanel.getTileSize(), gamePanel.getTileSize());
-
         } catch (IOException e){
             e.printStackTrace();
         }

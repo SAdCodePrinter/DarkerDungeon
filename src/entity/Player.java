@@ -46,6 +46,8 @@ public class Player extends Entity {
                 left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "left (" + (i + 1) + ").png")));
                 right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "right (" + (i + 1) + ").png")));
                 idle[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "idle (" + (i + 1) + ").png")));
+                //hit_left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_left (" + (i + 1) + ").png")));
+                //hit_right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_right (" + (i + 1) + ").png")));
             }
 
         } catch (IOException e) {
@@ -92,6 +94,7 @@ public class Player extends Entity {
             if (collisionHandler.noColisionDown(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
                 y += (keyH.rightPressed || keyH.leftPressed) ?
                         (int) (speed * 0.8) : speed;
+
             }
         }
 
@@ -130,6 +133,7 @@ public class Player extends Entity {
                     case "down" -> down[spriteNum];
                     case "left" -> left[spriteNum];
                     case "right" -> right[spriteNum];
+                    case "hit_left" -> hit_left[spriteNum];
                     default -> null;
                 };
 
