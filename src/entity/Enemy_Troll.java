@@ -35,6 +35,10 @@ public class Enemy_Troll extends Entity {
         setY(yKoord);
         setSpeed(defineSpeed);
         setDirection("down");
+
+        //Status
+        maxLife = 6;
+        life = maxLife;
     }
 
     public void getTrollImage(String path) {
@@ -81,7 +85,6 @@ public class Enemy_Troll extends Entity {
                     if (!collisionHandler.noCollisionPlayer("up", x, y, player1.x, player1.y, speed, 36) ||
                             !collisionHandler.noCollisionPlayer("up", x, y, player2.x, player2.y, speed, 36)) {
 
-                        System.out.println("ACTIONNNN UPPP");
                         direction = "hit_left";
                         break;
                     }
@@ -95,7 +98,7 @@ public class Enemy_Troll extends Entity {
                     if (!collisionHandler.noCollisionPlayer("down", x, y, player1.x, player1.y, speed, 36) ||
                             !collisionHandler.noCollisionPlayer("down", x, y, player2.x, player2.y, speed, 36)) {
 
-                        System.out.println("ACTIONNNN DOWNN");
+
                         direction = "hit_down";
                         break;
                     }
@@ -109,7 +112,7 @@ public class Enemy_Troll extends Entity {
                     if (!collisionHandler.noCollisionPlayer("left", x, y, player1.x, player1.y, speed, 36) ||
                             !collisionHandler.noCollisionPlayer("left", x, y, player2.x, player2.y, speed, 36)) {
 
-                        System.out.println("ACTIONNNN LEFTTT");
+
                         direction = "hit_left";
                         break;
                     }
@@ -123,7 +126,7 @@ public class Enemy_Troll extends Entity {
                     if (!collisionHandler.noCollisionPlayer("right", x, y, player1.x, player1.y, speed, 36) ||
                             !collisionHandler.noCollisionPlayer("right", x, y, player2.x, player2.y, speed, 36)) {
 
-                        System.out.println("ACTIONNNN RIGHHTTT");
+
                         direction = "hit_right";
                         break;
                     }
