@@ -22,6 +22,7 @@ public class Enemy_Ghost extends Entity {
     private void getGhostImage(String path) {
         try {
             for (int i = 0; i < 8; i++) {
+                String tmp = path + "idle (" + (i + 1) + ").png";
                 idle[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "idle (" + (i + 1) + ").png")));
             }
         } catch (IOException e) {
