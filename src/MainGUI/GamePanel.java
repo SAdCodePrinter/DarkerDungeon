@@ -13,7 +13,7 @@ public class GamePanel extends JPanel {
     public UI ui = new UI(this);
     public EventHandler eventHandler = new EventHandler(this);
     public ObjectHandler[] obj = new ObjectHandler[10];
-    //public AssetSetter assetSetter = new AssetSetter(this);
+//    public AssetSetter assetSetter = new AssetSetter(this);
     private final int screenWidth = 48 * 28;
     private final int screenHeight = 48 * 14;
     private final int delay = 1000 / 60; // Timer delay für 60 FPS
@@ -113,11 +113,11 @@ public class GamePanel extends JPanel {
 
 //        eventHandler.drawRect(g1);
 
-        for (int i = 0; i < obj.length; i++) {
-            if (obj [i] != null){
-                obj[i].draw(g1, this);
-            }
-        }
+//        for (int i = 0; i < obj.length; i++) {
+//            if (obj [i] != null){
+//                obj[i].draw(g1, this);
+//            }
+//        }
 
         characters.troll1.drawTroll(g1);
         characters.troll1.drawHitbox(g1);
