@@ -11,7 +11,6 @@ public class GamePanel extends JPanel {
     public Karaktere characters;
     public TileHandler tileH;
     public UI ui = new UI(this);
-    public EventHandler eventHandler = new EventHandler(this);
     public ObjectHandler[] obj = new ObjectHandler[10];
     //public AssetSetter assetSetter = new AssetSetter(this);
     private final int screenWidth = 48 * 28;
@@ -111,8 +110,6 @@ public class GamePanel extends JPanel {
         characters.player2.drawPlayer(g1);
         characters.player2.drawHitbox(g1);
 
-//        eventHandler.drawRect(g1);
-
         for (int i = 0; i < obj.length; i++) {
             if (obj [i] != null){
                 obj[i].draw(g1, this);
@@ -121,9 +118,6 @@ public class GamePanel extends JPanel {
 
         characters.troll1.drawTroll(g1);
         characters.troll1.drawHitbox(g1);
-
-        characters.player1.drawDamage(g1);
-        characters.player2.drawDamage(g1);
 
         tileH.drawBackGroundTiles(g1, false);
         ui.draw(g1);

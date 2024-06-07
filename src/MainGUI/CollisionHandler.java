@@ -9,49 +9,6 @@ public class CollisionHandler {
         this.gamePanel = gamePanel;
     }
 
-    public boolean noPlayerCollision(int leftX1, int topY1, int leftX2, int topY2, int tileSize) {
-
-        // toDO: auch mit Tiles so machen
-        // Punkte
-        int rightX1 = leftX1 + tileSize;
-        int bottomY1 = topY1 + tileSize;
-
-        int rightX2 = leftX2 + tileSize;
-        int bottomY2 = topY2 + tileSize;
-
-        // Rechts oder links vom Rechteck
-        if (leftX1 >= rightX2 || leftX2 >= rightX1) {
-            return true;
-        }
-
-        // Überprüfen, ob eines der Rechtecke oberhalb des anderen liegt
-        if (topY1 >= bottomY2 || topY2 >= bottomY1) {
-            return true;
-        }
-
-        return false;
-    }
-    public boolean enemyCollision(int leftX1, int topY1, int leftX2, int topY2, int tileSize) {
-        // Punkte
-        int rightX1 = leftX1 + tileSize;
-        int bottomY1 = topY1 + tileSize;
-
-        int rightX2 = leftX2 + tileSize;
-        int bottomY2 = topY2 + tileSize;
-
-        // Rechts oder links vom Rechteck
-        if (leftX1 >= rightX2 || leftX2 >= rightX1) {
-            return false;
-        }
-
-        // Überprüfen, ob eines der Rechtecke oberhalb des anderen liegt
-        if (topY1 >= bottomY2 || topY2 >= bottomY1) {
-            return false;
-        }
-
-        return true;
-    }
-
     public boolean noCollisionPlayer(String direction, int leftX1, int topY1, int leftX2, int topY2, int speed, int tileSize) {
 
         // Punkte
@@ -89,8 +46,10 @@ public class CollisionHandler {
 
     public boolean noColisionWithTiles(String direction, int leftX1, int topY1, int speed, int tileSize) {
         // wird um 2 pro Seite verkleinert, da sonst das errechnete Quadrat nicht zwischen zwei tiles passt
-        int rightX1 = leftX1 + tileSize;
-        int bottomY1 = topY1 + tileSize;
+        int rightX1 = leftX1 + tileSize - 2;
+        leftX1 += 2;
+        int bottomY1 = topY1 + tileSize - 2;
+        topY1 += 2;
 
         // die Rows und Cols - Größen berechnen
         // toDO: Entity col
@@ -150,8 +109,8 @@ public class CollisionHandler {
     }
 
     public boolean insideBoarder(int x, int y) {
-        return x > 0 && x < gamePanel.getScreenCol() * gamePanel.getTileSize() + gamePanel.getTileSize()&&
-                y > 0 && y < gamePanel.getScreenRow() * gamePanel.getTileSize() + gamePanel.getTileSize();
+        return x > 0 && x < gamePanel.getScreenCol() * gamePanel.getTileSize() &&
+                y > 0 && y < gamePanel.getScreenRow() * gamePanel.getTileSize();
     }
 
     /**
@@ -163,10 +122,7 @@ public class CollisionHandler {
      * @return
      */
     public boolean noColisionUp(int leftX1, int topY1, int leftX2, int topY2, int speed, int tileSize) {
-
-        return noPlayerCollision(leftX1, topY1 - speed, leftX2, topY2, tileSize) &&
-
-
+        return noCollisionPlayer("up", leftX1, topY1, leftX2, topY2, speed, tileSize) &&
                 (topY1 > 0 || topY1 < gamePanel.getScreenRow() * gamePanel.getTileSize()) &&
                 noColisionWithTiles("up", leftX1, topY1, speed, tileSize);
     }
@@ -188,8 +144,4 @@ public class CollisionHandler {
                 (leftX1 > 0 || leftX1 < gamePanel.getScreenCol() * gamePanel.getTileSize()) &&
                 noColisionWithTiles("right", leftX1, topY1, speed, tileSize);
     }
-
-//    public boolean noCollision(int leftX1, int topY1, int leftX2, int topY2, int tileSize) {
-//
-//    }
 }
