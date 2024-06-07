@@ -15,6 +15,8 @@ public class OBJ_Heart extends ObjectHandler {
     public OBJ_Heart(GamePanel gamePanel){
         this.gamePanel = gamePanel;
 
+
+
         name = "Heart";
         try {
             image1 = ImageIO.read(getClass().getResourceAsStream("/objects/heart_full.png"));
@@ -32,6 +34,7 @@ public class OBJ_Heart extends ObjectHandler {
             e.printStackTrace();
         }
     }
+
 }
 
 
