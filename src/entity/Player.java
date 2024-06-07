@@ -205,7 +205,9 @@ public class Player extends Entity {
             }
             if (hitSpritCounter > 12 && hitSpritCounter <= 16) {
                 hitSpriteNum = 4;
-                attacking();
+                if (hitSpritCounter == 14) {
+                    attacking();
+                }
             }
             if (hitSpritCounter > 16) {
                 hitSpriteNum = 1;
