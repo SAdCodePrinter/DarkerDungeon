@@ -33,7 +33,7 @@ public class Karaktere {
         troll1.setDefault(1050, 500, 2);
 
         ghost1 = new Enemy_Ghost(gamePanel, "/npc/ghost1/");
-        ghost1.setDefault(1200, 500, 3);
+        ghost1.setDefault(1200, 500, 1);
 
     }
 

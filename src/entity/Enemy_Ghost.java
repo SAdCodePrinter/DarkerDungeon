@@ -1,6 +1,5 @@
 package entity;
 
-import MainGUI.CollisionHandler;
 import MainGUI.GamePanel;
 
 import javax.imageio.ImageIO;
@@ -11,11 +10,10 @@ import java.util.Objects;
 
 public class Enemy_Ghost extends Entity {
 
-    private final CollisionHandler collisionHandler;
+    private int spriteCounter = 0; // Counter to keep track of animation frames
 
     public Enemy_Ghost(GamePanel gamePanel, String imagePath) {
         super(gamePanel);
-        collisionHandler = new CollisionHandler(gamePanel);
         getGhostImage(imagePath);
     }
 
@@ -23,14 +21,12 @@ public class Enemy_Ghost extends Entity {
         try {
             for (int i = 0; i < 8; i++) {
                 String tmp = path + "idle (" + (i + 1) + ").png";
-                idle[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "idle (" + (i + 1) + ").png")));
+                idle[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(tmp)));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
 
     public void setDefault(int xKoord, int yKoord, int defineSpeed) {
         setX(xKoord);
@@ -46,7 +42,26 @@ public class Enemy_Ghost extends Entity {
 
     public void move(Player player1, Player player2) {
         Player target = nearestPlayer(this, player1, player2);
-        // Die Richtung in die der Ghost gehen soll festlegen
+
+        int targetX = target.getX();
+        int targetY = target.getY();
+
+        if (getX() < targetX) {
+            setX(getX() + speed);
+        } else if (getX() > targetX) {
+            setX(getX() - speed);
+        }
+
+        if (getY() < targetY) {
+            setY(getY() + speed);
+        } else if (getY() > targetY) {
+            setY(getY() - speed);
+        }
+
+        // Update sprite animation
+        updateSprite();
+
+        // Set the direction of the ghost based on movement
         direction = "idle";
     }
 
@@ -57,15 +72,22 @@ public class Enemy_Ghost extends Entity {
         return distanceToPlayer1 <= distanceToPlayer2 ? player1 : player2;
     }
 
+    private void updateSprite() {
+        spriteCounter++;
+        if (spriteCounter > 10) { // Adjust the speed of the animation here
+            spriteNum++;
+            if (spriteNum >= idle.length) {
+                spriteNum = 0;
+            }
+            spriteCounter = 0;
+        }
+    }
+
     public void drawGhost(Graphics2D g) {
-        BufferedImage imageGhost =
-                switch (direction) {
-                    case "idle" -> idle[spriteNum];
-                    default -> null;
-                };
+        BufferedImage imageGhost = idle[spriteNum];
 
         if (imageGhost != null) {
-            g.drawImage(imageGhost, getX() - 32, getY() - 36, gamePanel.getTileSize() * 3, gamePanel.getTileSize() * 3, null);
+            g.drawImage(imageGhost, getX() - 20, getY() - gamePanel.getTileSize() / 2, gamePanel.getTileSize() * 2, gamePanel.getTileSize() * 2, null);
         }
     }
 }
