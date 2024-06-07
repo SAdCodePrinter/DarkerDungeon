@@ -16,7 +16,6 @@ public class Player extends Entity {
     //GamePanel gamePanel;
     KeyHandler keyH;
 
-
     public Player(GamePanel gamePanel, KeyHandler keyH, String imagePath) {
         super(gamePanel);
 
@@ -46,9 +45,16 @@ public class Player extends Entity {
                 left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "left (" + (i + 1) + ").png")));
                 right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "right (" + (i + 1) + ").png")));
                 idle[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "idle (" + (i + 1) + ").png")));
+                String pathTmp = path + "hit_left (" + (i + 1) + ").png";
                 hit_left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_left (" + (i + 1) + ").png")));
-                //hit_right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_right (" + (i + 1) + ").png")));
+                hit_right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_right (" + (i + 1) + ").png")));
             }
+
+            // Diese Animation hat 4 Bilder
+//            for (int i = 0; i < 4; i++) {
+//                hit_left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "swing_left (" + (i + 1) + ").png")));
+//                hit_right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "swing_right (" + (i + 1) + ").png")));
+//            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,6 +66,7 @@ public class Player extends Entity {
         g.setColor(Color.red);
         g.drawRect(x, y, 36, 36);
     }
+
     /**
      * Updatet die Positionskoordinaten, wenn keine Kollision entsteht
      *
@@ -83,8 +90,7 @@ public class Player extends Entity {
 
             if (collisionHandler.noColisionUp(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
                 // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
-                y -= (keyH.rightPressed || keyH.leftPressed) ?
-                        (int) (speed * 0.8) : speed;
+                y -= (keyH.rightPressed || keyH.leftPressed) ? (int) (speed * 0.8) : speed;
                 System.out.println("Slay Bitch");
             }
 

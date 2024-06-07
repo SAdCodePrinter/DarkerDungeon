@@ -69,7 +69,6 @@ public class Enemy_Troll extends Entity {
             setPathFinder();
         }
 
-        int tmp = target.getX();
         // Die Richtung in die der Troll gehen soll festlegen
         direction = searchPath(target.getX() / gamePanel.getTileSize(), target.getY() / gamePanel.getTileSize());
 
