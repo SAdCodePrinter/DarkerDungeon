@@ -11,7 +11,6 @@ public class GamePanel extends JPanel {
     public Karaktere characters;
     public TileHandler tileH;
     public UI ui = new UI(this);
-    public EventHandler eventHandler = new EventHandler(this);
     public ObjectHandler[] obj = new ObjectHandler[10];
 //    public AssetSetter assetSetter = new AssetSetter(this);
     private final int screenWidth = 48 * 28;
@@ -89,6 +88,8 @@ public class GamePanel extends JPanel {
             characters.player2.move(characters.player1);
             characters.troll1.move(characters.player1, characters.player2);
 
+            characters.ghost1.move(characters.player1, characters.player2);
+
         }
         if (gameState == pauseState) {
 
@@ -106,9 +107,12 @@ public class GamePanel extends JPanel {
 
         draw.backGroundTiles(g1, true);
 
+        characters.ghost1.drawGhost(g1);
+//        characters.ghost1.drawHitbox(g1);
+
         characters.player1.drawPlayer(g1);
-        characters.player1.drawHitbox(g1);
         characters.player1.drawDamage(g1);
+//        characters.player1.drawHitbox(g1);
 
         characters.player2.drawPlayer(g1);
         characters.player2.drawHitbox(g1);
@@ -117,6 +121,7 @@ public class GamePanel extends JPanel {
         eventHandler.drawEvent(g1);
 
 //        eventHandler.drawRect(g1);
+//        characters.player2.drawHitbox(g1);
 
 //        for (int i = 0; i < obj.length; i++) {
 //            if (obj [i] != null){
@@ -125,7 +130,7 @@ public class GamePanel extends JPanel {
 //        }
 
         characters.troll1.drawTroll(g1);
-        characters.troll1.drawHitbox(g1);
+//        characters.troll1.drawHitbox(g1);
         characters.troll1.drawDamage(g1);
 
 

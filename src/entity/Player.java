@@ -176,7 +176,7 @@ public class Player extends Entity {
         }
 
         // Check Event
-        gamePanel.eventHandler.checkEvent(this, direction);
+        //gamePanel.eventHandler.checkEvent(this, direction);
 
     }
 
