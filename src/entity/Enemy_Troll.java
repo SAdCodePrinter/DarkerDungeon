@@ -75,6 +75,7 @@ public class Enemy_Troll extends Entity {
         Player target = nearestPlayer(this, player1, player2);
 
         spriteCounter(8);
+
         if (pathFinder == null) {
             setPathFinder();
         }

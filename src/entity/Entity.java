@@ -47,6 +47,7 @@ public class Entity {
     }
 
     public Rectangle attackRect = new Rectangle(0, 0, 0, 0);
+
     public Rectangle getRect() {
         return new Rectangle(x, y, x + gamePanel.getTileSize(), y + gamePanel.getTileSize());
     }
@@ -67,6 +68,7 @@ public class Entity {
         this.y = y;
     }
 
+
     public void spriteCounter(int images) {
         spriteCounter++;
         if (spriteCounter > images - 1) {
@@ -75,5 +77,6 @@ public class Entity {
             spriteCounter = 0;
         }
     }
+
 
 }

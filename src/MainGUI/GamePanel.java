@@ -108,7 +108,7 @@ public class GamePanel extends JPanel {
 
         draw.backGroundTiles(g1, true);
 
-        characters.ghost1.drawGhost(g1);
+        draw.drawGhost(g1);
 //        characters.ghost1.drawHitbox(g1);
 
         characters.player1.drawPlayer(g1);
@@ -133,7 +133,6 @@ public class GamePanel extends JPanel {
         characters.troll1.drawTroll(g1);
 //        characters.troll1.drawHitbox(g1);
         characters.troll1.drawDamage(g1);
-
 
         draw.backGroundTiles(g1, false);
         ui.draw(g1);

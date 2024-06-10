@@ -126,8 +126,6 @@ public class Player extends Entity {
                 directionHit = "hit_right";
             }
 
-
-
         }
 
         if (!keyH.upPressed && !keyH.downPressed && !keyH.leftPressed && !keyH.rightPressed) {

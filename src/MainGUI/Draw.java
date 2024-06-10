@@ -1,6 +1,9 @@
 package MainGUI;
 
+import entity.Player;
+
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Draw {
     private GamePanel gamePanel;
@@ -9,6 +12,7 @@ public class Draw {
     public Draw(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
     }
+
     public void backGroundTiles(Graphics2D g, boolean isBackground) {
         int mapRow = 0;
         int mapCol = 0;
@@ -44,4 +48,13 @@ public class Draw {
             }
         }
     }
+
+    public void drawGhost(Graphics2D g) {
+        BufferedImage imageGhost = gamePanel.characters.ghost1.idle[gamePanel.characters.ghost1.spriteNum];
+
+        if (imageGhost != null) {
+            g.drawImage(imageGhost, gamePanel.characters.ghost1.x - 20, gamePanel.characters.ghost1.y - gamePanel.getTileSize() / 2, gamePanel.getTileSize() * 2, gamePanel.getTileSize() * 2, null);
+        }
+    }
+
 }
