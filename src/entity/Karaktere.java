@@ -15,6 +15,7 @@ public class Karaktere {
     public Enemy_Ghost ghost1;
     public KeyHandler kH1;
     public KeyHandler kH2;
+    private boolean ghostSpawned = false;
 
 
     public Karaktere(GamePanel gamePanel) {
@@ -29,7 +30,7 @@ public class Karaktere {
 
         // Gegner
         spawnTroll(1050, 500, 2, "/npc/troll1/");
-        spawnGhost(900, 400, 1, "/npc/ghost1/");
+       // spawnGhost(900, 400, 1, "/npc/ghost1/");
 
     }
 // toDo: Spielernamen integrieren
@@ -46,8 +47,11 @@ public class Karaktere {
     }
 
     public void spawnGhost(int x, int y, int speed, String imagePath) {
-        ghost1 = new Enemy_Ghost(gamePanel, imagePath);
-        ghost1.setDefault(x, y, speed);
+        if (!ghostSpawned) {
+            ghost1 = new Enemy_Ghost(gamePanel, imagePath);
+            ghost1.setDefault(x, y, speed);
+            ghostSpawned = true;
+        }
     }
 
 }
