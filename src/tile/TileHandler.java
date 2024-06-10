@@ -21,7 +21,7 @@ public class TileHandler {
     public TileHandler(GamePanel gamePanel) {
 
         this.gamePanel = gamePanel;
-        tile = new Tile[37];
+        tile = new Tile[38];
         mapTileNum = new int[gamePanel.getScreenCol()][gamePanel.getScreenRow()];
 
         getTileImage();
@@ -173,6 +173,9 @@ public class TileHandler {
             tile[36] = new Tile();
             tile[36].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/object_door_wall_west_top.png")));
             tile[36].collision = true;
+
+            tile[37] = new Tile();
+            tile[37].image = ImageIO.read(getClass().getResourceAsStream("/tiles/spikes.png"));
 
         } catch (IOException e) {
             e.printStackTrace();

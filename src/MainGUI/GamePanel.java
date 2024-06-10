@@ -114,6 +114,8 @@ public class GamePanel extends JPanel {
         characters.player2.drawHitbox(g1);
         characters.player2.drawDamage(g1);
 
+        eventHandler.drawEvent(g1);
+
 //        eventHandler.drawRect(g1);
 
 //        for (int i = 0; i < obj.length; i++) {
