@@ -12,6 +12,7 @@ public class GamePanel extends JPanel {
     public TileHandler tileH;
     public UI ui = new UI(this);
     public ObjectHandler[] obj = new ObjectHandler[10];
+    public EventHandler eventHandler = new EventHandler(this);
 //    public AssetSetter assetSetter = new AssetSetter(this);
     private final int screenWidth = 48 * 28;
     private final int screenHeight = 48 * 14;
