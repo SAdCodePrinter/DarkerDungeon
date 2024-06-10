@@ -1,12 +1,14 @@
 package pathFinder;
 
-import MainGUI.GamePanel;
 import tile.Tile;
 
 import java.util.ArrayList;
 
 public class PathFinder {
-    private GamePanel gamePanel;
+    private final int cols, rows;
+    private final int[][] tileMap;
+    private final Tile[] collisionTiles;
+
     Node[][] nodes;
     ArrayList<Node> openList = new ArrayList<>();
     ArrayList<Node> checkedList = new ArrayList<>();
@@ -15,20 +17,21 @@ public class PathFinder {
     boolean goalReached = false;
     int step = 0;
 
-    public PathFinder(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+    public PathFinder(int cols, int rows, int[][] tileMap, Tile[] collisionTiles) {
+        // toDo: Gamepanel entfernen
+        this.cols = cols;
+        this.rows = rows;
+        this.tileMap = tileMap;
+        this.collisionTiles = collisionTiles;
+
         instantiateNodes();
     }
 
-    public PathFinder(int cols, int rows, int[][] mapTileNum, Tile[] tile) {
-        // toDo: Gamepanel entfernen
-    }
-
     private void instantiateNodes() {
-        nodes = new Node[gamePanel.getScreenCol()][gamePanel.getScreenRow()];
+        nodes = new Node[cols][rows];
 
-        for (int row = 0; row < gamePanel.getScreenRow(); row++) {
-            for (int col = 0; col < gamePanel.getScreenCol(); col++) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
                 nodes[col][row] = new Node(col, row);
             }
         }
@@ -36,8 +39,8 @@ public class PathFinder {
 
     public void resetNodes() {
 
-        for (int row = 0; row < gamePanel.getScreenRow() ; row++) {
-            for (int col = 0; col < gamePanel.getScreenCol() ; col++) {
+        for (int row = 0; row < rows ; row++) {
+            for (int col = 0; col < cols; col++) {
                 nodes[col][row].open = false;
                 nodes[col][row].checked = false;
                 nodes[col][row].solid = false;
@@ -57,12 +60,12 @@ public class PathFinder {
         goalNode = nodes[endCol][endRow];
         openList.add(currentNode);
 
-        for (int row = 0; row < gamePanel.getScreenRow(); row++) {
-            for (int col = 0; col < gamePanel.getScreenCol(); col++) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
 
                 // set solid Nodes
-                int tileNum = gamePanel.tileH.mapTileNum[col][row];
-                if (gamePanel.tileH.tile[tileNum].collision) {
+                int tileNum = tileMap[col][row];
+                if (collisionTiles[tileNum].collision) {
                     nodes[col][row].solid = true;
                 }
 
@@ -106,11 +109,11 @@ public class PathFinder {
                 openNode(nodes[col - 1][row]);
             }
             // untere Node:
-            if (row + 1 < gamePanel.getScreenRow()) {
+            if (row + 1 < rows) {
                 openNode(nodes[col][row + 1]);
             }
             // rechte Node:
-            if (col + 1 < gamePanel.getScreenCol()) {
+            if (col + 1 < cols) {
                 openNode(nodes[col + 1][row]);
             }
 

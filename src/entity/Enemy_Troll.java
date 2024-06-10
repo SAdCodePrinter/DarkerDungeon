@@ -2,15 +2,12 @@ package entity;
 
 import MainGUI.CollisionHandler;
 import MainGUI.GamePanel;
-import pathFinder.Node;
 import pathFinder.PathFinder;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.security.PublicKey;
-import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -27,7 +24,8 @@ public class Enemy_Troll extends Entity {
     }
 
     public void setPathFinder() {
-        pathFinder = new PathFinder(gamePanel);
+//        pathFinder = new PathFinder(gamePanel);
+        pathFinder = new PathFinder(gamePanel.getScreenCol(), gamePanel.getScreenRow(), gamePanel.tileH.mapTileNum, gamePanel.tileH.tile);
     }
 
     public void setDefault(int xKoord, int yKoord, int defineSpeed) {
@@ -74,16 +72,15 @@ public class Enemy_Troll extends Entity {
         }
 
         // Die Richtung in die der Troll gehen soll festlegen
-        direction = searchPath(target.getX() / gamePanel.getTileSize(), target.getY() / gamePanel.getTileSize());
+        direction = nextTargetDirection(target.getX() / gamePanel.getTileSize(), target.getY() / gamePanel.getTileSize());
 
         // Überprüfen, ob der Troll eine Wand oder einen Spieler trifft
         switch (direction) {
             case "up":
-                if (collisionHandler.noColisionWithTiles("up", x, y, speed, 36) &&
-                        collisionHandler.insideBoarder(x, y)) {
+                if (collisionHandler.insideBoarder(x, y)) {
 
-                    if (!collisionHandler.noCollisionPlayer("up", x, y, player1.x, player1.y, speed, 36) ||
-                            !collisionHandler.noCollisionPlayer("up", x, y, player2.x, player2.y, speed, 36)) {
+                    if (!collisionHandler.noPlayerCollision(x, y - speed, player1.x, player1.y, 36) ||
+                            !collisionHandler.noPlayerCollision(x, y - speed, player2.x, player2.y, 36)) {
 
                         direction = "hit_left";
                         break;
@@ -93,11 +90,9 @@ public class Enemy_Troll extends Entity {
                 break;
 
             case "down":
-                if (collisionHandler.noColisionWithTiles("down", x, y, speed, 36) &&
-                        collisionHandler.insideBoarder(x, y)) {
-                    if (!collisionHandler.noCollisionPlayer("down", x, y, player1.x, player1.y, speed, 36) ||
-                            !collisionHandler.noCollisionPlayer("down", x, y, player2.x, player2.y, speed, 36)) {
-
+                if (collisionHandler.insideBoarder(x, y)) {
+                    if (!collisionHandler.noPlayerCollision(x, y + speed, player1.x, player1.y, 36) ||
+                            !collisionHandler.noPlayerCollision(x, y + speed, player1.x, player1.y, 36)) {
 
                         direction = "hit_down";
                         break;
@@ -107,10 +102,9 @@ public class Enemy_Troll extends Entity {
                 break;
 
             case "left":
-                if (collisionHandler.noColisionWithTiles("left", x, y, speed, 36) &&
-                        collisionHandler.insideBoarder(x, y)) {
-                    if (!collisionHandler.noCollisionPlayer("left", x, y, player1.x, player1.y, speed, 36) ||
-                            !collisionHandler.noCollisionPlayer("left", x, y, player2.x, player2.y, speed, 36)) {
+                if (collisionHandler.insideBoarder(x, y)) {
+                    if (!collisionHandler.noPlayerCollision(x - speed, y, player1.x, player1.y, 36) ||
+                            !collisionHandler.noPlayerCollision(x - speed, y, player1.x, player1.y, 36)) {
 
 
                         direction = "hit_left";
@@ -121,10 +115,9 @@ public class Enemy_Troll extends Entity {
                 break;
 
             case "right":
-                if (collisionHandler.noColisionWithTiles("right", x, y, speed, 36) &&
-                        collisionHandler.insideBoarder(x, y)) {
-                    if (!collisionHandler.noCollisionPlayer("right", x, y, player1.x, player1.y, speed, 36) ||
-                            !collisionHandler.noCollisionPlayer("right", x, y, player2.x, player2.y, speed, 36)) {
+                if (collisionHandler.insideBoarder(x, y)) {
+                    if (!collisionHandler.noPlayerCollision(x + speed, y, player1.x, player1.y, 36) ||
+                            !collisionHandler.noPlayerCollision(x + speed, y, player1.x, player1.y, 36)) {
 
 
                         direction = "hit_right";
@@ -147,7 +140,7 @@ public class Enemy_Troll extends Entity {
         }
     }
 
-    public String searchPath(int goalCol, int goalRow) {
+    public String nextTargetDirection(int goalCol, int goalRow) {
         int startCol = x / (gamePanel.getTileSize());
         int startRow = y / (gamePanel.getTileSize());
 
@@ -171,7 +164,7 @@ public class Enemy_Troll extends Entity {
             int bottmY2 = pathFinder.pathList.get(0).row * gamePanel.getTileSize() + gamePanel.getTileSize();
 
 
-            // Verschiedene Richtungen
+            // Richtungen bestimmen in die gelaufen wird
             if (topY > topY2 && leftX >= leftX2 && rightX <= rightX2) {
                 direction = "up";
             } else if (topY < topY2 && leftX >= leftX2 && rightX <= rightX2) {
@@ -183,7 +176,7 @@ public class Enemy_Troll extends Entity {
                     direction = "right";
                 }
 
-                // falls up und schräg, Kollision mit Teilen beachten
+                // falls up & schräg, Kollision mit Teilen beachten
             } else if (topY > topY2 && leftX > leftX2) {
                 direction = "up";
                 if (!collisionHandler.noColisionWithTiles("up", leftX, topY, speed, 36)) {
