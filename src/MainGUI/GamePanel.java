@@ -65,7 +65,9 @@ public class GamePanel extends JPanel {
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+
         characters = new Karaktere(this);
+
         tileH = new TileHandler(this);
 
         this.setBackground(Color.black);
@@ -85,11 +87,11 @@ public class GamePanel extends JPanel {
     private void update() {
         if (gameState == playState) {
             // den anderen Player übergeben, um eine Kollision abzufragen
-            characters.player1.move(characters.player2);
-            characters.player2.move(characters.player1);
-            characters.troll1.move(characters.player1, characters.player2);
+            characters.players.get(0).move(characters.players.get(1));
+            characters.players.get(1).move(characters.players.get(0));
 
-            characters.ghost1.move(characters.player1, characters.player2);
+            characters.troll1.move(characters.players.get(0), characters.players.get(1));
+            characters.ghost1.move(characters.players.get(0), characters.players.get(1));
 
         }
         if (gameState == pauseState) {
@@ -111,13 +113,13 @@ public class GamePanel extends JPanel {
         draw.drawGhost(g1);
 //        characters.ghost1.drawHitbox(g1);
 
-        characters.player1.drawPlayer(g1);
-        characters.player1.drawDamage(g1);
+        characters.players.get(0).drawPlayer(g1);
+        characters.players.get(0).drawDamage(g1);
 //        characters.player1.drawHitbox(g1);
 
-        characters.player2.drawPlayer(g1);
-        characters.player2.drawHitbox(g1);
-        characters.player2.drawDamage(g1);
+        characters.players.get(1).drawPlayer(g1);
+        characters.players.get(1).drawHitbox(g1);
+        characters.players.get(1).drawDamage(g1);
 
         eventHandler.drawEvent(g1);
 

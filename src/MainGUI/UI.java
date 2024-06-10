@@ -56,7 +56,7 @@ public class UI {
         int spaceBetweenHearts = 20; // Abstand zwischen den Herzen
 
         // MaxLife
-        for (int i = 0; i < gamePanel.characters.player1.maxLife / 2; i++) {
+        for (int i = 0; i < gamePanel.characters.players.get(0).maxLife / 2; i++) {
             g1.drawImage(heart_blanc, x, y, null);
             x += gamePanel.getTileSize() + spaceBetweenHearts;
         }
@@ -65,10 +65,10 @@ public class UI {
         y = gamePanel.getTileSize() * 16;
 
         // CurrentLife
-        for (int i = 0; i < gamePanel.characters.player1.life; ) {
+        for (int i = 0; i < gamePanel.characters.players.get(0).life; ) {
             g1.drawImage(heart_half, x, y, null);
             i++;
-            if (i < gamePanel.characters.player1.life) {
+            if (i < gamePanel.characters.players.get(0).life) {
                 g1.drawImage(heart_full, x, y, null);
                 i++;
             }

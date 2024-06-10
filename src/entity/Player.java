@@ -12,9 +12,7 @@ import java.util.Objects;
 
 public class Player extends Entity {
     private final CollisionHandler collisionHandler;
-
     KeyHandler keyH;
-
     public Player(GamePanel gamePanel, KeyHandler keyH, String imagePath) {
         super(gamePanel);
 
@@ -49,15 +47,26 @@ public class Player extends Entity {
         }
 
         if (collisionHandler.entityCollision(gamePanel.characters.troll1.x, gamePanel.characters.troll1.y, attackRect.x, attackRect.y, gamePanel.getTileSize())) {
-            damageMonster();
+            damageMonster("Troll", 1);
+        } else if (collisionHandler.entityCollision(gamePanel.characters.ghost1.x, gamePanel.characters.ghost1.y, attackRect.x, attackRect.y, gamePanel.getTileSize())) {
+            damageMonster("Ghost", 1);
         }
 
     }
 
     // toDo: Den Index des Monsters übergeben, welches getroffen wurde.
-    private void damageMonster() {
-        gamePanel.characters.troll1.life -= 1;
-        System.out.println(" Troll Leben: " + gamePanel.characters.troll1.life);
+    private void damageMonster(String monster, int damage) {
+        if (Objects.equals(monster, "Troll")) {
+            gamePanel.characters.troll1.life -= damage;
+            if (gamePanel.characters.troll1.life <= 0) {
+
+            }
+            System.out.println(" Troll Leben: " + gamePanel.characters.troll1.life);
+
+        } else if (Objects.equals(monster, "Ghost")) {
+            gamePanel.characters.ghost1.life -= damage;
+            System.out.println(" Ghost Leben: " + gamePanel.characters.ghost1.life);
+        }
 
     }
 
@@ -223,7 +232,6 @@ public class Player extends Entity {
             }
 
 
-
         } else {
             imagePlayer =
                     switch (direction) {
@@ -238,7 +246,7 @@ public class Player extends Entity {
                         default -> null;
                     };
             if (imagePlayer != null) {
-                g.drawImage(imagePlayer, getX() -2, getY() - getHeight(), getWidth() + 4, getHeight() * 2, null);
+                g.drawImage(imagePlayer, getX() - 2, getY() - getHeight(), getWidth() + 4, getHeight() * 2, null);
             }
         }
 

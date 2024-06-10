@@ -298,15 +298,15 @@ public class Enemy_Troll extends Entity {
             }
         }
 
-        if (collisionHandler.entityCollision(gamePanel.characters.player1.x, gamePanel.characters.player1.y, attackRect.x, attackRect.y, gamePanel.getTileSize()) ||
-                collisionHandler.entityCollision(gamePanel.characters.player2.x, gamePanel.characters.player2.y, attackRect.x, attackRect.y, gamePanel.getTileSize())) {
+        if (collisionHandler.entityCollision(gamePanel.characters.players.get(0).x, gamePanel.characters.players.get(0).y, attackRect.x, attackRect.y, gamePanel.getTileSize()) ||
+                collisionHandler.entityCollision(gamePanel.characters.players.get(1).x, gamePanel.characters.players.get(1).y, attackRect.x, attackRect.y, gamePanel.getTileSize())) {
             damagePlayer();
         }
     }
 
     // toDo: Die Id des Players übergeben, welcher gehittet wird
     private void damagePlayer() {
-        gamePanel.characters.player1.life -= 1;
-        System.out.println("Leben Spieler 1 & 2: " + gamePanel.characters.player1.life);
+        gamePanel.characters.players.get(0).life -= 1;
+        System.out.println("Leben Spieler 1 & 2: " + gamePanel.characters.players.get(0).life);
     }
 }
