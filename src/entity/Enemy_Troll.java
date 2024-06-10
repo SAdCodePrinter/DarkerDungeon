@@ -20,6 +20,7 @@ public class Enemy_Troll extends Entity {
         g.setColor(Color.cyan);
         g.drawRect(attackRect.x, attackRect.y, attackRect.width, attackRect.height);
     }
+
     public Enemy_Troll(GamePanel gamePanel, String imagePath) {
         super(gamePanel);
         collisionHandler = new CollisionHandler(gamePanel);
@@ -77,58 +78,65 @@ public class Enemy_Troll extends Entity {
             setPathFinder();
         }
 
-        // Die Richtung in die der Troll gehen soll festlegen
-        direction = nextTargetDirection(target.getX() / gamePanel.getTileSize(), target.getY() / gamePanel.getTileSize());
+        // Wenn sich der Troll noch nicht beim Spieler befindet:
+        if (collisionHandler.noPlayerCollision(x, y - speed, player1.x, player1.y, 36) ||
+                collisionHandler.noPlayerCollision(x, y - speed, player2.x, player2.y, 36)) {
+            // Die Richtung in die der Troll gehen soll festlegen
+            direction = nextTargetDirection(target.getX() / gamePanel.getTileSize(), target.getY() / gamePanel.getTileSize());
 
-        // Überprüfen, ob der Troll eine Wand oder einen Spieler trifft
-        switch (direction) {
-            case "up":
-                if (collisionHandler.insideBoarder(x, y)) {
-                    if (!collisionHandler.noPlayerCollision(x, y - speed, player1.x, player1.y, 36) ||
-                            !collisionHandler.noPlayerCollision(x, y - speed, player2.x, player2.y, 36)) {
-                        attacking = true;
-                        directionHit = "hit_up";
-                        break;
+            // Überprüfen, ob der Troll eine Wand oder einen Spieler trifft
+            switch (direction) {
+                case "up":
+                    if (collisionHandler.insideBoarder(x, y)) {
+                        if (!collisionHandler.noPlayerCollision(x, y - speed, player1.x, player1.y, 36) ||
+                                !collisionHandler.noPlayerCollision(x, y - speed, player2.x, player2.y, 36)) {
+                            attacking = true;
+                            directionHit = "hit_up";
+                            break;
+                        }
+                        y -= speed;
                     }
-                    y -= speed;
-                }
-                break;
+                    break;
 
-            case "down":
-                if (collisionHandler.insideBoarder(x, y)) {
-                    if (!collisionHandler.noPlayerCollision(x, y + speed, player1.x, player1.y, 36) ||
-                            !collisionHandler.noPlayerCollision(x, y + speed, player1.x, player1.y, 36)) {
-                        attacking = true;
-                        directionHit = "hit_down";
-                        break;
+                case "down":
+                    if (collisionHandler.insideBoarder(x, y)) {
+                        if (!collisionHandler.noPlayerCollision(x, y + speed, player1.x, player1.y, 36) ||
+                                !collisionHandler.noPlayerCollision(x, y + speed, player2.x, player2.y, 36)) {
+                            attacking = true;
+                            directionHit = "hit_down";
+                            break;
+                        }
+                        y += speed;
                     }
-                    y += speed;
-                }
-                break;
+                    break;
 
-            case "left":
-                if (collisionHandler.insideBoarder(x, y)) {
-                    if (!collisionHandler.noPlayerCollision(x - speed, y, player1.x, player1.y, 36) ||
-                            !collisionHandler.noPlayerCollision(x - speed, y, player1.x, player1.y, 36)) {
-                        attacking = true;
-                        directionHit = "hit_left";
-                        break;
+                case "left":
+                    if (collisionHandler.insideBoarder(x, y)) {
+                        if (!collisionHandler.noPlayerCollision(x - speed, y, player1.x, player1.y, 36) ||
+                                !collisionHandler.noPlayerCollision(x - speed, y, player2.x, player2.y, 36)) {
+                            attacking = true;
+                            directionHit = "hit_left";
+                            break;
+                        }
+                        x -= speed;
                     }
-                    x -= speed;
-                }
-                break;
+                    break;
 
-            case "right":
-                if (collisionHandler.insideBoarder(x, y)) {
-                    if (!collisionHandler.noPlayerCollision(x + speed, y, player1.x, player1.y, 36) ||
-                            !collisionHandler.noPlayerCollision(x + speed, y, player1.x, player1.y, 36)) {
-                        attacking = true;
-                        directionHit = "hit_right";
-                        break;
+                case "right":
+                    if (collisionHandler.insideBoarder(x, y)) {
+                        if (!collisionHandler.noPlayerCollision(x + speed, y, player1.x, player1.y, 36) ||
+                                !collisionHandler.noPlayerCollision(x + speed, y, player2.x, player2.y, 36)) {
+                            attacking = true;
+                            directionHit = "hit_right";
+                            break;
+                        }
+                        x += speed;
                     }
-                    x += speed;
-                }
-                break;
+                    break;
+            }
+        } else {
+            attacking = true;
+            directionHit = "hit_down";
         }
     }
 
@@ -221,23 +229,23 @@ public class Enemy_Troll extends Entity {
         if (attacking) {
             hitSpritCounter++;
 
-            if (hitSpritCounter <= 2) hitSpriteNum = 0;
-            if (hitSpritCounter > 2 && hitSpritCounter <= 4) hitSpriteNum = 1;
-            if (hitSpritCounter > 4 && hitSpritCounter <= 6) hitSpriteNum = 2;
-            if (hitSpritCounter > 6 && hitSpritCounter <= 8) hitSpriteNum = 3;
-            if (hitSpritCounter > 8 && hitSpritCounter <= 10) hitSpriteNum = 4;
-            if (hitSpritCounter > 10 && hitSpritCounter <= 12) hitSpriteNum = 5;
+            if (hitSpritCounter <= 4) hitSpriteNum = 0;
+            if (hitSpritCounter > 4 && hitSpritCounter <= 8) hitSpriteNum = 1;
+            if (hitSpritCounter > 8 && hitSpritCounter <= 12) hitSpriteNum = 2;
+            if (hitSpritCounter > 12 && hitSpritCounter <= 16) hitSpriteNum = 3;
+            if (hitSpritCounter > 16 && hitSpritCounter <= 20) hitSpriteNum = 4;
+            if (hitSpritCounter > 20 && hitSpritCounter <= 24) hitSpriteNum = 5;
 
-            if (hitSpritCounter > 12 && hitSpritCounter <= 14) {
+            if (hitSpritCounter > 24 && hitSpritCounter <= 28) {
                 hitSpriteNum = 6;
-                if (hitSpritCounter == 14) {
+                if (hitSpritCounter == 28) {
                     attacking();
                 }
             }
 
-            if (hitSpritCounter > 14 && hitSpritCounter <= 16) hitSpriteNum = 7;
+            if (hitSpritCounter > 28 && hitSpritCounter <= 32) hitSpriteNum = 7;
 
-            if (hitSpritCounter > 16) {
+            if (hitSpritCounter > 32) {
                 hitSpriteNum = 0;
                 hitSpritCounter = 0;
                 attacking = false;
