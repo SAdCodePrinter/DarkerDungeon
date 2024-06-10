@@ -108,9 +108,11 @@ public class GamePanel extends JPanel {
 
         characters.player1.drawPlayer(g1);
         characters.player1.drawHitbox(g1);
+        characters.player1.drawDamage(g1);
 
         characters.player2.drawPlayer(g1);
         characters.player2.drawHitbox(g1);
+        characters.player2.drawDamage(g1);
 
 //        eventHandler.drawRect(g1);
 
@@ -122,9 +124,8 @@ public class GamePanel extends JPanel {
 
         characters.troll1.drawTroll(g1);
         characters.troll1.drawHitbox(g1);
+        characters.troll1.drawDamage(g1);
 
-        characters.player1.drawDamage(g1);
-        characters.player2.drawDamage(g1);
 
         draw.backGroundTiles(g1, false);
         ui.draw(g1);
