@@ -32,7 +32,7 @@ public class Entity {
     // ToDo: Private machen und vielleicht abstract
     public int x, y;
     public int speed;
-    public String direction, directionHit, lastDirection;
+    public String direction, directionHit, lastDirection = "right";
     //Status:
     public boolean attacking = false;
     public int maxLife;
