@@ -16,11 +16,17 @@ public class Enemy_Troll extends Entity {
     CollisionHandler collisionHandler;
     public PathFinder pathFinder = null;
 
-
+    public void drawDamage(Graphics2D g) {
+        g.setColor(Color.cyan);
+        g.drawRect(attackRect.x, attackRect.y, attackRect.width, attackRect.height);
+    }
     public Enemy_Troll(GamePanel gamePanel, String imagePath) {
         super(gamePanel);
         collisionHandler = new CollisionHandler(gamePanel);
         getTrollImage(imagePath);
+
+        attackRect.width = gamePanel.getTileSize();
+        attackRect.height = gamePanel.getTileSize();
     }
 
     public void setPathFinder() {
@@ -78,11 +84,10 @@ public class Enemy_Troll extends Entity {
         switch (direction) {
             case "up":
                 if (collisionHandler.insideBoarder(x, y)) {
-
                     if (!collisionHandler.noPlayerCollision(x, y - speed, player1.x, player1.y, 36) ||
                             !collisionHandler.noPlayerCollision(x, y - speed, player2.x, player2.y, 36)) {
-
-                        direction = "hit_left";
+                        attacking = true;
+                        directionHit = "hit_up";
                         break;
                     }
                     y -= speed;
@@ -93,8 +98,8 @@ public class Enemy_Troll extends Entity {
                 if (collisionHandler.insideBoarder(x, y)) {
                     if (!collisionHandler.noPlayerCollision(x, y + speed, player1.x, player1.y, 36) ||
                             !collisionHandler.noPlayerCollision(x, y + speed, player1.x, player1.y, 36)) {
-
-                        direction = "hit_down";
+                        attacking = true;
+                        directionHit = "hit_down";
                         break;
                     }
                     y += speed;
@@ -105,9 +110,8 @@ public class Enemy_Troll extends Entity {
                 if (collisionHandler.insideBoarder(x, y)) {
                     if (!collisionHandler.noPlayerCollision(x - speed, y, player1.x, player1.y, 36) ||
                             !collisionHandler.noPlayerCollision(x - speed, y, player1.x, player1.y, 36)) {
-
-
-                        direction = "hit_left";
+                        attacking = true;
+                        directionHit = "hit_left";
                         break;
                     }
                     x -= speed;
@@ -118,9 +122,8 @@ public class Enemy_Troll extends Entity {
                 if (collisionHandler.insideBoarder(x, y)) {
                     if (!collisionHandler.noPlayerCollision(x + speed, y, player1.x, player1.y, 36) ||
                             !collisionHandler.noPlayerCollision(x + speed, y, player1.x, player1.y, 36)) {
-
-
-                        direction = "hit_right";
+                        attacking = true;
+                        directionHit = "hit_right";
                         break;
                     }
                     x += speed;
@@ -147,7 +150,7 @@ public class Enemy_Troll extends Entity {
         pathFinder.setNodes(startCol, startRow, goalCol, goalRow);
 
         // default
-        String direction = "idle";
+        String nextDirection = "idle";
 
         if (pathFinder.autoSearch()) {
 
@@ -166,38 +169,38 @@ public class Enemy_Troll extends Entity {
 
             // Richtungen bestimmen in die gelaufen wird
             if (topY > topY2 && leftX >= leftX2 && rightX <= rightX2) {
-                direction = "up";
+                nextDirection = "up";
             } else if (topY < topY2 && leftX >= leftX2 && rightX <= rightX2) {
-                direction = "down";
+                nextDirection = "down";
             } else if (topY >= topY2 && bottmY <= bottmY2) {
                 if (leftX > leftX2) {
-                    direction = "left";
+                    nextDirection = "left";
                 } else if (leftX < leftX2) {
-                    direction = "right";
+                    nextDirection = "right";
                 }
 
                 // falls up & schräg, Kollision mit Teilen beachten
             } else if (topY > topY2 && leftX > leftX2) {
-                direction = "up";
+                nextDirection = "up";
                 if (!collisionHandler.noColisionWithTiles("up", leftX, topY, speed, 36)) {
-                    direction = "left";
+                    nextDirection = "left";
                 }
             } else if (topY > topY2 && leftX < leftX2) {
-                direction = "up";
+                nextDirection = "up";
                 if (!collisionHandler.noColisionWithTiles("up", x, y, speed, 36)) {
-                    direction = "right";
+                    nextDirection = "right";
                 }
 
                 // Falls down und schräg
             } else if (topY < topY2 && leftX > leftX2) {
-                direction = "down";
+                nextDirection = "down";
                 if (!collisionHandler.noColisionWithTiles("down", x, y, speed, 36)) {
-                    direction = "left";
+                    nextDirection = "left";
                 }
             } else if (topY < topY2 && leftX < leftX2) {
-                direction = "down";
+                nextDirection = "down";
                 if (!collisionHandler.noColisionWithTiles("down", x, y, speed, 36)) {
-                    direction = "right";
+                    nextDirection = "right";
                 }
             }
             // Troll hat sein Ziel erreicht
@@ -208,26 +211,92 @@ public class Enemy_Troll extends Entity {
 //            System.out.println("Troll hat keinen Pfad zum Ziel mit dem Pathfinder gefunden");
         }
 
-        return direction;
+        return nextDirection;
         // https://www.youtube.com/watch?v=Hd0D68guFKg
     }
 
     public void drawTroll(Graphics2D g) {
-        BufferedImage imageTroll =
-                switch (direction) {
-                    case "idle" -> idle[spriteNum];
-                    case "up" -> down[spriteNum];
-                    case "down" -> down[spriteNum];
-                    case "left" -> left[spriteNum];
-                    case "right" -> right[spriteNum];
-                    case "hit_right" -> hit_right[spriteNum];
-                    case "hit_left" -> hit_left[spriteNum];
-                    case "hit_down" -> hit_down[spriteNum];
-                    default -> null;
-                };
+        BufferedImage imageTroll;
+
+        if (attacking) {
+            hitSpritCounter++;
+
+            if (hitSpritCounter <= 2) hitSpriteNum = 0;
+            if (hitSpritCounter > 2 && hitSpritCounter <= 4) hitSpriteNum = 1;
+            if (hitSpritCounter > 4 && hitSpritCounter <= 6) hitSpriteNum = 2;
+            if (hitSpritCounter > 6 && hitSpritCounter <= 8) hitSpriteNum = 3;
+            if (hitSpritCounter > 8 && hitSpritCounter <= 10) hitSpriteNum = 4;
+            if (hitSpritCounter > 10 && hitSpritCounter <= 12) hitSpriteNum = 5;
+
+            if (hitSpritCounter > 12 && hitSpritCounter <= 14) {
+                hitSpriteNum = 6;
+                if (hitSpritCounter == 14) {
+                    attacking();
+                }
+            }
+
+            if (hitSpritCounter > 14 && hitSpritCounter <= 16) hitSpriteNum = 7;
+
+            if (hitSpritCounter > 16) {
+                hitSpriteNum = 0;
+                hitSpritCounter = 0;
+                attacking = false;
+            }
+
+            imageTroll = switch (directionHit) {
+                // toDo: wenn es einen Schlag nach oben gibt für den Troll, ändern
+                case "hit_up" -> hit_down[hitSpriteNum];
+                case "hit_down" -> hit_down[hitSpriteNum];
+                case "hit_left" -> hit_left[hitSpriteNum];
+                case "hit_right" -> hit_right[hitSpriteNum];
+                default -> null;
+            };
+        } else {
+            imageTroll =
+                    switch (direction) {
+                        case "idle" -> idle[spriteNum];
+                        case "up" -> down[spriteNum];
+                        case "down" -> down[spriteNum];
+                        case "left" -> left[spriteNum];
+                        case "right" -> right[spriteNum];
+                        default -> null;
+                    };
+        }
 
         if (imageTroll != null) {
             g.drawImage(imageTroll, getX() - 32, getY() - 36, gamePanel.getTileSize() * 3, gamePanel.getTileSize() * 3, null);
         }
+    }
+
+    private void attacking() {
+        switch (directionHit) {
+            case "hit_up" -> {
+                attackRect.y = y - gamePanel.getTileSize();
+                attackRect.x = x;
+            }
+            case "hit_down" -> {
+                attackRect.y = y + gamePanel.getTileSize();
+                attackRect.x = x;
+            }
+            case "hit_left" -> {
+                attackRect.x = x - gamePanel.getTileSize();
+                attackRect.y = y;
+            }
+            case "hit_right" -> {
+                attackRect.x = x + gamePanel.getTileSize();
+                attackRect.y = y;
+            }
+        }
+
+        if (collisionHandler.entityCollision(gamePanel.characters.player1.x, gamePanel.characters.player1.y, attackRect.x, attackRect.y, gamePanel.getTileSize()) ||
+                collisionHandler.entityCollision(gamePanel.characters.player2.x, gamePanel.characters.player2.y, attackRect.x, attackRect.y, gamePanel.getTileSize())) {
+            damagePlayer();
+        }
+    }
+
+    // toDo: Die Id des Players übergeben, welcher gehittet wird
+    private void damagePlayer() {
+        gamePanel.characters.player1.life -= 1;
+        System.out.println("Leben Spieler 1 & 2: " + gamePanel.characters.player1.life);
     }
 }

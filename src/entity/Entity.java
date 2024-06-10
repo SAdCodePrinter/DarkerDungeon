@@ -34,6 +34,7 @@ public class Entity {
     public int speed;
     public String direction, directionHit, lastDirection;
     //Status:
+    public boolean attacking = false;
     public int maxLife;
     public int life;
 
