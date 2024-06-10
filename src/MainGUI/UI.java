@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class UI {
-
     GamePanel gamePanel;
     Font arial_40;
     BufferedImage heart_full, heart_half, heart_blanc;

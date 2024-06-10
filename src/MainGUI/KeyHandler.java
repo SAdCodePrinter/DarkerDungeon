@@ -4,18 +4,27 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
-
     GamePanel gamePanel;
-    private int up, down, left, right, pause;
-    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    private int up, down, left, right, pause, attack;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, attacking;
 
-    public KeyHandler(int up, int down, int left, int right, int pause, GamePanel gamePanel) {
+    public KeyHandler(int up, int down, int left, int right, int pause, int attack, GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         this.up = up;
         this.down = down;
         this.left = left;
         this.right = right;
         this.pause = pause;
+        this.attack = attack;
+    }
+
+    public KeyHandler(int up, int down, int left, int right, int attack, GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+        this.up = up;
+        this.down = down;
+        this.left = left;
+        this.right = right;
+        this.attack = attack;
     }
 
     @Override
@@ -48,6 +57,9 @@ public class KeyHandler implements KeyListener {
                 System.out.println("PLAY");
             }
         }
+        if (code == this.attack) {
+            attacking = true;
+        }
 
     }
 
@@ -67,5 +79,8 @@ public class KeyHandler implements KeyListener {
         if (code == this.right) {
             rightPressed = false;
         }
+//        if (code == this.attack) {
+//            attacking = false;
+//        }
     }
 }
