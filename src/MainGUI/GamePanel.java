@@ -100,10 +100,11 @@ public class GamePanel extends JPanel {
     // toDO: das drawn auslagern
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Draw draw = new Draw(this);
 
         Graphics2D g1 = (Graphics2D) g;
 
-        tileH.drawBackGroundTiles(g1, true);
+        draw.backGroundTiles(g1, true);
 
         characters.player1.drawPlayer(g1);
         characters.player1.drawHitbox(g1);
@@ -125,7 +126,7 @@ public class GamePanel extends JPanel {
         characters.player1.drawDamage(g1);
         characters.player2.drawDamage(g1);
 
-        tileH.drawBackGroundTiles(g1, false);
+        draw.backGroundTiles(g1, false);
         ui.draw(g1);
 
         g1.dispose();

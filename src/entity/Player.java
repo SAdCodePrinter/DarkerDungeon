@@ -48,7 +48,7 @@ public class Player extends Entity {
             }
         }
 
-        if (collisionHandler.enemyCollision(gamePanel.characters.troll1.x, gamePanel.characters.troll1.y, attackRect.x, attackRect.y, gamePanel.getTileSize())) {
+        if (collisionHandler.entityCollision(gamePanel.characters.troll1.x, gamePanel.characters.troll1.y, attackRect.x, attackRect.y, gamePanel.getTileSize())) {
             damageMonster();
         }
 
@@ -140,7 +140,7 @@ public class Player extends Entity {
             direction = "up";
             lastDirection = "up";
 
-            if (collisionHandler.noColisionUp(this.x, this.y, other.x, other.y, speed + 2, gamePanel.getTileSize())) {
+            if (collisionHandler.noColisionUp(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
                 // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
                 y -= (keyH.rightPressed || keyH.leftPressed) ? (int) (speed * 0.8) : speed;
             }
@@ -149,7 +149,7 @@ public class Player extends Entity {
             direction = "down";
             lastDirection = "down";
 
-            if (collisionHandler.noColisionDown(this.x, this.y, other.x, other.y, speed + 2, gamePanel.getTileSize())) {
+            if (collisionHandler.noColisionDown(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
                 y += (keyH.rightPressed || keyH.leftPressed) ?
                         (int) (speed * 0.8) : speed;
 
@@ -160,7 +160,7 @@ public class Player extends Entity {
             direction = "left";
             lastDirection = "left";
 
-            if (collisionHandler.noColisionLeft(this.x, this.y, other.x, other.y, speed + 2, gamePanel.getTileSize())) {
+            if (collisionHandler.noColisionLeft(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
                 x -= (keyH.upPressed || keyH.downPressed) ?
                         (int) (speed * 0.8) : speed;
             }
@@ -169,7 +169,7 @@ public class Player extends Entity {
             direction = "right";
             lastDirection = "right";
 
-            if (collisionHandler.noColisionRight(this.x, this.y, other.x, other.y, speed + 2, gamePanel.getTileSize())) {
+            if (collisionHandler.noColisionRight(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
                 x += (keyH.upPressed || keyH.downPressed) ?
                         (int) (speed * 0.8) : speed;
             }
@@ -205,7 +205,9 @@ public class Player extends Entity {
             }
             if (hitSpritCounter > 12 && hitSpritCounter <= 16) {
                 hitSpriteNum = 4;
-                attacking();
+                if (hitSpritCounter == 14) {
+                    attacking();
+                }
             }
             if (hitSpritCounter > 16) {
                 hitSpriteNum = 1;
