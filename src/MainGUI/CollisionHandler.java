@@ -18,12 +18,12 @@ public class CollisionHandler {
         int bottomY2 = topY2 + tileSize;
 
         // Rechts oder links vom Rechteck
-        if (leftX1 >= rightX2 || leftX2 >= rightX1) {
+        if (leftX1 > rightX2 || leftX2 > rightX1) {
             return true;
         }
 
         // Überprüfen, ob eines der Rechtecke oberhalb des anderen liegt
-        if (topY1 >= bottomY2 || topY2 >= bottomY1) {
+        if (topY1 > bottomY2 || topY2 > bottomY1) {
             return true;
         }
 
