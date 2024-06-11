@@ -140,6 +140,10 @@ public class GamePanel {
 
             if (characters.ghosts.isEmpty() && characters.trolls.isEmpty()) {
                 this.level++;
+                for (Player player : characters.players) {
+                        player.life = 6;
+                }
+
                 enemysSpawned = false;
             } else {
                 for (Enemy_Troll troll : characters.trolls) {
