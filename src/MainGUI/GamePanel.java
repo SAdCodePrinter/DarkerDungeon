@@ -6,6 +6,7 @@ import tile.TileHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GamePanel extends JPanel {
     public Karaktere characters;
@@ -84,10 +85,20 @@ public class GamePanel extends JPanel {
         this.addKeyListener(characters.kH2);
         this.setFocusable(true);
 
+        final long[] lastChecked = {System.currentTimeMillis()};
+        final int[] frames = {0};
+
 // Timer für die Aktualisierung und das Neuzeichnen des Panels
-        Timer timer = new Timer(delay, e -> {
+        Timer timer = new Timer(20, e -> {
+            frames[0]++;
             update();
             repaint();
+            if (System.currentTimeMillis() - lastChecked[0] >= 1000) {
+
+                System.out.println("FPS: " + frames[0]);
+                frames[0] = 0;
+                lastChecked[0] = System.currentTimeMillis();
+            }
         });
         timer.start();
     }
@@ -121,7 +132,6 @@ public class GamePanel extends JPanel {
 
         draw.backGroundTiles(g1, true);
 
-
 //        characters.ghost1.drawHitbox(g1);
 
         characters.players.get(0).drawPlayer(g1);
@@ -144,7 +154,7 @@ public class GamePanel extends JPanel {
 //        }
 
         if (characters.troll1.life <= 0) {
-            characters.spawnGhost(1050, 500, 5, "/npc/ghost1/");
+            characters.spawnGhost(1050, 500, 3, "/npc/ghost1/");
             draw.drawGhost(g1);
         } else {
             characters.troll1.drawTroll(g1);
