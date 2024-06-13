@@ -13,6 +13,7 @@ import java.util.Objects;
 public class Player extends Entity {
     private final CollisionHandler collisionHandler;
     KeyHandler keyH;
+
     public Player(GamePanel gamePanel, KeyHandler keyH, String imagePath) {
         super(gamePanel);
 
@@ -197,7 +198,6 @@ public class Player extends Entity {
 
     public void drawPlayer(Graphics2D g) {
         BufferedImage imagePlayer;
-
         if (keyH.attacking) {
             hitSpritCounter++;
 
@@ -228,7 +228,7 @@ public class Player extends Entity {
             };
             // Andere Höhen und Breiten der Bilder
             if (imagePlayer != null) {
-                g.drawImage(imagePlayer, getX() - 15, getY() - getHeight(), getWidth() + 30, getHeight() * 2, null);
+                gamePanel.gui.drawPlayer(g, imagePlayer, getX() - 15, getY() - getHeight(), getWidth() + 30, getHeight() * 2);
             }
 
 
@@ -246,7 +246,7 @@ public class Player extends Entity {
                         default -> null;
                     };
             if (imagePlayer != null) {
-                g.drawImage(imagePlayer, getX() - 2, getY() - getHeight(), getWidth() + 4, getHeight() * 2, null);
+                gamePanel.gui.drawPlayer(g, imagePlayer, getX() - 2, getY() - getHeight(), getWidth() + 4, getHeight() * 2);
             }
         }
 
