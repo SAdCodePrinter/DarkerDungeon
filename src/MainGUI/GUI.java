@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+
 public class GUI extends JPanel {
     private GamePanel gamePanel;
     public boolean drawTrollPath = true;
@@ -26,6 +27,7 @@ public class GUI extends JPanel {
         heart_full = heart.image1;
         heart_half = heart.image2;
         heart_blanc = heart.image3;
+
     }
 
     public void backGroundTiles(Graphics2D g, boolean isBackground) {

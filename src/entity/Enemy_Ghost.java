@@ -1,5 +1,6 @@
 package entity;
 
+import MainGUI.CollisionHandler;
 import MainGUI.GamePanel;
 
 import javax.imageio.ImageIO;
@@ -9,12 +10,17 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Enemy_Ghost extends Entity {
+    CollisionHandler collisionHandler;
 
     private int spriteCounter = 0; // Counter to keep track of animation frames
 
     public Enemy_Ghost(GamePanel gamePanel, String imagePath) {
         super(gamePanel);
+        collisionHandler = new CollisionHandler(gamePanel);
         getGhostImage(imagePath);
+
+        attackRect.width = gamePanel.getTileSize();
+        attackRect.height = gamePanel.getTileSize();
     }
 
     private void getGhostImage(String path) {
@@ -63,6 +69,8 @@ public class Enemy_Ghost extends Entity {
 
         // Set the direction of the ghost based on movement
         direction = "idle";
+
+        attacking();
     }
 
     private Player nearestPlayer(Enemy_Ghost ghost, Player player1, Player player2) {
@@ -74,7 +82,7 @@ public class Enemy_Ghost extends Entity {
 
     private void updateSprite() {
         spriteCounter++;
-        if (spriteCounter > 10) { // Adjust the speed of the animation here
+        if (spriteCounter > 10) {
             spriteNum++;
             if (spriteNum >= idle.length) {
                 spriteNum = 0;
@@ -82,6 +90,37 @@ public class Enemy_Ghost extends Entity {
             spriteCounter = 0;
         }
     }
+    private void attacking() {
+        attackRect.x = getX();
+        attackRect.y = getY();
+
+        boolean playerInRange = false;
+        for (Player player : gamePanel.characters.players) {
+            if (collisionHandler.entityCollision(player.getX(), player.getY(), attackRect.x, attackRect.y, gamePanel.getTileSize())) {
+                playerInRange = true;
+                break;
+            }
+        }
+
+        if (playerInRange) {
+            hitSpritCounter++;
+            if (hitSpritCounter == 28) {
+                for (Player player : gamePanel.characters.players) {
+                    if (collisionHandler.entityCollision(player.getX(), player.getY(), attackRect.x, attackRect.y, gamePanel.getTileSize())) {
+                        damagePlayer(player);
+                    }
+                }
+                hitSpritCounter = 0; // Reset the counter after the attack
+            }
+        } else {
+            hitSpritCounter = 0; // Reset the counter if the player is not in range
+        }
+    }
+
+    private void damagePlayer(Player player) {
+        player.life -= 1;
+    }
+
 
     public void drawGhost(Graphics2D g) {
         BufferedImage imageGhost = idle[spriteNum];
