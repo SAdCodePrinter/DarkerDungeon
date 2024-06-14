@@ -12,10 +12,23 @@ import java.util.Objects;
 
 public class Player extends Entity {
     private final CollisionHandler collisionHandler;
+    private final String name;
+    private int reachedLevel;
+    private long time;
+
+    public void setReachedLevel(int reachedLevel) {
+        this.reachedLevel = reachedLevel;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
     KeyHandler keyH;
 
-    public Player(GamePanel gamePanel, KeyHandler keyH, String imagePath) {
+    public Player(GamePanel gamePanel, KeyHandler keyH, String imagePath, String name) {
         super(gamePanel);
+        this.name = name;
 
         collisionHandler = new CollisionHandler(gamePanel);
 

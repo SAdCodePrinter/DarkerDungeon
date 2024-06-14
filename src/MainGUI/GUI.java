@@ -3,6 +3,8 @@ package MainGUI;
 import entity.Enemy_Ghost;
 import entity.Enemy_Troll;
 import entity.Player;
+import object.OBJ_Heart;
+import object.ObjectHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +15,17 @@ public class GUI extends JPanel {
     public boolean drawTrollPath = true;
     public boolean drawHitbox = true;
     public boolean drawDamage = true;
+    BufferedImage heart_full, heart_half, heart_blanc;
+
 
     public GUI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
+
+        //HUD
+        ObjectHandler heart = new OBJ_Heart(gamePanel);
+        heart_full = heart.image1;
+        heart_half = heart.image2;
+        heart_blanc = heart.image3;
     }
 
     public void backGroundTiles(Graphics2D g, boolean isBackground) {
@@ -72,13 +82,13 @@ public class GUI extends JPanel {
         g.drawImage(imagePlayer, x, y, w, h, null);
     }
 
-    public void setupGame() {
+    public void setupGame(KeyHandler kH1, KeyHandler kH2) {
         this.setPreferredSize(new Dimension(gamePanel.getScreenWidth(), gamePanel.getScreenHeight()));
 
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
-        this.addKeyListener(gamePanel.characters.kH1);
-        this.addKeyListener(gamePanel.characters.kH2);
+        this.addKeyListener(kH1);
+        this.addKeyListener(kH2);
         this.setFocusable(true);
     }
 
@@ -89,6 +99,7 @@ public class GUI extends JPanel {
         backGroundTiles(g1, true);
 
 //        gamePanel.eventHandler.drawEvent(g1);
+
         drawAllPlayer(g1);
 
         drawAllGhosts(g1);
@@ -97,12 +108,71 @@ public class GUI extends JPanel {
 
         backGroundTiles(g1, false);
 
-        // toDo: wofür ist die Klasse UI?
-        UI ui = new UI(gamePanel);
-        ui.draw(g1);
+        drawGUI(g1);
 
         g1.dispose();
 
+    }
+
+    private void drawGUI(Graphics2D g1) {
+        Font font = new Font("Arial", Font.PLAIN, 40);
+        g1.setFont(font);
+        g1.setColor(Color.white);
+
+        if (gamePanel.getGameState() == gamePanel.getPlayState()) {
+            drawPlayerLife(g1);
+        }
+
+        if (gamePanel.getGameState() == gamePanel.getPauseState()) {
+            String text = "SYYYMON";
+            int length = (int) g1.getFontMetrics().getStringBounds(text, g1).getWidth();
+            int x = gamePanel.getScreenWidth() / 2 - length / 2;
+            int y = gamePanel.getScreenHeight() / 2;
+
+            g1.drawString(text, x, y);
+        }
+
+        if (gamePanel.getGameState() == gamePanel.getStartState()) {
+            drawStartScreen(g1);
+        }
+
+        if (gamePanel.getGameState() == gamePanel.getEndState()) {
+            drawEndScreen(g1);
+        }
+    }
+
+    private void drawEndScreen(Graphics2D g1) {
+        g1.drawImage(heart_full, gamePanel.getTileSize(), gamePanel.getTileSize(), gamePanel.getScreenWidth(), gamePanel.getScreenHeight(), null);
+    }
+
+    private void drawStartScreen(Graphics2D g1) {
+        g1.drawImage(heart_full, gamePanel.getTileSize(), gamePanel.getTileSize(), gamePanel.getScreenWidth(), gamePanel.getScreenHeight(), null);
+    }
+
+    private void drawPlayerLife(Graphics2D g1) {
+        int x = gamePanel.getTileSize();
+        int y = gamePanel.getTileSize() * 16;
+        int spaceBetweenHearts = 20; // Abstand zwischen den Herzen
+
+        // MaxLife
+        for (int i = 0; i < gamePanel.characters.players.get(0).maxLife / 2; i++) {
+            g1.drawImage(heart_blanc, x, y, null);
+            x += gamePanel.getTileSize() + spaceBetweenHearts;
+        }
+
+        x = gamePanel.getTileSize();
+        y = gamePanel.getTileSize() * 16;
+
+        // CurrentLife
+        for (int i = 0; i < gamePanel.characters.players.get(0).life; ) {
+            g1.drawImage(heart_half, x, y, null);
+            i++;
+            if (i < gamePanel.characters.players.get(0).life) {
+                g1.drawImage(heart_full, x, y, null);
+                i++;
+            }
+            x += gamePanel.getTileSize() + spaceBetweenHearts;
+        }
     }
 
     private void drawAllTrolls(Graphics2D g1) {

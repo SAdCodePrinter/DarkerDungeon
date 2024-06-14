@@ -7,6 +7,7 @@ import entity.Player;
 import tile.TileHandler;
 
 import javax.swing.*;
+import java.awt.event.KeyEvent;
 
 public class GamePanel {
     private Timer timer;
@@ -50,6 +51,10 @@ public class GamePanel {
         return pauseState;
     }
 
+    public int getEndState() {
+        return this.endState;
+    }
+
     public int getScreenCol() {
         return 37;
     }
@@ -84,7 +89,12 @@ public class GamePanel {
         characters = new Karaktere(this);
         tileH = new TileHandler(this);
         this.gui = new GUI(this);
-        gui.setupGame();
+        KeyHandler kH1 = new KeyHandler(KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_P, KeyEvent.VK_R, this);
+        KeyHandler kH2 = new KeyHandler(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_O, this);
+        characters.spawnPlayer(getTileSize() * 12, getTileSize() * 8, 7, kH1, "/players/player1/", "Spieler 1");
+        characters.spawnPlayer(getTileSize() * 7, getTileSize() * 7, 5, kH2, "/players/player2/", "Spieler 2");
+
+        gui.setupGame(kH1, kH2);
 
         // zur Berechnung der Frames
         final long[] lastChecked = {System.currentTimeMillis()};
@@ -108,9 +118,13 @@ public class GamePanel {
 
     private void update() {
         if (gameState == playState) {
+
             // den anderen Player übergeben, um eine Kollision abzufragen
-            characters.players.get(0).move(characters.players.get(1));
-            characters.players.get(1).move(characters.players.get(0));
+            for (Player player : characters.players) {
+                player.move(characters.players.get(1));
+                player.move(characters.players.get(0));
+            }
+
 
             if (!enemysSpawned) {
                 for (int i = 0; i < this.level; i++) {
@@ -150,6 +164,12 @@ public class GamePanel {
         } else if (gameState == endState) {
             System.out.println("Du hast " + ((endTime - startTime) / 1000) + " Sekunden überlebt");
             System.out.println("Du hast Level: " + this.level + " erreicht");
+
+            for (Player player : characters.players) {
+                player.setTime(((endTime - startTime) / 1000));
+                player.setReachedLevel(this.level);
+            }
+
 
             timer.stop();
         }
