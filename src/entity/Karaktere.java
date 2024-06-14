@@ -11,8 +11,8 @@ public class Karaktere {
 
     private GamePanel gamePanel;
     public ArrayList<Player> players = new ArrayList<>();
-    public Enemy_Troll troll1;
-    public Enemy_Ghost ghost1;
+    public ArrayList<Enemy_Troll> trolls = new ArrayList<>();
+    public ArrayList<Enemy_Ghost> ghosts = new ArrayList<>();
     public KeyHandler kH1;
     public KeyHandler kH2;
     private boolean ghostSpawned = false;
@@ -29,11 +29,12 @@ public class Karaktere {
         spawnPlayer(gamePanel.getTileSize() * 7, gamePanel.getTileSize() * 7, 5, kH2, "/players/player2/", "Spieler 2");
 
         // Gegner
-        spawnTroll(1050, 500, 2, "/npc/troll1/");
-       // spawnGhost(900, 400, 1, "/npc/ghost1/");
+//        spawnTroll(1050, 500, 2, "/npc/troll1/");
+        // spawnGhost(900, 400, 1, "/npc/ghost1/");
 
     }
-// toDo: Spielernamen integrieren
+
+    // toDo: Spielernamen integrieren
     public void spawnPlayer(int x, int y, int speed, KeyHandler kH, String imagePath, String name) {
         Player player = new Player(gamePanel, kH, imagePath);
         player.setDefault(x, y, speed);
@@ -42,16 +43,17 @@ public class Karaktere {
     }
 
     public void spawnTroll(int x, int y, int speed, String imagePath) {
-        troll1 = new Enemy_Troll(gamePanel, imagePath);
-        troll1.setDefault(x, y, speed);
+        Enemy_Troll troll = new Enemy_Troll(gamePanel, imagePath);
+        troll.setDefault(x, y, speed);
+
+        trolls.add(troll);
     }
 
     public void spawnGhost(int x, int y, int speed, String imagePath) {
-        if (!ghostSpawned) {
-            ghost1 = new Enemy_Ghost(gamePanel, imagePath);
-            ghost1.setDefault(x, y, speed);
-            ghostSpawned = true;
-        }
+        Enemy_Ghost ghost = new Enemy_Ghost(gamePanel, imagePath);
+        ghost.setDefault(x, y, speed);
+
+        ghosts.add(ghost);
     }
 
 }

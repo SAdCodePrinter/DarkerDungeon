@@ -47,26 +47,36 @@ public class Player extends Entity {
             }
         }
 
-        if (collisionHandler.entityCollision(gamePanel.characters.troll1.x, gamePanel.characters.troll1.y, attackRect.x, attackRect.y, gamePanel.getTileSize())) {
-            damageMonster("Troll", 1);
-        } else if (collisionHandler.entityCollision(gamePanel.characters.ghost1.x, gamePanel.characters.ghost1.y, attackRect.x, attackRect.y, gamePanel.getTileSize())) {
-            damageMonster("Ghost", 1);
+        for (int i = 0; i < gamePanel.characters.trolls.size(); i++) {
+            if (collisionHandler.entityCollision(gamePanel.characters.trolls.get(i).x, gamePanel.characters.trolls.get(i).y, attackRect.x, attackRect.y, gamePanel.getTileSize())) {
+                damageMonster("Troll", i);
+            }
+        }
+
+        for (int i = 0; i < gamePanel.characters.ghosts.size(); i++) {
+            if (collisionHandler.entityCollision(gamePanel.characters.ghosts.get(i).x, gamePanel.characters.ghosts.get(i).y, attackRect.x, attackRect.y, gamePanel.getTileSize())) {
+                damageMonster("Ghost", i);
+            }
         }
 
     }
 
-    // toDo: Den Index des Monsters übergeben, welches getroffen wurde.
-    private void damageMonster(String monster, int damage) {
+    private void damageMonster(String monster, int index) {
         if (Objects.equals(monster, "Troll")) {
-            gamePanel.characters.troll1.life -= damage;
-            if (gamePanel.characters.troll1.life <= 0) {
+            gamePanel.characters.trolls.get(index).life -= 1;
+            if (gamePanel.characters.trolls.get(index).life <= 0) {
+                gamePanel.characters.trolls.remove(index);
+
+                // toDo: Hier die Todesanimation aufrufen
+            } else {
+                System.out.println(" Troll Leben: " + gamePanel.characters.trolls.get(index).life);
 
             }
-            System.out.println(" Troll Leben: " + gamePanel.characters.troll1.life);
-
         } else if (Objects.equals(monster, "Ghost")) {
-            gamePanel.characters.ghost1.life -= damage;
-            System.out.println(" Ghost Leben: " + gamePanel.characters.ghost1.life);
+            gamePanel.characters.ghosts.get(index).life -= 1;
+            if (gamePanel.characters.ghosts.get(index).life <= 0) {
+                gamePanel.characters.ghosts.remove(index);
+            }
         }
 
     }

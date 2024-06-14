@@ -307,6 +307,5 @@ public class Enemy_Troll extends Entity {
     // toDo: Die Id des Players übergeben, welcher gehittet wird
     private void damagePlayer() {
         gamePanel.characters.players.get(0).life -= 1;
-        System.out.println("Leben Spieler 1 & 2: " + gamePanel.characters.players.get(0).life);
     }
 }

@@ -1,27 +1,38 @@
 package MainGUI;
 
+import entity.Enemy_Ghost;
+import entity.Enemy_Troll;
 import entity.Karaktere;
+import entity.Player;
 import tile.TileHandler;
 
 import javax.swing.*;
 
 public class GamePanel {
+    private Timer timer;
+    private int level;
     public Karaktere characters;
     public TileHandler tileH;
-//    public ObjectHandler[] obj = new ObjectHandler[10];
+    //    public ObjectHandler[] obj = new ObjectHandler[10];
     public EventHandler eventHandler = new EventHandler(this);
     //    public AssetSetter assetSetter = new AssetSetter(this);
     private final int screenWidth = 48 * 28;
     private final int screenHeight = 48 * 14;
 
     // Game State
-    private int gameState;
+    private long startTime;
+    private long endTime;
+
     public void setGameState(int gameState) {
         this.gameState = gameState;
     }
+
+    private int gameState;
     private final int startState = 0;
     private final int playState = 1;
     private final int pauseState = 2;
+    private final int endState = 3;
+    private boolean enemysSpawned = false;
 
     public int getGameState() {
         return gameState;
@@ -50,9 +61,11 @@ public class GamePanel {
     public int getScreenWidth() {
         return screenWidth;
     }
+
     public int getScreenHeight() {
         return screenHeight;
     }
+
     public int getTileSize() {
         return 36;
     }
@@ -60,6 +73,9 @@ public class GamePanel {
     public void setStart() {
         //assetSetter.setObject();
         gameState = playState;
+        this.level = 1;
+        startTime = System.currentTimeMillis();
+
     }
 
     public GUI gui;
@@ -75,7 +91,7 @@ public class GamePanel {
         final int[] frames = {0};
 
 // Timer für die Aktualisierung und das Neuzeichnen des Panels
-        Timer timer = new Timer(20, e -> {
+        timer = new Timer(20, e -> {
             frames[0]++;
             update();
             gui.repaint();
@@ -91,24 +107,51 @@ public class GamePanel {
     }
 
     private void update() {
-
-
         if (gameState == playState) {
             // den anderen Player übergeben, um eine Kollision abzufragen
             characters.players.get(0).move(characters.players.get(1));
             characters.players.get(1).move(characters.players.get(0));
 
-            if (characters.troll1.life <= 0) {
-                gui.drawGhost = true;
-                characters.spawnGhost(1050, 500, 3, "/npc/ghost1/");
-                characters.ghost1.move(characters.players.get(0), characters.players.get(1));
-            } else {
-                characters.troll1.move(characters.players.get(0), characters.players.get(1));
+            if (!enemysSpawned) {
+                for (int i = 0; i < this.level; i++) {
+                    if (this.level % 2 == 0) {
+                        characters.spawnGhost(1050, 500, 3, "/npc/ghost1/");
+                    } else {
+                        characters.spawnTroll(1050, 500, 2, "/npc/troll1/");
+                    }
+                }
+
+                enemysSpawned = true;
             }
 
-        }
-        if (gameState == pauseState) {
+            if (characters.ghosts.isEmpty() && characters.trolls.isEmpty()) {
+                this.level++;
+                enemysSpawned = false;
+            } else {
+                for (Enemy_Troll troll : characters.trolls) {
+                    // toDo: Player als Liste übergeben und nicht einzeln
+                    troll.move(characters.players.get(0), characters.players.get(1));
+                }
+                for (Enemy_Ghost ghost : characters.ghosts) {
+                    ghost.move(characters.players.get(0), characters.players.get(1));
+                }
+            }
 
+            for (Player player : characters.players) {
+                if (player.life <= 0) {
+                    this.endTime = System.currentTimeMillis();
+                    this.gameState = endState;
+
+                }
+            }
+
+        } else if (gameState == pauseState) {
+
+        } else if (gameState == endState) {
+            System.out.println("Du hast " + ((endTime - startTime) / 1000) + " Sekunden überlebt");
+            System.out.println("Du hast Level: " + this.level + " erreicht");
+
+            timer.stop();
         }
     }
 
