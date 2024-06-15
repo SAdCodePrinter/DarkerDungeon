@@ -15,6 +15,7 @@ public class GamePanel {
 
     private Timer timer;
     private int level;
+    private double score;
     public Karaktere characters;
     public TileHandler tileH;
     //    public ObjectHandler[] obj = new ObjectHandler[10];
@@ -40,6 +41,12 @@ public class GamePanel {
 
     private List<int[]> spawnPoints = new ArrayList<>();
     private int currentSpawnIndex = 0;
+    public double getScore() {
+        return this.score;
+    }
+    public int getLevel() {
+        return this.level;
+    }
 
     private void calculateMonstersForLevel(int level, List<String> monsters) {
         int numMonsters = Math.min(level, 10);  // Limitiere die maximale Anzahl der Monster pro Level auf 10
@@ -270,19 +277,18 @@ public class GamePanel {
         } else if (gameState == pauseState) {
             // Pause Logik
         } else if (gameState == endState) {
-            System.out.println("Du hast " + ((endTime - startTime) / 1000) + " Sekunden überlebt");
+            this.score = (endTime - startTime) / 1000;
+            System.out.println("Du hast " + (score) + " Sekunden überlebt");
             System.out.println("Du hast Level: " + this.level + " erreicht");
 
             for (Player player : characters.players) {
                 player.setTime(((endTime - startTime) / 1000));
                 player.setReachedLevel(this.level);
             }
-
             timer.stop();
         }
     }
 }
-
 
 
 

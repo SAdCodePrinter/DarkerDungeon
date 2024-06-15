@@ -126,7 +126,7 @@ public class GUI extends JPanel {
         }
 
         if (gamePanel.getGameState() == gamePanel.getPauseState()) {
-            String text = "SYYYMON";
+            String text = "PAUSE";
             int length = (int) g1.getFontMetrics().getStringBounds(text, g1).getWidth();
             int x = gamePanel.getScreenWidth() / 2 - length / 2;
             int y = gamePanel.getScreenHeight() / 2;
@@ -139,7 +139,46 @@ public class GUI extends JPanel {
         }
 
         if (gamePanel.getGameState() == gamePanel.getEndState()) {
-            drawEndScreen(g1);
+
+            if (gamePanel.getGameState() == gamePanel.getEndState()) {
+                g1.setColor(Color.BLACK);
+                g1.fillRect(0, 0, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
+
+                g1.setFont(new Font("Chiller", Font.BOLD, 60));
+                g1.setColor(Color.RED);
+
+                String text = "YOU DIED";
+                FontMetrics fm = g1.getFontMetrics();
+                int length = fm.stringWidth(text);
+                int x = (gamePanel.getScreenWidth() - length) / 2;
+                int y = gamePanel.getScreenHeight() / 2 + fm.getHeight() / 4;
+
+                g1.drawString(text, x, y);
+
+
+                g1.setFont(new Font("Chiller", Font.PLAIN, 30));
+                g1.setColor(Color.WHITE);
+
+                String scoreText = "Score: " + gamePanel.getScore() + " Sekunden überlebt";
+                int scoreLength = fm.stringWidth(scoreText);
+                int scoreX = (gamePanel.getScreenWidth() - scoreLength) / 2;
+                int scoreY = y + fm.getHeight();
+
+                g1.drawString(scoreText, scoreX, scoreY);
+
+
+                g1.setFont(new Font("Chiller", Font.PLAIN, 30));
+                g1.setColor(Color.WHITE);
+
+                String levelText = "Level: " + gamePanel.getLevel()+ " Erreicht";
+                int levelLength = fm.stringWidth(scoreText);
+                int levelX = (gamePanel.getScreenWidth() - levelLength) / 2;
+                int levelY = y + fm.getHeight() - 25;
+
+                g1.drawString(levelText, levelX, levelY);
+            }
+
+
         }
     }
 
