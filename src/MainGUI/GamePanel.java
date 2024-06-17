@@ -1,5 +1,8 @@
 package MainGUI;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
 import entity.Enemy_Ghost;
 import entity.Enemy_Troll;
 import entity.Karaktere;
@@ -7,12 +10,17 @@ import entity.Player;
 import tile.TileHandler;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 public class GamePanel {
-
     private Timer timer;
     private int level;
     private double score;
@@ -41,15 +49,17 @@ public class GamePanel {
 
     private List<int[]> spawnPoints = new ArrayList<>();
     private int currentSpawnIndex = 0;
+
     public double getScore() {
         return this.score;
     }
+
     public int getLevel() {
         return this.level;
     }
 
     private void calculateMonstersForLevel(int level, List<String> monsters) {
-        int numMonsters = Math.min(level, 10);  // Limitiere die maximale Anzahl der Monster pro Level auf 10
+        int numMonsters = Math.min(level, 15);
         boolean spawnBoth = level % 5 == 0;     // Jedes 5. Level spawnt sowohl Geister als auch Trolle
 
         for (int i = 0; i < numMonsters; i++) {
@@ -230,8 +240,7 @@ public class GamePanel {
     private void update() {
         if (gameState == playState) {
             for (Player player : characters.players) {
-                player.move(characters.players.get(1));
-                player.move(characters.players.get(0));
+                player.move(characters.players);
             }
 
             if (!enemysSpawned) {
@@ -252,6 +261,7 @@ public class GamePanel {
                 enemysSpawned = true;
             }
 
+            // Sobald alle Monster tot sind, ist das Level vorbei
             if (characters.ghosts.isEmpty() && characters.trolls.isEmpty()) {
                 this.level++;
                 for (Player player : characters.players) {
@@ -268,6 +278,7 @@ public class GamePanel {
                 }
             }
 
+            // Spieler tot: Spiel vorbei
             for (Player player : characters.players) {
                 if (player.life <= 0) {
                     this.endTime = System.currentTimeMillis();
@@ -275,17 +286,78 @@ public class GamePanel {
                 }
             }
         } else if (gameState == pauseState) {
-            // Pause Logik
+            // toDo: Pause Logik
+
         } else if (gameState == endState) {
             this.score = (endTime - startTime) / 1000;
             System.out.println("Du hast " + (score) + " Sekunden überlebt");
             System.out.println("Du hast Level: " + this.level + " erreicht");
 
+
             for (Player player : characters.players) {
                 player.setTime(((endTime - startTime) / 1000));
                 player.setReachedLevel(this.level);
+                saveScoreToCSV(player.getName(), player.getReachedLevel(), player.getTime(), player.getKillCounter());
             }
+
             timer.stop();
+        }
+    }
+
+    // toDo: Auslagern in eigene Klasse?
+    public static void saveScoreToCSV(String name, int reachedLevel, double time, int killCounter) {
+        String[] data = {name, Integer.toString(reachedLevel), Double.toString(time), Integer.toString(killCounter)};
+        File file = new File("highscores/Highscores.csv");
+
+        // Ensure the directory exists
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+
+        List<String[]> existingData = new ArrayList<>();
+
+        // Read existing data if the file exists
+        if (file.exists()) {
+            try (FileReader inputFile = new FileReader(file);
+                 CSVReader reader = new CSVReader(inputFile)) {
+                existingData = reader.readAll();
+            } catch (IOException | CsvException e) {
+                System.out.println("Konnte den Highscore nicht lesen: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+
+        // Update or add new data
+        boolean found = false;
+        Iterator<String[]> iterator = existingData.iterator();
+        while (iterator.hasNext()) {
+            String[] existing = iterator.next();
+            if (Objects.equals(name, existing[0])) {
+                if (reachedLevel > Integer.parseInt(existing[1]) ||
+                        (reachedLevel == Integer.parseInt(existing[1]) && time < Double.parseDouble(existing[2]))) {
+                    iterator.remove();
+                    existingData.add(data);
+                }
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            existingData.add(data);
+        }
+
+        existingData.sort(Comparator.comparingInt((String[] entry) -> Integer.parseInt(entry[1])).reversed()
+                .thenComparingDouble(entry -> Double.parseDouble(entry[2])).thenComparingInt(entry -> Integer.parseInt(entry[3])).reversed());
+
+        // Write updated data back to file
+        try (FileWriter outputFile = new FileWriter(file);
+             CSVWriter writer = new CSVWriter(outputFile)) {
+            writer.writeAll(existingData);
+            System.out.println("Highscore erfolgreich gespeichert!");
+        } catch (IOException e) {
+            System.out.println("Konnte den Highscore nicht speichern: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
