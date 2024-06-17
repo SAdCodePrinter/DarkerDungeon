@@ -49,7 +49,6 @@ public class Enemy_Troll extends Entity {
     public void getTrollImage(String path) {
         try {
             for (int i = 0; i < 8; i++) {
-                String tmp = path + "down (" + (i + 1) + ").png";
                 down[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "down (" + (i + 1) + ").png")));
                 left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "left (" + (i + 1) + ").png")));
                 right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "right (" + (i + 1) + ").png")));

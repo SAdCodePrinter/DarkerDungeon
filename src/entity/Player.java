@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player extends Entity {
@@ -15,13 +16,30 @@ public class Player extends Entity {
     private final String name;
     private int reachedLevel;
     private long time;
+    private int killCounter = 0;
+
+    public int getKillCounter() {
+        return killCounter;
+    }
 
     public void setReachedLevel(int reachedLevel) {
         this.reachedLevel = reachedLevel;
     }
 
+    public int getReachedLevel() {
+        return reachedLevel;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
     public void setTime(long time) {
         this.time = time;
+    }
+
+    public String getName() {
+        return name;
     }
 
     KeyHandler keyH;
@@ -79,6 +97,7 @@ public class Player extends Entity {
             gamePanel.characters.trolls.get(index).life -= 1;
             if (gamePanel.characters.trolls.get(index).life <= 0) {
                 gamePanel.characters.trolls.remove(index);
+                this.killCounter++;
 
                 // toDo: Hier die Todesanimation aufrufen
             } else {
@@ -89,6 +108,7 @@ public class Player extends Entity {
             gamePanel.characters.ghosts.get(index).life -= 1;
             if (gamePanel.characters.ghosts.get(index).life <= 0) {
                 gamePanel.characters.ghosts.remove(index);
+                this.killCounter++;
             }
         }
 
@@ -142,11 +162,10 @@ public class Player extends Entity {
     }
 
     /**
-     * Updatet die Positionskoordinaten, wenn keine Kollision entsteht
      *
-     * @param other ist das Element bei dem geschaut wird, ob es eine Kollision mit diesem geben wird
+     * @param players
      */
-    public void move(Player other) {
+    public void move(ArrayList<Player> players) {
 
         spriteCounter(8);
 
@@ -171,19 +190,27 @@ public class Player extends Entity {
             direction = "up";
             lastDirection = "up";
 
-            if (collisionHandler.noColisionUp(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
-                // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
-                y -= (keyH.rightPressed || keyH.leftPressed) ? (int) (speed * 0.8) : speed;
+            for (Player player : players) {
+                if (this != player) {
+                    if (collisionHandler.noColisionUp(this.x, this.y, player.x, player.y, speed, gamePanel.getTileSize())) {
+                        // Wenn schräg gelaufen wird: die Geschwindigkeit verringern
+                        y -= (keyH.rightPressed || keyH.leftPressed) ? (int) (speed * 0.8) : speed;
+                    }
+                }
             }
 
         } else if (keyH.downPressed) {
             direction = "down";
             lastDirection = "down";
 
-            if (collisionHandler.noColisionDown(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
-                y += (keyH.rightPressed || keyH.leftPressed) ?
-                        (int) (speed * 0.8) : speed;
+            for (Player player : players) {
+                if (this != player) {
+                    if (collisionHandler.noColisionDown(this.x, this.y, player.x, player.y, speed, gamePanel.getTileSize())) {
+                        y += (keyH.rightPressed || keyH.leftPressed) ?
+                                (int) (speed * 0.8) : speed;
 
+                    }
+                }
             }
         }
 
@@ -191,18 +218,27 @@ public class Player extends Entity {
             direction = "left";
             lastDirection = "left";
 
-            if (collisionHandler.noColisionLeft(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
-                x -= (keyH.upPressed || keyH.downPressed) ?
-                        (int) (speed * 0.8) : speed;
+
+            for (Player player : players) {
+                if (this != player) {
+                    if (collisionHandler.noColisionLeft(this.x, this.y, player.x, player.y, speed, gamePanel.getTileSize())) {
+                        x -= (keyH.upPressed || keyH.downPressed) ?
+                                (int) (speed * 0.8) : speed;
+                    }
+                }
             }
 
         } else if (keyH.rightPressed) {
             direction = "right";
             lastDirection = "right";
 
-            if (collisionHandler.noColisionRight(this.x, this.y, other.x, other.y, speed, gamePanel.getTileSize())) {
-                x += (keyH.upPressed || keyH.downPressed) ?
-                        (int) (speed * 0.8) : speed;
+            for (Player player : players) {
+                if (this != player) {
+                    if (collisionHandler.noColisionRight(this.x, this.y, player.x, player.y, speed, gamePanel.getTileSize())) {
+                        x += (keyH.upPressed || keyH.downPressed) ?
+                                (int) (speed * 0.8) : speed;
+                    }
+                }
             }
         }
 
