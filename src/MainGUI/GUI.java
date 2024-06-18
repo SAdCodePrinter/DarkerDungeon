@@ -1,5 +1,7 @@
 package MainGUI;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 import entity.Enemy_Ghost;
 import entity.Enemy_Troll;
 import entity.Player;
@@ -9,6 +11,12 @@ import object.ObjectHandler;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class GUI extends JPanel {
@@ -170,20 +178,59 @@ public class GUI extends JPanel {
                 g1.setFont(new Font("Chiller", Font.PLAIN, 30));
                 g1.setColor(Color.WHITE);
 
-                String levelText = "Level: " + gamePanel.getLevel()+ " Erreicht";
+                String levelText = "Level: " + gamePanel.getLevel() + " Erreicht";
                 int levelLength = fm.stringWidth(scoreText);
                 int levelX = (gamePanel.getScreenWidth() - levelLength) / 2;
                 int levelY = y + fm.getHeight() - 25;
 
                 g1.drawString(levelText, levelX, levelY);
+
+                // Highscores
+                g1.setFont(new Font("Chiller", Font.PLAIN, 30));
+                g1.setColor(Color.WHITE);
+
+                List<String[]> highscores = getHighscores();
+
+                String highScoreHeader = "HIGHSCORES";
+                String[] highScoreRows = new String[6];
+                for (int i = 0; i < 6 && i < highscores.size(); i++) {
+                    highScoreRows[i] = "" + highscores.get(i)[0] +
+                            "  Level: " + highscores.get(i)[1] +
+                            "  Zeit: " + highscores.get(i)[2] +
+                            "  Kills: " + highscores.get(i)[3];
+
+                }
+                int highScoreLength = fm.stringWidth(highScoreRows[0]);
+                int highScoreX = gamePanel.getScreenWidth() - highScoreLength - 10;
+                int highScoreY = (int) (gamePanel.getScreenHeight() * 0.1);
+
+                g1.drawString(highScoreHeader, highScoreX, highScoreY);
+
+                for (int i = 0; i < highScoreRows.length && highScoreRows[i] != null; i++) {
+                    highScoreY += 30;
+                    g1.drawString(highScoreRows[i], highScoreX, highScoreY);
+                }
+
             }
 
 
         }
     }
 
-    private void drawEndScreen(Graphics2D g1) {
-        g1.drawImage(heart_full, gamePanel.getTileSize(), gamePanel.getTileSize(), gamePanel.getScreenWidth(), gamePanel.getScreenHeight(), null);
+    private List<String[]> getHighscores() {
+        List<String[]> highscores = new ArrayList<>();
+        try (FileReader inputFile = new FileReader(new File("highscores/Highscores.csv"));
+             CSVReader reader = new CSVReader(inputFile)) {
+            highscores = reader.readAll();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CsvException e) {
+            e.printStackTrace();
+        }
+        return highscores;
     }
 
     private void drawStartScreen(Graphics2D g1) {
