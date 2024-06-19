@@ -112,7 +112,7 @@ public class GamePanel {
 
     public void setStart() {
         //assetSetter.setObject();
-        gameState = playState;
+        gameState = startState;
         this.level = 1;
         startTime = System.currentTimeMillis();
 
