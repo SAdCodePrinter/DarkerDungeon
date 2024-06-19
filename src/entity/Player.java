@@ -55,6 +55,12 @@ public class Player extends Entity {
         attackRect.width = gamePanel.getTileSize();
         attackRect.height = gamePanel.getTileSize();
     }
+    public void reset() {
+        this.life = 6;  // Setze das Leben des Spielers zurück
+        this.killCounter = 0;  // Setze den Kill-Counter zurück
+        // Setze andere Parameter zurück falls notwendig
+    }
+
 
     private void attacking() {
         switch (lastDirection) {

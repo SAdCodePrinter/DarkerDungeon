@@ -117,6 +117,19 @@ public class GamePanel {
         startTime = System.currentTimeMillis();
 
     }
+    public void resetGame() {
+        this.level = 1;
+        this.score = 0;
+        for (Player player : characters.players) {
+            player.reset();  // Diese Methode sollte in der Player-Klasse definiert werden, um das Leben und andere Parameter zurückzusetzen
+        }
+        this.startTime = System.currentTimeMillis();
+        this.enemysSpawned = false;
+        this.currentSpawnIndex = 0;
+        this.timer.start();
+        // Weitere Reset-Operationen falls notwendig
+    }
+
 
     public GUI gui;
 

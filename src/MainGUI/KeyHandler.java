@@ -59,9 +59,9 @@ public class KeyHandler implements KeyListener {
                 gamePanel.setGameState(gamePanel.getPlayState());
                 System.out.println("PLAY");
             } else if (gamePanel.getGameState() == gamePanel.getEndState()) {
-                gamePanel.setStart();
+                gamePanel.resetGame();
+                gamePanel.setGameState(gamePanel.getStartState());
                 System.out.println("START");
-
             }
         }
         if (code == this.attack) {
