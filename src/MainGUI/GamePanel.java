@@ -9,6 +9,7 @@ import entity.Karaktere;
 import entity.Player;
 import tile.TileHandler;
 
+import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.event.KeyEvent;
 
@@ -135,15 +136,30 @@ public class GamePanel {
     public GUI gui;
 
     public GamePanel() {
+
+        // Spieler-Namen-Eingabe
+        String namePlayer1 = JOptionPane.showInputDialog("Spieler 1 Name:");
+        String namePlayer2 = JOptionPane.showInputDialog("Spieler 2 Name:");
+
+        if (namePlayer1 == null || namePlayer1.isEmpty()) {
+            namePlayer1 = "Spieler 1"; // Standardname setzen, falls nichts eingegeben wurde
+        }
+
+        if (namePlayer2 == null || namePlayer2.isEmpty()) {
+            namePlayer2 = "Spieler 2"; // Standardname setzen, falls nichts eingegeben wurde
+        }
+
         characters = new Karaktere(this);
         tileH = new TileHandler(this);
         this.gui = new GUI(this);
         KeyHandler kH1 = new KeyHandler(KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_P, KeyEvent.VK_R, this);
         KeyHandler kH2 = new KeyHandler(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_O, this);
-        characters.spawnPlayer(getTileSize() * 18, getTileSize() * 8, 7, kH1, "/players/player1/", "Giesela");
-        characters.spawnPlayer(getTileSize() * 17, getTileSize() * 8, 5, kH2, "/players/player2/", "Jochen");
+        characters.spawnPlayer(getTileSize() * 18, getTileSize() * 8, 7, kH1, "/players/player1/", namePlayer1);
+        characters.spawnPlayer(getTileSize() * 17, getTileSize() * 8, 5, kH2, "/players/player2/", namePlayer2);
 
         gui.setupGame(kH1, kH2);
+
+
 
         //Spawnpunkte der Monster
         spawnPoints.add(new int[]{100, 100});

@@ -6,8 +6,10 @@ import entity.Enemy_Ghost;
 import entity.Enemy_Troll;
 import entity.Player;
 import object.OBJ_Heart;
+import object.OBJ_Screen;
 import object.ObjectHandler;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -24,7 +26,8 @@ public class GUI extends JPanel {
     public boolean drawTrollPath = true;
     public boolean drawHitbox = true;
     public boolean drawDamage = true;
-    BufferedImage heart_full, heart_half, heart_blanc;
+    BufferedImage heart_full, heart_half, heart_blanc, startScreen;
+
 
 
     public GUI(GamePanel gamePanel) {
@@ -36,6 +39,8 @@ public class GUI extends JPanel {
         heart_half = heart.image2;
         heart_blanc = heart.image3;
 
+        ObjectHandler screen = new OBJ_Screen(gamePanel);
+        startScreen = screen.image1;
     }
 
     public void backGroundTiles(Graphics2D g, boolean isBackground) {
@@ -210,10 +215,7 @@ public class GUI extends JPanel {
                     highScoreY += 30;
                     g1.drawString(highScoreRows[i], highScoreX, highScoreY);
                 }
-
             }
-
-
         }
     }
 
@@ -233,9 +235,53 @@ public class GUI extends JPanel {
         return highscores;
     }
 
+
     private void drawStartScreen(Graphics2D g1) {
-        g1.drawImage(heart_full, gamePanel.getTileSize(), gamePanel.getTileSize(), gamePanel.getScreenWidth(), gamePanel.getScreenHeight(), null);
+        // Hintergrund schwarz füllen
+        g1.setColor(Color.BLACK);
+        g1.fillRect(0, 0, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
+
+        // Bildschirmdimensionen
+        int screenWidth = gamePanel.getScreenWidth();
+        int screenHeight = gamePanel.getScreenHeight();
+
+        // Bild skalieren
+        Image scaledImage = startScreen.getScaledInstance(screenWidth, screenHeight, Image.SCALE_SMOOTH);
+
+        // Bild zeichnen
+        g1.drawImage(scaledImage, 0, 0, null);
+
+        // Titel, Prompt und Credits zeichnen
+//        g1.setFont(new Font("Arial", Font.BOLD, 60));
+//        g1.setColor(Color.WHITE);
+//
+//        String title = "Darker Dungeon";
+//        FontMetrics fm = g1.getFontMetrics();
+//        int titleLength = fm.stringWidth(title);
+//        int titleX = (screenWidth - titleLength) / 2;
+//        int titleY = screenHeight / 2;
+//
+//        g1.drawString(title, titleX, titleY);
+//
+//        g1.setFont(new Font("Arial", Font.PLAIN, 30));
+//        g1.setColor(Color.WHITE);
+//
+//        String prompt = "Press P to Play";
+//        int promptLength = fm.stringWidth(prompt);
+//        int promptX = (screenWidth - promptLength) / 2;
+//        int promptY = titleY + fm.getHeight() + 20;
+//
+//        g1.drawString(prompt, promptX, promptY);
+//
+//        String credits = "Made By Adam&Bauer";
+//        int creditsLength = fm.stringWidth(credits);
+//        int creditsX = (screenWidth - creditsLength) / 2;
+//        int creditsY = promptY + fm.getHeight() + 40;
+//
+//        g1.drawString(credits, creditsX, creditsY);
     }
+
+
 
     private void drawPlayerLife(Graphics2D g1) {
         int x = gamePanel.getTileSize();
