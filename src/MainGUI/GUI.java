@@ -26,7 +26,6 @@ public class GUI extends JPanel {
     public boolean drawDamage = true;
     BufferedImage heart_full, heart_half, heart_blanc;
 
-
     public GUI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
 

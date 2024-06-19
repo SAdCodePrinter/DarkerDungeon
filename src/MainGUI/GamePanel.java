@@ -3,10 +3,13 @@ package MainGUI;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
+import com.sun.source.tree.IfTree;
 import entity.Enemy_Ghost;
 import entity.Enemy_Troll;
 import entity.Karaktere;
 import entity.Player;
+import network.Client;
+import network.ClientHandler;
 import tile.TileHandler;
 
 import javax.swing.Timer;
@@ -29,10 +32,12 @@ public class GamePanel {
     //    public AssetSetter assetSetter = new AssetSetter(this);
     private final int screenWidth = 48 * 28;
     private final int screenHeight = 48 * 14;
+    private Client client = new Client();
 
     // Game State
     private double startTime;
     private double endTime;
+    private String serverHigscore;
 
     public void setGameState(int gameState) {
         this.gameState = gameState;
@@ -230,9 +235,13 @@ public class GamePanel {
     }
 
     // toDo: Auslagern in eigene Klasse?
-    public static void saveScoreToCSV(String name, int reachedLevel, double time, int killCounter) {
+    public void saveScoreToCSV(String name, int reachedLevel, double time, int killCounter) {
         String[] data = {name, Integer.toString(reachedLevel), Double.toString(time), Integer.toString(killCounter)};
         File file = new File("highscores/Highscores.csv");
+
+        // neuen Stand auf server speichern
+        // toDo: Highscores auf Host speichern
+        //this.serverHigscore = client.sendDataToServer(Arrays.toString(data));
 
         // Ensure the directory exists
         if (!file.getParentFile().exists()) {
