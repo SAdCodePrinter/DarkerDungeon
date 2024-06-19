@@ -15,7 +15,7 @@ public class Player extends Entity {
     private final CollisionHandler collisionHandler;
     private final String name;
     private int reachedLevel;
-    private long time;
+    private double time;
     private int killCounter = 0;
 
     public int getKillCounter() {
@@ -30,14 +30,12 @@ public class Player extends Entity {
         return reachedLevel;
     }
 
-    public long getTime() {
-        return time;
-    }
-
-    public void setTime(long time) {
+    public void setTime(double time) {
         this.time = time;
     }
-
+    public double getTime() {
+        return time;
+    }
     public String getName() {
         return name;
     }
