@@ -33,11 +33,18 @@ public class Player extends Entity {
     public void setTime(double time) {
         this.time = time;
     }
+
     public double getTime() {
         return time;
     }
+
     public String getName() {
         return name;
+    }
+
+    public void setPosition(int x, int y) {
+        this.setX(x);
+        this.setY(y);
     }
 
     KeyHandler keyH;
@@ -55,6 +62,7 @@ public class Player extends Entity {
         attackRect.width = gamePanel.getTileSize();
         attackRect.height = gamePanel.getTileSize();
     }
+
     public void reset() {
         this.life = 6;  // Setze das Leben des Spielers zurück
         this.killCounter = 0;  // Setze den Kill-Counter zurück
@@ -166,7 +174,6 @@ public class Player extends Entity {
     }
 
     /**
-     *
      * @param players
      */
     public void move(ArrayList<Player> players) {

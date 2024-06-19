@@ -115,8 +115,8 @@ public class GamePanel {
         gameState = startState;
         this.level = 1;
         startTime = System.currentTimeMillis();
-
     }
+
     public void resetGame() {
         this.level = 1;
         this.score = 0;
@@ -127,7 +127,8 @@ public class GamePanel {
         this.enemysSpawned = false;
         this.currentSpawnIndex = 0;
         this.timer.start();
-        // Weitere Reset-Operationen falls notwendig
+        characters.players.get(0).setPosition(getTileSize() * 17, getTileSize() * 8);
+        characters.players.get(1).setPosition(getTileSize() * 18, getTileSize() * 8);
     }
 
 
@@ -139,8 +140,8 @@ public class GamePanel {
         this.gui = new GUI(this);
         KeyHandler kH1 = new KeyHandler(KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D, KeyEvent.VK_P, KeyEvent.VK_R, this);
         KeyHandler kH2 = new KeyHandler(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, KeyEvent.VK_O, this);
-        characters.spawnPlayer(getTileSize() * 12, getTileSize() * 8, 7, kH1, "/players/player1/", "Giesela");
-        characters.spawnPlayer(getTileSize() * 7, getTileSize() * 7, 5, kH2, "/players/player2/", "Jochen");
+        characters.spawnPlayer(getTileSize() * 18, getTileSize() * 8, 7, kH1, "/players/player1/", "Giesela");
+        characters.spawnPlayer(getTileSize() * 17, getTileSize() * 8, 5, kH2, "/players/player2/", "Jochen");
 
         gui.setupGame(kH1, kH2);
 
@@ -231,12 +232,15 @@ public class GamePanel {
             System.out.println("Du hast " + (score) + " Sekunden überlebt");
             System.out.println("Du hast Level: " + this.level + " erreicht");
 
-
             for (Player player : characters.players) {
                 player.setTime(((endTime - startTime) / 1000.0));
                 player.setReachedLevel(this.level);
                 saveScoreToCSV(player.getName(), player.getReachedLevel(), player.getTime(), player.getKillCounter());
             }
+
+            // entfernen der Entitäten
+            characters.trolls.clear();
+            characters.ghosts.clear();
 
             timer.stop();
         }
@@ -286,7 +290,7 @@ public class GamePanel {
         }
 
         existingData.sort(Comparator.comparingDouble((zeit) -> Double.parseDouble(zeit[2])));
-        existingData.sort(Comparator.comparingInt((String [] level) -> Integer.parseInt(level[1])).reversed());
+        existingData.sort(Comparator.comparingInt((String[] level) -> Integer.parseInt(level[1])).reversed());
 
         // Zeigen der Highscores
         // Write updated data back to file
