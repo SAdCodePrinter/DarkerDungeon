@@ -22,8 +22,8 @@ public class OBJ_Screen extends ObjectHandler {
             image2 = ImageIO.read(getClass().getResourceAsStream("/objects/pause.screen.png"));
 
 
-            int scaledWidth = gamePanel.getTileSize() + 100; // Adjust these values as needed
-            int scaledHeight = gamePanel.getTileSize() + 100; // Adjust these values as needed
+            int scaledWidth = gamePanel.getTileSize() + 100;
+            int scaledHeight = gamePanel.getTileSize() + 100; 
             image1 = uTool.scaleImage(image1, scaledWidth, scaledHeight);
 
 

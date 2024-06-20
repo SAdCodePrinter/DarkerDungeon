@@ -24,7 +24,7 @@ public class GUI extends JPanel {
     private boolean drawTrollPath = false;
     private boolean drawHitbox = false;
     private boolean drawDamage = false;
-    BufferedImage heart_full, heart_half, heart_blanc, startScreen;
+    BufferedImage heart_full, heart_half, heart_blanc, startScreen, pauseScreen;
 
     public GUI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -37,6 +37,7 @@ public class GUI extends JPanel {
 
         ObjectHandler screen = new OBJ_Screen(gamePanel);
         startScreen = screen.image1;
+        pauseScreen = screen.image2;
     }
 
     public void drawHitboxPath(boolean b) {
@@ -220,7 +221,6 @@ public class GUI extends JPanel {
             g1.drawString(highScoreRows[i], highScoreX, highScoreY);
         }
 
-        // Press P to restart
         g1.setFont(new Font("Chiller", Font.BOLD, 60));
         g1.setColor(Color.RED);
 
@@ -233,12 +233,15 @@ public class GUI extends JPanel {
     }
 
     private void drawPauseScreen(Graphics2D g1) {
-        String text = "PAUSE";
-        int length = (int) g1.getFontMetrics().getStringBounds(text, g1).getWidth();
-        int x = gamePanel.getScreenWidth() / 2 - length / 2;
-        int y = gamePanel.getScreenHeight() / 2;
+        g1.setColor(Color.BLACK);
+        g1.fillRect(0, 0, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
 
-        g1.drawString(text, x, y);
+        int screenWidth = gamePanel.getScreenWidth();
+        int screenHeight = gamePanel.getScreenHeight();
+
+        Image scaledImage = pauseScreen.getScaledInstance(screenWidth, screenHeight, Image.SCALE_SMOOTH);
+
+        g1.drawImage(scaledImage, 0, 0, null);
     }
 
     private List<String[]> getHighscores() {
