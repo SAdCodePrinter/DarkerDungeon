@@ -24,7 +24,7 @@ muss man im Start-Screen nachdem man das Spiel neugestartet hat, die taste "R" e
 
 -------------------------------------------------------------------------------------------------------------------------
 
-In einem weiteren Branche "Host-Implementierung" wurde eine Netzwerkverbindung mit einem Localhost aufgebaut, über welche sich mehrere Spieler gleichzeitig anmelden können.
+In einem weiteren Branche "Host-Implementierung" wurde eine Netzwerkverbindung per Localhost aufgebaut, über welche sich mehrere Spieler gleichzeitig anmelden können.
 
 Um dies zu machen ist es erforderlich im Package "network", die Klasse HostRunner aufzurufen und dort die "main" methode auszuführen.
 
@@ -33,8 +33,8 @@ in der Classe "Client" bei der Variable "SERVER_ADDRESS" anstatt dem String "loc
 
 Dadurch wird nach jedem Tod ein String mit allen Highscores online gespeichert, und auf jedem Anwender Synchronisiert.
 
-Leider ist dieser Branch nicht fertig geworden, weshalb die Speicherung und der Abruf der Daten noch nicht implementiert ist.
+Leider ist dieser Branch nicht fertig geworden, weshalb die Speicherung und der Abruf der Daten noch nicht implementiert wurde.
 
 
-
+-----
 Projekt Von Philipp Bauer und Simon Adam
