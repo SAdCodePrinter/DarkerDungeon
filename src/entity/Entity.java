@@ -7,12 +7,6 @@ import java.awt.image.BufferedImage;
 
 public class Entity {
     GamePanel gamePanel;
-
-    public Entity(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
-    }
-
-
     public BufferedImage[] up = new BufferedImage[8];
     public BufferedImage[] down = new BufferedImage[8];
     public BufferedImage[] left = new BufferedImage[8];
@@ -28,8 +22,6 @@ public class Entity {
     public int spriteNum = 1;
     public int hitSpriteNum = 1;
 
-
-    // ToDo: Private machen und vielleicht abstract
     public int x, y;
     public int speed;
     public String direction, directionHit, lastDirection = "right";
@@ -38,6 +30,10 @@ public class Entity {
     public int maxLife;
     public int life;
 
+    public Entity(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+    }
+
     public void setSpeed(int speed) {
         this.speed = speed;
     }
@@ -45,12 +41,7 @@ public class Entity {
     public void setDirection(String direction) {
         this.direction = direction;
     }
-
     public Rectangle attackRect = new Rectangle(0, 0, 0, 0);
-
-    public Rectangle getRect() {
-        return new Rectangle(x, y, x + gamePanel.getTileSize(), y + gamePanel.getTileSize());
-    }
 
     public int getX() {
         return x;
@@ -77,6 +68,4 @@ public class Entity {
             spriteCounter = 0;
         }
     }
-
-
 }

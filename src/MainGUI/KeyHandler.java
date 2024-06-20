@@ -49,18 +49,27 @@ public class KeyHandler implements KeyListener {
             rightPressed = true;
         }
         if (code == this.pause) {
-            if (gamePanel.getGameState() == gamePanel.getPlayState()) {
+            if (gamePanel.getGameState() == gamePanel.getStartState()) {
+                gamePanel.setGameState(gamePanel.getPlayState());
+                System.out.println("PLAY");
+            } else if (gamePanel.getGameState() == gamePanel.getPlayState()) {
                 gamePanel.setGameState(gamePanel.getPauseState());
                 System.out.println("PAUSE");
             } else if (gamePanel.getGameState() == gamePanel.getPauseState()) {
                 gamePanel.setGameState(gamePanel.getPlayState());
                 System.out.println("PLAY");
+            } else if (gamePanel.getGameState() == gamePanel.getEndState()) {
+                gamePanel.resetGame();
+                gamePanel.setGameState(gamePanel.getStartState());
+                System.out.println("START");
             }
         }
         if (code == this.attack) {
+            if (gamePanel.getGameState() == gamePanel.getStartState()) {
+                gamePanel.gui.drawHitboxPath(true);
+            }
             attacking = true;
         }
-
     }
 
     @Override
@@ -79,8 +88,5 @@ public class KeyHandler implements KeyListener {
         if (code == this.right) {
             rightPressed = false;
         }
-//        if (code == this.attack) {
-//            attacking = false;
-//        }
     }
 }

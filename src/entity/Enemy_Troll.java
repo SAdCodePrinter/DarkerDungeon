@@ -31,7 +31,6 @@ public class Enemy_Troll extends Entity {
     }
 
     public void setPathFinder() {
-//        pathFinder = new PathFinder(gamePanel);
         pathFinder = new PathFinder(gamePanel.getScreenCol(), gamePanel.getScreenRow(), gamePanel.tileH.mapTileNum, gamePanel.tileH.tile);
     }
 
@@ -214,10 +213,6 @@ public class Enemy_Troll extends Entity {
             }
             // Troll hat sein Ziel erreicht
 
-
-        } else {
-
-//            System.out.println("Troll hat keinen Pfad zum Ziel mit dem Pathfinder gefunden");
         }
 
         return nextDirection;
@@ -253,7 +248,6 @@ public class Enemy_Troll extends Entity {
             }
 
             imageTroll = switch (directionHit) {
-                // toDo: wenn es einen Schlag nach oben gibt für den Troll, ändern
                 case "hit_up" -> hit_down[hitSpriteNum];
                 case "hit_down" -> hit_down[hitSpriteNum];
                 case "hit_left" -> hit_left[hitSpriteNum];
@@ -303,7 +297,6 @@ public class Enemy_Troll extends Entity {
         }
     }
 
-    // toDo: Die Id des Players übergeben, welcher gehittet wird
     private void damagePlayer() {
         gamePanel.characters.players.get(0).life -= 1;
     }

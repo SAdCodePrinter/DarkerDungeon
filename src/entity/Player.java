@@ -33,11 +33,18 @@ public class Player extends Entity {
     public void setTime(double time) {
         this.time = time;
     }
+
     public double getTime() {
         return time;
     }
+
     public String getName() {
         return name;
+    }
+
+    public void setPosition(int x, int y) {
+        this.setX(x);
+        this.setY(y);
     }
 
     KeyHandler keyH;
@@ -47,14 +54,18 @@ public class Player extends Entity {
         this.name = name;
 
         collisionHandler = new CollisionHandler(gamePanel);
-
-        //this.gamePanel = gamePanel;
         this.keyH = keyH;
         getPlayerImage(imagePath);
 
         attackRect.width = gamePanel.getTileSize();
         attackRect.height = gamePanel.getTileSize();
     }
+
+    public void reset() {
+        this.life = 6;  // Setze das Leben des Spielers zurück
+        this.killCounter = 0;  // Setze den Kill-Counter zurück
+    }
+
 
     private void attacking() {
         switch (lastDirection) {
@@ -135,12 +146,6 @@ public class Player extends Entity {
                 hit_right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "hit_right (" + (i + 1) + ").png")));
             }
 
-            // Diese Animation hat 4 Bilder
-//            for (int i = 0; i < 4; i++) {
-//                hit_left[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "swing_left (" + (i + 1) + ").png")));
-//                hit_right[i] = ImageIO.read(Objects.requireNonNull(Player.class.getResourceAsStream(path + "swing_right (" + (i + 1) + ").png")));
-//            }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -160,7 +165,6 @@ public class Player extends Entity {
     }
 
     /**
-     *
      * @param players
      */
     public void move(ArrayList<Player> players) {
@@ -240,9 +244,6 @@ public class Player extends Entity {
             }
         }
 
-        // Check Event
-        //gamePanel.eventHandler.checkEvent(this, direction);
-
     }
 
     public int getWidth() {
@@ -253,7 +254,7 @@ public class Player extends Entity {
         return gamePanel.getTileSize();
     }
 
-    public void drawPlayer(Graphics2D g) {
+    public void setPlayerImage(Graphics2D g) {
         BufferedImage imagePlayer;
         if (keyH.attacking) {
             hitSpritCounter++;
@@ -285,7 +286,7 @@ public class Player extends Entity {
             };
             // Andere Höhen und Breiten der Bilder
             if (imagePlayer != null) {
-                gamePanel.gui.drawPlayer(g, imagePlayer, getX() - 15, getY() - getHeight(), getWidth() + 30, getHeight() * 2);
+                gamePanel.gui.drawPlayerImage(g, imagePlayer, getX() - 15, getY() - getHeight(), getWidth() + 30, getHeight() * 2);
             }
 
 
@@ -297,17 +298,12 @@ public class Player extends Entity {
                         case "down" -> down[spriteNum];
                         case "left" -> left[spriteNum];
                         case "right" -> right[spriteNum];
-//                        // toDO: Schlag fängt nicht bei Bild 1 an
-//                        case "hit_left" -> hit_left[spriteNum];
-//                        case "hit_right" -> hit_right[spriteNum];
                         default -> null;
                     };
             if (imagePlayer != null) {
-                gamePanel.gui.drawPlayer(g, imagePlayer, getX() - 2, getY() - getHeight(), getWidth() + 4, getHeight() * 2);
+                gamePanel.gui.drawPlayerImage(g, imagePlayer, getX() - 2, getY() - getHeight(), getWidth() + 4, getHeight() * 2);
             }
         }
-
-
     }
 
 }

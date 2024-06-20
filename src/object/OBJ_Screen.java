@@ -16,10 +16,10 @@ public class OBJ_Screen extends ObjectHandler {
         this.gamePanel = gamePanel;
 
 
-
         name = "startScreen";
         try {
-            image1 = ImageIO.read(getClass().getResourceAsStream("/objects/start-screen.png"));
+            image1 = ImageIO.read(getClass().getResourceAsStream("/objects/start.screen.png"));
+            image2 = ImageIO.read(getClass().getResourceAsStream("/objects/pause.screen.png"));
 
 
             int scaledWidth = gamePanel.getTileSize() + 100; // Adjust these values as needed

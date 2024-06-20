@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Enemy_Ghost extends Entity {
     CollisionHandler collisionHandler;
 
-    private int spriteCounter = 0; // Counter to keep track of animation frames
+    private int spriteCounter = 0;
 
     public Enemy_Ghost(GamePanel gamePanel, String imagePath) {
         super(gamePanel);
@@ -40,11 +40,6 @@ public class Enemy_Ghost extends Entity {
         setDirection("idle");
     }
 
-    public void drawHitbox(Graphics2D g) {
-        g.setColor(Color.red);
-        g.drawRect(x, y, 36, 36);
-    }
-
     public void move(Player player1, Player player2) {
         Player target = nearestPlayer(this, player1, player2);
 
@@ -66,7 +61,6 @@ public class Enemy_Ghost extends Entity {
         // Update sprite animation
         updateSprite();
 
-        // Set the direction of the ghost based on movement
         direction = "idle";
 
         attacking();
@@ -77,6 +71,7 @@ public class Enemy_Ghost extends Entity {
         double distanceToPlayer2 = Math.sqrt(Math.pow(ghost.getX() - player2.getX(), 2) + Math.pow(ghost.getY() - player2.getY(), 2));
 
         return distanceToPlayer1 <= distanceToPlayer2 ? player1 : player2;
+        // Quelle ChatGPT (Überarbeitet)
     }
 
     private void updateSprite() {
@@ -106,26 +101,18 @@ public class Enemy_Ghost extends Entity {
             if (hitSpritCounter == 28) {
                 for (Player player : gamePanel.characters.players) {
                     if (collisionHandler.entityCollision(player.getX(), player.getY(), attackRect.x, attackRect.y, gamePanel.getTileSize())) {
-                        damagePlayer(player);
+                        damagePlayer();
                     }
                 }
-                hitSpritCounter = 0; // Reset the counter after the attack
+                hitSpritCounter = 0;
             }
         } else {
-            hitSpritCounter = 0; // Reset the counter if the player is not in range
+            hitSpritCounter = 0;
         }
     }
 
-    private void damagePlayer(Player player) {
-        player.life -= 1;
+    private void damagePlayer() {
+        gamePanel.characters.players.get(0).life -= 1;
     }
 
-
-    public void drawGhost(Graphics2D g) {
-        BufferedImage imageGhost = idle[spriteNum];
-
-        if (imageGhost != null) {
-            g.drawImage(imageGhost, getX() - 20, getY() - gamePanel.getTileSize() / 2, gamePanel.getTileSize() * 2, gamePanel.getTileSize() * 2, null);
-        }
-    }
 }
