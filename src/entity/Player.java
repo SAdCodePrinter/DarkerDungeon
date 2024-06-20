@@ -55,7 +55,6 @@ public class Player extends Entity {
 
         collisionHandler = new CollisionHandler(gamePanel);
 
-        //this.gamePanel = gamePanel;
         this.keyH = keyH;
         getPlayerImage(imagePath);
 
@@ -64,9 +63,8 @@ public class Player extends Entity {
     }
 
     public void reset() {
-        this.life = 6;  // Setze das Leben des Spielers zurück
-        this.killCounter = 0;  // Setze den Kill-Counter zurück
-        // Setze andere Parameter zurück falls notwendig
+        this.life = 6;
+        this.killCounter = 0;
     }
 
 

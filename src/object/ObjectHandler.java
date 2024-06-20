@@ -9,5 +9,6 @@ public class ObjectHandler {
     public BufferedImage image1, image2, image3;
     public String name;
 
+
 }
 

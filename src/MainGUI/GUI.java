@@ -274,6 +274,8 @@ public class GUI extends JPanel {
     }
 
     private void drawPlayerLife(Graphics2D g1) {
+        //Quelle: https://youtu.be/vztluVKH4P4?si=blxNS4tm5ZAZtsSz
+
         int x = gamePanel.getTileSize();
         int y = gamePanel.getTileSize() * 16;
         int spaceBetweenHearts = 20; // Abstand zwischen den Herzen

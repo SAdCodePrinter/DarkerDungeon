@@ -31,7 +31,6 @@ public class Enemy_Troll extends Entity {
     }
 
     public void setPathFinder() {
-//        pathFinder = new PathFinder(gamePanel);
         pathFinder = new PathFinder(gamePanel.getScreenCol(), gamePanel.getScreenRow(), gamePanel.tileH.mapTileNum, gamePanel.tileH.tile);
     }
 
@@ -216,8 +215,6 @@ public class Enemy_Troll extends Entity {
 
 
         } else {
-
-//            System.out.println("Troll hat keinen Pfad zum Ziel mit dem Pathfinder gefunden");
         }
 
         return nextDirection;
@@ -302,7 +299,6 @@ public class Enemy_Troll extends Entity {
         }
     }
 
-    // toDo: Die Id des Players übergeben, welcher gehittet wird
     private void damagePlayer() {
         gamePanel.characters.players.get(0).life -= 1;
     }

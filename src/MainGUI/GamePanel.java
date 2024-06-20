@@ -266,14 +266,12 @@ public class GamePanel {
         String[] data = {name, Integer.toString(reachedLevel), Double.toString(time), Integer.toString(killCounter)};
         File file = new File("highscores/Highscores.csv");
 
-        // Ensure the directory exists
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
 
         List<String[]> existingData = new ArrayList<>();
 
-        // Read existing data if the file exists
         if (file.exists()) {
             try (FileReader inputFile = new FileReader(file);
                  CSVReader reader = new CSVReader(inputFile)) {
@@ -284,7 +282,6 @@ public class GamePanel {
             }
         }
 
-        // Update or add new data
         boolean found = false;
         Iterator<String[]> iterator = existingData.iterator();
         while (iterator.hasNext()) {
@@ -308,7 +305,6 @@ public class GamePanel {
         existingData.sort(Comparator.comparingInt((String[] level) -> Integer.parseInt(level[1])).reversed());
 
         // Zeigen der Highscores
-        // Write updated data back to file
         try (FileWriter outputFile = new FileWriter(file);
              CSVWriter writer = new CSVWriter(outputFile)) {
             writer.writeAll(existingData);

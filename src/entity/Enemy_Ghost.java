@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Enemy_Ghost extends Entity {
     CollisionHandler collisionHandler;
 
-    private int spriteCounter = 0; // Counter to keep track of animation frames
+    private int spriteCounter = 0;
 
     public Enemy_Ghost(GamePanel gamePanel, String imagePath) {
         super(gamePanel);
@@ -66,7 +66,6 @@ public class Enemy_Ghost extends Entity {
         // Update sprite animation
         updateSprite();
 
-        // Set the direction of the ghost based on movement
         direction = "idle";
 
         attacking();
@@ -77,6 +76,7 @@ public class Enemy_Ghost extends Entity {
         double distanceToPlayer2 = Math.sqrt(Math.pow(ghost.getX() - player2.getX(), 2) + Math.pow(ghost.getY() - player2.getY(), 2));
 
         return distanceToPlayer1 <= distanceToPlayer2 ? player1 : player2;
+        // Quelle ChatGPT (Überarbeitet)
     }
 
     private void updateSprite() {
@@ -109,10 +109,10 @@ public class Enemy_Ghost extends Entity {
                         damagePlayer(player);
                     }
                 }
-                hitSpritCounter = 0; // Reset the counter after the attack
+                hitSpritCounter = 0;
             }
         } else {
-            hitSpritCounter = 0; // Reset the counter if the player is not in range
+            hitSpritCounter = 0;
         }
     }
 

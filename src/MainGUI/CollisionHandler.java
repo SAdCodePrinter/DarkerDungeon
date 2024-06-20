@@ -119,14 +119,6 @@ public class CollisionHandler {
                 y > 0 && y < gamePanel.getScreenRow() * gamePanel.getTileSize() + gamePanel.getTileSize();
     }
 
-    /**
-     * @param leftX1 Die Koordinaten vom eigenen Objekt
-     * @param topY1
-     * @param leftX2 Die Koordinaten mit dem eine Collision abgefragt werden soll
-     * @param topY2
-     * @param speed
-     * @return
-     */
     public boolean noColisionUp(int leftX1, int topY1, int leftX2, int topY2, int speed, int tileSize) {
         return noPlayerCollision(leftX1, topY1 - speed, leftX2, topY2, tileSize) &&
                 (topY1 > 0 || topY1 < gamePanel.getScreenRow() * gamePanel.getTileSize()) &&
