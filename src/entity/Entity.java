@@ -7,11 +7,6 @@ import java.awt.image.BufferedImage;
 
 public class Entity {
     GamePanel gamePanel;
-
-    public Entity(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
-    }
-
     public BufferedImage[] up = new BufferedImage[8];
     public BufferedImage[] down = new BufferedImage[8];
     public BufferedImage[] left = new BufferedImage[8];
@@ -35,6 +30,10 @@ public class Entity {
     public int maxLife;
     public int life;
 
+    public Entity(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
+    }
+
     public void setSpeed(int speed) {
         this.speed = speed;
     }
@@ -43,10 +42,6 @@ public class Entity {
         this.direction = direction;
     }
     public Rectangle attackRect = new Rectangle(0, 0, 0, 0);
-
-    public Rectangle getRect() {
-        return new Rectangle(x, y, x + gamePanel.getTileSize(), y + gamePanel.getTileSize());
-    }
 
     public int getX() {
         return x;

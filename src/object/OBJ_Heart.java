@@ -4,8 +4,6 @@ import MainGUI.GamePanel;
 import MainGUI.uTool;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 
@@ -14,6 +12,7 @@ public class OBJ_Heart extends ObjectHandler {
 
     public OBJ_Heart(GamePanel gamePanel){
         this.gamePanel = gamePanel;
+
 
         name = "Heart";
         try {

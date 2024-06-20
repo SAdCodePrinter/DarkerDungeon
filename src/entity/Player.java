@@ -254,7 +254,7 @@ public class Player extends Entity {
         return gamePanel.getTileSize();
     }
 
-    public void drawPlayer(Graphics2D g) {
+    public void setPlayerImage(Graphics2D g) {
         BufferedImage imagePlayer;
         if (keyH.attacking) {
             hitSpritCounter++;
@@ -286,7 +286,7 @@ public class Player extends Entity {
             };
             // Andere Höhen und Breiten der Bilder
             if (imagePlayer != null) {
-                gamePanel.gui.drawPlayer(g, imagePlayer, getX() - 15, getY() - getHeight(), getWidth() + 30, getHeight() * 2);
+                gamePanel.gui.drawPlayerImage(g, imagePlayer, getX() - 15, getY() - getHeight(), getWidth() + 30, getHeight() * 2);
             }
 
 
@@ -301,11 +301,9 @@ public class Player extends Entity {
                         default -> null;
                     };
             if (imagePlayer != null) {
-                gamePanel.gui.drawPlayer(g, imagePlayer, getX() - 2, getY() - getHeight(), getWidth() + 4, getHeight() * 2);
+                gamePanel.gui.drawPlayerImage(g, imagePlayer, getX() - 2, getY() - getHeight(), getWidth() + 4, getHeight() * 2);
             }
         }
-
-
     }
 
 }

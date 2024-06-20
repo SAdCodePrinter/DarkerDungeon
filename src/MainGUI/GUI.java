@@ -101,7 +101,7 @@ public class GUI extends JPanel {
 
     }
 
-    public void drawPlayer(Graphics2D g, BufferedImage imagePlayer, int x, int y, int w, int h) {
+    public void drawPlayerImage(Graphics2D g, BufferedImage imagePlayer, int x, int y, int w, int h) {
         g.drawImage(imagePlayer, x, y, w, h, null);
     }
 
@@ -315,7 +315,7 @@ public class GUI extends JPanel {
 
     private void drawAllPlayer(Graphics2D g1) {
         for (Player player : gamePanel.characters.players) {
-            player.drawPlayer(g1);
+            player.setPlayerImage(g1);
             if (drawHitbox) {
                 player.drawHitbox(g1);
             }

@@ -16,7 +16,6 @@ public class OBJ_Screen extends ObjectHandler {
         this.gamePanel = gamePanel;
 
 
-
         name = "startScreen";
         try {
             image1 = ImageIO.read(getClass().getResourceAsStream("/objects/start.screen.png"));

@@ -186,9 +186,6 @@ public class GamePanel {
         if (gameState == playState) {
             updatePlaystate();
 
-        } else if (gameState == pauseState) {
-            // toDo: Pause Logik
-
         } else if (gameState == endState) {
             updateEndState();
 

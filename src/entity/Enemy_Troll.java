@@ -213,8 +213,6 @@ public class Enemy_Troll extends Entity {
             }
             // Troll hat sein Ziel erreicht
 
-
-        } else {
         }
 
         return nextDirection;

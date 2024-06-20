@@ -40,11 +40,6 @@ public class Enemy_Ghost extends Entity {
         setDirection("idle");
     }
 
-    public void drawHitbox(Graphics2D g) {
-        g.setColor(Color.red);
-        g.drawRect(x, y, 36, 36);
-    }
-
     public void move(Player player1, Player player2) {
         Player target = nearestPlayer(this, player1, player2);
 
@@ -106,7 +101,7 @@ public class Enemy_Ghost extends Entity {
             if (hitSpritCounter == 28) {
                 for (Player player : gamePanel.characters.players) {
                     if (collisionHandler.entityCollision(player.getX(), player.getY(), attackRect.x, attackRect.y, gamePanel.getTileSize())) {
-                        damagePlayer(player);
+                        damagePlayer();
                     }
                 }
                 hitSpritCounter = 0;
@@ -116,16 +111,8 @@ public class Enemy_Ghost extends Entity {
         }
     }
 
-    private void damagePlayer(Player player) {
-        player.life -= 1;
+    private void damagePlayer() {
+        gamePanel.characters.players.get(0).life -= 1;
     }
 
-
-    public void drawGhost(Graphics2D g) {
-        BufferedImage imageGhost = idle[spriteNum];
-
-        if (imageGhost != null) {
-            g.drawImage(imageGhost, getX() - 20, getY() - gamePanel.getTileSize() / 2, gamePanel.getTileSize() * 2, gamePanel.getTileSize() * 2, null);
-        }
-    }
 }

@@ -17,8 +17,16 @@ public class PathFinder {
     boolean goalReached = false;
     int step = 0;
 
+    /**
+     * Den Pathfinder haben wir mittels viedeos von Youtube erstellt.
+     * Die Hauptquelle ist: https://www.youtube.com/watch?v=2JNEme00ZFA
+     *
+     * @param cols
+     * @param rows
+     * @param tileMap
+     * @param collisionTiles
+     */
     public PathFinder(int cols, int rows, int[][] tileMap, Tile[] collisionTiles) {
-        // toDo: Gamepanel entfernen
         this.cols = cols;
         this.rows = rows;
         this.tileMap = tileMap;

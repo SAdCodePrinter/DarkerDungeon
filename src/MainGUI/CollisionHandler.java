@@ -1,6 +1,5 @@
 package MainGUI;
 
-import java.util.Objects;
 
 public class CollisionHandler {
     private final GamePanel gamePanel;

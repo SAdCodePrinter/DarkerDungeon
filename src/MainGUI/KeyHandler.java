@@ -88,8 +88,5 @@ public class KeyHandler implements KeyListener {
         if (code == this.right) {
             rightPressed = false;
         }
-//        if (code == this.attack) {
-//            attacking = false;
-//        }
     }
 }
