@@ -178,7 +178,7 @@ public class GUI extends JPanel {
         g1.setFont(new Font("Chiller", Font.PLAIN, 30));
         g1.setColor(Color.WHITE);
 
-        String scoreText = "Score: " + gamePanel.getScore() + " Sekunden überlebt";
+        String scoreText = "" + gamePanel.getScore() + " Sekunden überlebt";
         int scoreLength = fm.stringWidth(scoreText);
         int scoreX = (gamePanel.getScreenWidth() - scoreLength) / 2;
         int scoreY = y + fm.getHeight();
@@ -190,9 +190,17 @@ public class GUI extends JPanel {
 
         String levelText = "Level: " + gamePanel.getLevel() + " Erreicht";
         int levelLength = fm.stringWidth(scoreText);
-        int levelX = (gamePanel.getScreenWidth() - levelLength) / 2;
+        int levelX = (int) ((gamePanel.getScreenWidth() - levelLength) * 0.25);
         int levelY = y + fm.getHeight() - 25;
 
+        g1.drawString(levelText, levelX, levelY);
+
+        levelText = gamePanel.characters.players.get(0).getName() + ": " + gamePanel.characters.players.get(0).getKillCounter() + " Kills";
+        levelY += 30;
+        g1.drawString(levelText, levelX, levelY);
+
+        levelText = gamePanel.characters.players.get(1).getName() + ": "  + gamePanel.characters.players.get(1).getKillCounter() + " Kills";
+        levelY += 30;
         g1.drawString(levelText, levelX, levelY);
 
 
