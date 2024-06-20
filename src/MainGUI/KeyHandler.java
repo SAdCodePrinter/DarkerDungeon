@@ -65,6 +65,9 @@ public class KeyHandler implements KeyListener {
             }
         }
         if (code == this.attack) {
+            if (gamePanel.getGameState() == gamePanel.getStartState()) {
+                gamePanel.gui.drawHitboxPath(true);
+            }
             attacking = true;
         }
     }

@@ -9,7 +9,6 @@ import object.OBJ_Heart;
 import object.OBJ_Screen;
 import object.ObjectHandler;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -20,15 +19,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class GUI extends JPanel {
     private GamePanel gamePanel;
-    public boolean drawTrollPath = true;
-    public boolean drawHitbox = true;
-    public boolean drawDamage = true;
+    private boolean drawTrollPath = false;
+    private boolean drawHitbox = false;
+    private boolean drawDamage = false;
     BufferedImage heart_full, heart_half, heart_blanc, startScreen;
-
-
 
     public GUI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -41,6 +37,18 @@ public class GUI extends JPanel {
 
         ObjectHandler screen = new OBJ_Screen(gamePanel);
         startScreen = screen.image1;
+    }
+
+    public void drawHitboxPath(boolean b) {
+        if (b) {
+            drawDamage = true;
+            drawHitbox = true;
+            drawTrollPath = true;
+        } else {
+            drawDamage = false;
+            drawHitbox = false;
+            drawTrollPath = false;
+        }
     }
 
     public void backGroundTiles(Graphics2D g, boolean isBackground) {
@@ -113,8 +121,6 @@ public class GUI extends JPanel {
 
         backGroundTiles(g1, true);
 
-//        gamePanel.eventHandler.drawEvent(g1);
-
         drawAllPlayer(g1);
 
         drawAllGhosts(g1);
@@ -139,12 +145,7 @@ public class GUI extends JPanel {
         }
 
         if (gamePanel.getGameState() == gamePanel.getPauseState()) {
-            String text = "PAUSE";
-            int length = (int) g1.getFontMetrics().getStringBounds(text, g1).getWidth();
-            int x = gamePanel.getScreenWidth() / 2 - length / 2;
-            int y = gamePanel.getScreenHeight() / 2;
-
-            g1.drawString(text, x, y);
+            drawPauseScreen(g1);
         }
 
         if (gamePanel.getGameState() == gamePanel.getStartState()) {
@@ -152,71 +153,92 @@ public class GUI extends JPanel {
         }
 
         if (gamePanel.getGameState() == gamePanel.getEndState()) {
-
-            if (gamePanel.getGameState() == gamePanel.getEndState()) {
-                g1.setColor(Color.BLACK);
-                g1.fillRect(0, 0, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
-
-                g1.setFont(new Font("Chiller", Font.BOLD, 60));
-                g1.setColor(Color.RED);
-
-                String text = "YOU DIED";
-                FontMetrics fm = g1.getFontMetrics();
-                int length = fm.stringWidth(text);
-                int x = (gamePanel.getScreenWidth() - length) / 2;
-                int y = gamePanel.getScreenHeight() / 2 + fm.getHeight() / 4;
-
-                g1.drawString(text, x, y);
-
-
-                g1.setFont(new Font("Chiller", Font.PLAIN, 30));
-                g1.setColor(Color.WHITE);
-
-                String scoreText = "Score: " + gamePanel.getScore() + " Sekunden überlebt";
-                int scoreLength = fm.stringWidth(scoreText);
-                int scoreX = (gamePanel.getScreenWidth() - scoreLength) / 2;
-                int scoreY = y + fm.getHeight();
-
-                g1.drawString(scoreText, scoreX, scoreY);
-
-
-                g1.setFont(new Font("Chiller", Font.PLAIN, 30));
-                g1.setColor(Color.WHITE);
-
-                String levelText = "Level: " + gamePanel.getLevel() + " Erreicht";
-                int levelLength = fm.stringWidth(scoreText);
-                int levelX = (gamePanel.getScreenWidth() - levelLength) / 2;
-                int levelY = y + fm.getHeight() - 25;
-
-                g1.drawString(levelText, levelX, levelY);
-
-                // Highscores
-                g1.setFont(new Font("Chiller", Font.PLAIN, 30));
-                g1.setColor(Color.WHITE);
-
-                List<String[]> highscores = getHighscores();
-
-                String highScoreHeader = "HIGHSCORES";
-                String[] highScoreRows = new String[6];
-                for (int i = 0; i < 6 && i < highscores.size(); i++) {
-                    highScoreRows[i] = "" + highscores.get(i)[0] +
-                            "  Level: " + highscores.get(i)[1] +
-                            "  Zeit: " + highscores.get(i)[2] +
-                            "  Kills: " + highscores.get(i)[3];
-
-                }
-                int highScoreLength = fm.stringWidth(highScoreRows[0]);
-                int highScoreX = gamePanel.getScreenWidth() - highScoreLength - 10;
-                int highScoreY = (int) (gamePanel.getScreenHeight() * 0.1);
-
-                g1.drawString(highScoreHeader, highScoreX, highScoreY);
-
-                for (int i = 0; i < highScoreRows.length && highScoreRows[i] != null; i++) {
-                    highScoreY += 30;
-                    g1.drawString(highScoreRows[i], highScoreX, highScoreY);
-                }
-            }
+            drawEndscreen(g1);
         }
+    }
+
+    private void drawEndscreen(Graphics2D g1) {
+        g1.setColor(Color.BLACK);
+        g1.fillRect(0, 0, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
+
+        // Überschrift
+        g1.setFont(new Font("Chiller", Font.BOLD, 60));
+        g1.setColor(Color.RED);
+
+        String text = "YOU DIED";
+        FontMetrics fm = g1.getFontMetrics();
+        int length = fm.stringWidth(text);
+        int x = (gamePanel.getScreenWidth() - length) / 2;
+        int y = gamePanel.getScreenHeight() / 2 + fm.getHeight() / 4;
+
+        g1.drawString(text, x, y);
+
+        // Eigener Score
+        g1.setFont(new Font("Chiller", Font.PLAIN, 30));
+        g1.setColor(Color.WHITE);
+
+        String scoreText = "Score: " + gamePanel.getScore() + " Sekunden überlebt";
+        int scoreLength = fm.stringWidth(scoreText);
+        int scoreX = (gamePanel.getScreenWidth() - scoreLength) / 2;
+        int scoreY = y + fm.getHeight();
+
+        g1.drawString(scoreText, scoreX, scoreY);
+
+        g1.setFont(new Font("Chiller", Font.PLAIN, 30));
+        g1.setColor(Color.WHITE);
+
+        String levelText = "Level: " + gamePanel.getLevel() + " Erreicht";
+        int levelLength = fm.stringWidth(scoreText);
+        int levelX = (gamePanel.getScreenWidth() - levelLength) / 2;
+        int levelY = y + fm.getHeight() - 25;
+
+        g1.drawString(levelText, levelX, levelY);
+
+
+        // Highscores
+        g1.setFont(new Font("Chiller", Font.PLAIN, 30));
+        g1.setColor(Color.WHITE);
+
+        List<String[]> highscores = getHighscores();
+
+        String highScoreHeader = "HIGHSCORES";
+        String[] highScoreRows = new String[6];
+        for (int i = 0; i < 6 && i < highscores.size(); i++) {
+            highScoreRows[i] = "" + highscores.get(i)[0] +
+                    "  Level: " + highscores.get(i)[1] +
+                    "  Zeit: " + highscores.get(i)[2] +
+                    "  Kills: " + highscores.get(i)[3];
+        }
+        int highScoreLength = fm.stringWidth(highScoreRows[0]);
+        int highScoreX = gamePanel.getScreenWidth() - highScoreLength - 10;
+        int highScoreY = (int) (gamePanel.getScreenHeight() * 0.1);
+
+        g1.drawString(highScoreHeader, highScoreX, highScoreY);
+
+        for (int i = 0; i < highScoreRows.length && highScoreRows[i] != null; i++) {
+            highScoreY += 30;
+            g1.drawString(highScoreRows[i], highScoreX, highScoreY);
+        }
+
+        // Press P to restart
+        g1.setFont(new Font("Chiller", Font.BOLD, 60));
+        g1.setColor(Color.RED);
+
+        String infoText = "PRESS P TO RESTART";
+        int infoLength = fm.stringWidth(infoText);
+        int infoX = (gamePanel.getScreenWidth() - infoLength) / 2;
+        int infoY = (int) (gamePanel.getScreenHeight() * 0.75 + fm.getHeight() / 4);
+        g1.drawString(infoText, infoX, infoY);
+
+    }
+
+    private void drawPauseScreen(Graphics2D g1) {
+        String text = "PAUSE";
+        int length = (int) g1.getFontMetrics().getStringBounds(text, g1).getWidth();
+        int x = gamePanel.getScreenWidth() / 2 - length / 2;
+        int y = gamePanel.getScreenHeight() / 2;
+
+        g1.drawString(text, x, y);
     }
 
     private List<String[]> getHighscores() {
@@ -235,7 +257,6 @@ public class GUI extends JPanel {
         return highscores;
     }
 
-
     private void drawStartScreen(Graphics2D g1) {
         // Hintergrund schwarz füllen
         g1.setColor(Color.BLACK);
@@ -250,38 +271,7 @@ public class GUI extends JPanel {
 
         // Bild zeichnen
         g1.drawImage(scaledImage, 0, 0, null);
-
-        // Titel, Prompt und Credits zeichnen
-//        g1.setFont(new Font("Arial", Font.BOLD, 60));
-//        g1.setColor(Color.WHITE);
-//
-//        String title = "Darker Dungeon";
-//        FontMetrics fm = g1.getFontMetrics();
-//        int titleLength = fm.stringWidth(title);
-//        int titleX = (screenWidth - titleLength) / 2;
-//        int titleY = screenHeight / 2;
-//
-//        g1.drawString(title, titleX, titleY);
-//
-//        g1.setFont(new Font("Arial", Font.PLAIN, 30));
-//        g1.setColor(Color.WHITE);
-//
-//        String prompt = "Press P to Play";
-//        int promptLength = fm.stringWidth(prompt);
-//        int promptX = (screenWidth - promptLength) / 2;
-//        int promptY = titleY + fm.getHeight() + 20;
-//
-//        g1.drawString(prompt, promptX, promptY);
-//
-//        String credits = "Made By Adam&Bauer";
-//        int creditsLength = fm.stringWidth(credits);
-//        int creditsX = (screenWidth - creditsLength) / 2;
-//        int creditsY = promptY + fm.getHeight() + 40;
-//
-//        g1.drawString(credits, creditsX, creditsY);
     }
-
-
 
     private void drawPlayerLife(Graphics2D g1) {
         int x = gamePanel.getTileSize();

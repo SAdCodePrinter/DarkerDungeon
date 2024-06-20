@@ -1,27 +1,22 @@
 package entity;
 
-import MainGUI.CollisionHandler;
 import MainGUI.GamePanel;
 import MainGUI.KeyHandler;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class Karaktere {
-
+public class Spawn {
     private GamePanel gamePanel;
     public ArrayList<Player> players = new ArrayList<>();
     public ArrayList<Enemy_Troll> trolls = new ArrayList<>();
     public ArrayList<Enemy_Ghost> ghosts = new ArrayList<>();
-    private boolean ghostSpawned = false;
 
 
-    public Karaktere(GamePanel gamePanel) {
+    public Spawn(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
 
     }
 
-    // toDo: Spielernamen integrieren
     public void spawnPlayer(int x, int y, int speed, KeyHandler kH, String imagePath, String name) {
         Player player = new Player(gamePanel, kH, imagePath, name);
         player.setDefault(x, y, speed);

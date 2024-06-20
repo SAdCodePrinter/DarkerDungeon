@@ -253,7 +253,6 @@ public class Enemy_Troll extends Entity {
             }
 
             imageTroll = switch (directionHit) {
-                // toDo: wenn es einen Schlag nach oben gibt für den Troll, ändern
                 case "hit_up" -> hit_down[hitSpriteNum];
                 case "hit_down" -> hit_down[hitSpriteNum];
                 case "hit_left" -> hit_left[hitSpriteNum];

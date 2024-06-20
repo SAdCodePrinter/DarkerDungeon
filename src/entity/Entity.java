@@ -12,7 +12,6 @@ public class Entity {
         this.gamePanel = gamePanel;
     }
 
-
     public BufferedImage[] up = new BufferedImage[8];
     public BufferedImage[] down = new BufferedImage[8];
     public BufferedImage[] left = new BufferedImage[8];
@@ -28,8 +27,6 @@ public class Entity {
     public int spriteNum = 1;
     public int hitSpriteNum = 1;
 
-
-    // ToDo: Private machen und vielleicht abstract
     public int x, y;
     public int speed;
     public String direction, directionHit, lastDirection = "right";
@@ -45,7 +42,6 @@ public class Entity {
     public void setDirection(String direction) {
         this.direction = direction;
     }
-
     public Rectangle attackRect = new Rectangle(0, 0, 0, 0);
 
     public Rectangle getRect() {
