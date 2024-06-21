@@ -110,7 +110,6 @@ public class Player extends Entity {
 
                 // toDo: Hier die Todesanimation aufrufen
             } else {
-                System.out.println(" Troll Leben: " + gamePanel.characters.trolls.get(index).life);
 
             }
         } else if (Objects.equals(monster, "Ghost")) {
